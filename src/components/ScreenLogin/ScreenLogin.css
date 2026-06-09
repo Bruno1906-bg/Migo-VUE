@@ -1,0 +1,220 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #011627;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-container {
+    background-color: #F6f6f4;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(1, 22, 39, 0.05);
+    text-align: center;
+}
+
+.login-header {
+    margin-bottom: 30px;
+}
+
+.login-logo {
+    height: 60px;
+    width: auto;
+    margin-bottom: 20px;
+}
+
+.login-header h2 {
+    font-size: 1.8rem;
+    color: #011627;
+    margin-bottom: 8px;
+}
+
+.login-header p {
+    font-size: 0.9rem;
+    color: rgba(1, 22, 39, 0.6);
+}
+
+.login-form {
+    text-align: left;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #011627;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid rgba(1, 22, 39, 0.1);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: #011627;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #2EC4B6;
+}
+
+.input-group input:invalid {
+    border-color: rgba(255, 99, 71, 0.45);
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+    display: none;
+}
+
+.password-field {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    position: relative;
+}
+
+.password-field input {
+    flex: 1;
+    min-width: 0;
+    padding-right: 52px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: 0;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 22px 22px;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.9;
+    z-index: 2;
+}
+
+.password-toggle:hover {
+    opacity: 1;
+}
+
+.password-toggle[data-state="hidden"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232EC4B6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+}
+
+.password-toggle[data-state="visible"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232EC4B6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17.94 17.94A10.94 10.94 0 0 1 12 20C5 20 1 12 1 12a21.08 21.08 0 0 1 5.06-6.94'/%3E%3Cpath d='M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a21.24 21.24 0 0 1-2.11 3.19'/%3E%3Cpath d='M14.12 14.12A3 3 0 1 1 9.88 9.88'/%3E%3Cpath d='m1 1 22 22'/%3E%3C/svg%3E");
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 25px;
+}
+
+.forgot-password {
+    font-size: 0.85rem;
+    color: #2EC4B6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.btn-login {
+    width: 100%;
+    background-color: #2EC4B6;
+    color: #FDFFFC;
+    padding: 14px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-login:hover {
+    background-color: #249c91;
+    transform: scale(1.02);
+}
+
+.form-message {
+    min-height: 1.2rem;
+    margin-top: 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.form-message.success {
+    color: #1f8a70;
+}
+
+.form-message.error {
+    color: #c0392b;
+}
+
+.login-footer {
+    margin-top: 30px;
+    border-top: 1px solid rgba(1, 22, 39, 0.08);
+    padding-top: 20px;
+}
+
+.login-footer p {
+    font-size: 0.9rem;
+    color: rgba(1, 22, 39, 0.7);
+    margin-bottom: 15px;
+}
+
+.login-footer a {
+    color: #2EC4B6;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+.btn-back {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: rgba(1, 22, 39, 0.5) !important;
+    font-weight: 500 !important;
+    transition: color 0.3s ease;
+}
+
+.btn-back:hover {
+    color: #011627 !important;
+    text-decoration: none !important;
+}

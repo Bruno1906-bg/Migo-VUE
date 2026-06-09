@@ -16,7 +16,7 @@
         <div class="cta-container">
           <!-- Usamos <router-link> en lugar de <a> para navegar sin recargar la página -->
           <router-link to="/login" class="cta-button login">Iniciar sesión</router-link>
-          <router-link to="/crear-cuenta" class="cta-button register">Crear cuenta</router-link>
+          <router-link to="/crearcuenta" class="cta-button register">Crear cuenta</router-link>
         </div>
       </div>
     </section>
