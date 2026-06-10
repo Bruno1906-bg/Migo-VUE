@@ -27,6 +27,9 @@ https://universi799-my.sharepoint.com/:x:/g/personal/2402044_utrivieramaya_edu_m
 
 https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQCznXtuGcn9QomEGWqOrZpmAQhrzb-axY47iqCuJbuOyUk?e=oefP4W
 
+-Encuesta realizadas  a usuarios-
+
+https://docs.google.com/forms/d/1JoFm_RPcyFNfSV1AhxnY7maLdQTIsZ3CIXxzOGSpB0M/edit#responses
 
 -Matriz  de  riesgos y comunicaciones-
 
