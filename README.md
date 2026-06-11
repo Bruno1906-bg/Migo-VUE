@@ -1,7 +1,5 @@
 --DOCUMENTACIÓN DEL PROYECTO INTEGRADOR--
 
-###########################################################################################################
-
 -Link proyecto MIGO/integradora-
 
 https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQBNZzLIKhqiQZ1sR-ltua0sAWDpUETfXxBo7WUevUZhuNU?e=VkyJgz
@@ -13,8 +11,6 @@ https://universi799-my.sharepoint.com/:w:/r/personal/2402137_utrivieramaya_edu_m
 -Matriz  de  riesgos y comunicaciones-
 
 https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQAlXcfQ2pXlS57GnNf12-5bAVKJQx_gr0DWy0Lo097nYrI?e=CoI59G
-
-###########################################################################################################
 
 -Product Backlog/Modulos del proyecto-
 
@@ -35,8 +31,6 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_m
 -Encuesta realizadas  a usuarios-
 
 https://docs.google.com/forms/d/1JoFm_RPcyFNfSV1AhxnY7maLdQTIsZ3CIXxzOGSpB0M/edit#responses
-
-###########################################################################################################
 
 -Modelo de negocio Migo-
 
