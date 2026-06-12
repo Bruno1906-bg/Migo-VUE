@@ -1,5 +1,3 @@
-// src/components/ScreenLogin/Login.js
-
 const API_BASE_URL = 'http://localhost:4000/api';
 
 /**
@@ -9,8 +7,6 @@ export const obtenerColonias = async () => {
     try {
         const response = await fetch(`${API_BASE_URL}/colonias/colonias`);
         if (!response.ok) throw new Error('Error al cargar colonias');
-        
-        // Asumiendo que tu servidor devuelve un array directamente
         return await response.json();
     } catch (error) {
         console.error("Error al obtener colonias:", error);
@@ -29,11 +25,11 @@ export const registrarUsuario = async (datos) => {
             nombre: datos.nombre,
             apellido: datos.apellido,
             correo: datos.correo,
-            contrasena: datos.contrasena, // ¡Recuerda hashear en el backend!
+            contrasena: datos.contrasena, 
             telefono: datos.telefono,
             direccion: datos.direccion,
             id_colonia: datos.id_colonia,
-            rol: 'usuario', // O el valor que corresponda
+            rol: 'usuario', 
         }),
     });
 
@@ -60,5 +56,5 @@ export const loginUsuario = async (correo, contrasena) => {
     if (!response.ok) {
         throw new Error(result.message || 'Error en las credenciales');
     }
-    return result; // Devuelve los datos del usuario logueado
+    return result; 
 };

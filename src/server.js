@@ -53,5 +53,19 @@ app.get('/api/colonias/colonias', (req, res) => {
     });
 });
 
+//**OBTENCION DE ESPECIES TABLA ESPECIES */
+app.get('/api/especies/especies', (req, res) => {
+    db.query('SELECT * FROM especies', (err, results) => {
+        if (err) return res.status(500).json({ message: 'Error en BD' });
+        res.json(results);
+    });
+});
+
+//**OBTENCION DEL TIPO DE PUBLICACION */
+app.get('/api/tipos_publi/tipos_publi', (req, res) => {
+    db.query('SELECT * FROM tipos_publi', (err, results) => {
+        res.json(results);
+    });
+});
 
 app.listen(4000, () => console.log('Se conecto de forma exitosa a la base de datos de Migo'));

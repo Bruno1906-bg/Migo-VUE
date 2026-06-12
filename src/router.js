@@ -4,6 +4,7 @@ import ScreenLandingPage from './components/ScreenLandingPage/ScreenLandingPage.
 import ScreenDashboard from './components/ScreenDashboard/ScreenDashboard.vue'
 import ScreenLogin from './components/ScreenLogin/ScreenLogin.vue'
 import ScreenCrearCuenta from './components/ScreenCrearCuenta/ScreenCrearCuenta.vue'
+import ScreenCrearPublicacion from './components/ScreenCrearPublicacion/ScreenCrearPublicacion.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -11,7 +12,8 @@ const router = createRouter({
     { path: '/', component: ScreenLandingPage },
     {path: '/login', component: ScreenLogin},
     {path: '/crearcuenta', component: ScreenCrearCuenta},
-    { path: '/dashboard', component: ScreenDashboard }
+    { path: '/dashboard', component: ScreenDashboard },
+    {path: '/crearpublicacion', component: ScreenCrearPublicacion}
   ]
 });
 

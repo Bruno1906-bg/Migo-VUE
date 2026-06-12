@@ -33,7 +33,7 @@
           <input 
             type="text" 
             v-model="searchQuery" 
-            placeholder="Busca una publicacion en especifico.."
+            placeholder="Busca algo en especifico aqui....."
             class="search-input"
           >
         </div>
@@ -47,7 +47,7 @@
         
         <div class="publications-grid">
           <div v-if="publicaciones.length === 0" class="empty-feed">
-            <p>No hay reportes recientes para mostrar.</p>
+            <p>No hay publicaciones que mostrar....💩</p>
           </div>
           
           <div v-for="pub in publicaciones" :key="pub.id" class="pub-card">
