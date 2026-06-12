@@ -37,7 +37,7 @@ body {
 .Anuncio1 {
     height: 70vh;
     background: linear-gradient(rgba(1, 22, 39, 0.5), rgba(1, 22, 39, 0.5)),
-    url('../../img/imagen1.jpg');
+    url('../../assets/imagen1.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -52,7 +52,7 @@ body {
 .Anuncio2 {
     height: 70vh;
     background: linear-gradient(rgba(1, 22, 39, 0.5), rgba(1, 22, 39, 0.5)),
-    url('../../img/imagen2.jpg');
+    url('../../assets/imagen2.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -178,13 +178,15 @@ body {
     display: block;
 }
 
+/* Contenedor para alinear los botones */
 .cta-container {
     display: flex;
-    gap: 15px; 
-    justify-content: center; 
+    gap: 15px; /* Espacio entre los botones */
+    justify-content: center; /* Centrar en la pantalla */
     margin-top: 20px;
 }
 
+/* Estilo base para los botones */
 .cta-button {
     padding: 12px 25px;
     border-radius: 8px;
@@ -193,16 +195,19 @@ body {
     transition: 0.3s;
 }
 
+/* Botón Iniciar Sesión */
 .login {
-    background-color: #20b2aa; 
+    background-color: #20b2aa; /* Turquesa Migo */
+    color: white;
     border: 2px solid #20b2aa;
 }
 
 .login:hover {
-    background-color: #0b1d28; 
+    background-color: #0b1d28; /* Azul Marino */
     border-color: #0b1d28;
 }
 
+/* Botón Crear Cuenta */
 .register {
     background-color: transparent;
     color: #0b1d28;
