@@ -40,29 +40,27 @@
       </div>
     </section>
 
-    <main class="contenedor-inicio" id="acceso">
-      <h2 class="titulo-seccion">¿Qué deseas hacer hoy?</h2>
-      <div class="menu">
-        <router-link to="/dashboard" class="card">
-          <div class="icono-img">
-            <img src="../../assets/imagen6.jpg" alt="publicacion">
-          </div>
-          <h3>Realizar publicación.</h3>
-          <p>Realiza tu primera publicación o ve la de los demás usuarios.</p>
-          <span class="btn-entrar">Ir ahora</span>
-        </router-link>
-
-        <router-link to="/veterinaria" class="card">
-          <div class="icono-img">
-            <img src="../../assets/imagen7.jpg" alt="veterinarios">
-          </div>
-          <h3>Consultar servicios.</h3>
-          <p>Consulta los mejores servicios cerca de ti.</p>
-          <span class="btn-entrar">Ir ahora</span>
-        </router-link>
+    <main>
+      <section class="Anuncio3">
+      <div class="Anuncio3-content">
+        <h1>Realiza tu primera publicacion.</h1>
+        <p>Realiza una publicacion o ve la de otros usuarios..📸🐶😽</p>
+        <div class="cta-container">
+          <router-link to="/login" class="cta-button login">Publicacion</router-link>
+        </div>
       </div>
+    </section>
+ 
+    <section class="Anuncio4">
+      <div class="Anuncio4-content">
+        <h1>Consulta servicios.</h1>
+        <p>Consulta los mejores servicios para tu mascota..🔎🧑‍⚕️👩‍⚕️</p>
+        <div class="cta-container">
+          <router-link to="/login" class="cta-button login">Servicios</router-link>
+        </div>
+      </div>
+    </section>
     </main>
-
     <footer class="pie-pagina">
       <p>MIGO || FBJB-CodeTeam </p>
     </footer>
@@ -70,7 +68,6 @@
 </template>
 
 <script setup>
-// Aquí puedes agregar lógica si es necesaria en el futuro
 </script>
 
 <style scoped src="./ScreenLandingPage.css">

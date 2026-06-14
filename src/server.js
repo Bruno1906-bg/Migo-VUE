@@ -1,8 +1,9 @@
 import express from 'express';
 import mysql from 'mysql2';
-import cors from 'cors';
+import cors from 'cors'; 
 import multer from 'multer';
 
+//**CONEXION A LA BASE DE DATOS */
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
@@ -17,7 +18,7 @@ const db = mysql.createConnection({
     database: 'migo_db'
 });
 
-//**INICIO DE SESION */
+//**INICIO DE SESION DE USUARIO */
 app.post('/api/login/login', (req, res) => {
     const { correo, contrasena } = req.body;
     const sql = 'SELECT id_usuario, nombre FROM usuarios WHERE correo = ? AND contrasena = ?';
@@ -28,7 +29,7 @@ app.post('/api/login/login', (req, res) => {
     });
 });
 
-//**CATALOGOS */
+//**OBTENCION DE COLONIAS*/
 app.get('/api/colonias/colonias', (req, res) => {
     db.query('SELECT * FROM colonias', (err, results) => { 
         if(err) return res.status(500).json({error: err.message});
@@ -36,6 +37,8 @@ app.get('/api/colonias/colonias', (req, res) => {
     });
 });
 
+
+//**OBTENCION DE ESPECIES */
 app.get('/api/especies/especies', (req, res) => {
     db.query('SELECT * FROM especies', (err, results) => { 
         if(err) return res.status(500).json({error: err.message});
@@ -43,6 +46,7 @@ app.get('/api/especies/especies', (req, res) => {
     });
 });
 
+//**OBTENCION DE TIPOS DE PUBLICACIONES */
 app.get('/api/tipos_publi/tipos_publi', (req, res) => {
     db.query('SELECT * FROM tipos_publi', (err, results) => { 
         if(err) return res.status(500).json({error: err.message});
@@ -52,20 +56,19 @@ app.get('/api/tipos_publi/tipos_publi', (req, res) => {
 
 //**OBTENER PUBLICACIONES (Para el Dashboard) */
 app.get('/api/publicaciones/publicaciones', (req, res) => {
-    // Consulta simplificada para descartar errores de JOIN
     const sql = 'SELECT * FROM publicaciones ORDER BY fecha_publi DESC';
     
     db.query(sql, (err, results) => {
         if (err) {
             console.error("--- ERROR FATAL EN SQL ---");
-            console.error(err); // ESTO TE DIRÁ EXACTAMENTE QUÉ PASA
+            console.error(err);
             return res.status(500).json({ message: 'Error en BD: ' + err.sqlMessage });
         }
         res.json(results);
     });
 });
 
-//**CREACION DE PUBLICACION CON FOTO */
+//**CREACION DE PUBLICACION*/
 app.post('/api/publicaciones/crear', upload.single('foto'), (req, res) => {
     const { id_usuario, id_colonia, id_especie, id_tipo, id_estado, nombre_pet, descripcion } = req.body;
     
@@ -91,4 +94,19 @@ app.post('/api/publicaciones/crear', upload.single('foto'), (req, res) => {
     });
 });
 
-app.listen(4000, () => console.log('Servidor Migo corriendo en puerto 4000'));
+//**OBTENCION DE VETERINARIOS */
+app.get('/api/veterinarios/veterinarios', (req, res) => {
+    const sql = `
+        SELECT v.id, v.nombre, v.descripcion, v.imagen, c.nombre_colonia
+        FROM veterinarios v
+        LEFT JOIN colonias c ON v.id_colonia = c.id_colonia
+    `;
+    db.query(sql, (err, results) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(results);
+    });
+});
+
+
+//**VERIFICACION DE CONEXION A LA DATABASE */
+app.listen(4000, () => console.log('Conectado a la base de datos Migo  :)'));

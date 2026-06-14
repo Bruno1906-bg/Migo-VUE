@@ -63,6 +63,37 @@ body {
     padding: 0 20px;
 }
 
+.Anuncio3 {
+    height: 70vh;
+    background: linear-gradient(rgba(1, 22, 39, 0.5), rgba(1, 22, 39, 0.5)),
+    url('../../assets/imagen6.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #FDFFFC;
+    padding: 0 20px;
+    margin-top: 120px;
+}
+
+.Anuncio4 {
+    height: 70vh;
+    background: linear-gradient(rgba(1, 22, 39, 0.5), rgba(1, 22, 39, 0.5)),
+    url('../../assets/imagen7.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #FDFFFC;
+    padding: 0 20px;
+    margin-top: 120px;
+}
+
+
 .cta-main {
     background-color: #2EC4B6;
     color: #FDFFFC;
@@ -156,6 +187,7 @@ body {
     color: #FDFFFC;
     text-align: center;
     padding: 20px;
+    margin-top: 50px;
 }
 
 .feature-item img {

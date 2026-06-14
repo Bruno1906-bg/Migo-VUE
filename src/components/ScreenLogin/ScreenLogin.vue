@@ -15,18 +15,9 @@ const handleLogin = async () => {
   try {
     message.value = "Conectando...";
     
-    // 1. Llamada a tu función de login
     const respuesta = await loginUsuario(email.value, password.value);
-    
-    // 2. Guardado en sessionStorage para persistencia de sesión
-    // Guardamos el objeto completo (si lo usas en otras partes)
     sessionStorage.setItem('migo_user', JSON.stringify(respuesta));
-    
-    // 3. Guardado específico del ID (ESTA LÍNEA ES LA QUE CORRIGE EL ERROR DE PUBLICACIÓN)
-    // Asegúrate de que 'respuesta.id_usuario' coincida con el nombre que devuelve tu API
     sessionStorage.setItem('id_usuario', respuesta.id_usuario);
-    
-    // 4. Redirección
     router.push('/dashboard'); 
   } catch (error) {
     message.value = error.message || "Error al iniciar sesión";

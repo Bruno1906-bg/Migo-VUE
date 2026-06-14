@@ -15,6 +15,9 @@
         <router-link to="/veterinarios" class="menu-item">
           ° Veterinarios
         </router-link>
+        <router-link to="/servicios" class="menu-item">
+          ° Otros servicios
+        </router-link>
         <router-link to="/ajustes" class="menu-item">
           ° Ajustes
         </router-link>
@@ -33,7 +36,7 @@
           <input 
             type="text" 
             v-model="searchQuery" 
-            placeholder="Busca algo en especifico aqui..."
+            placeholder="Busca una publicacion aqui.."
             class="search-input"
           >
         </div>
