@@ -48,25 +48,19 @@
       <main class="feed-section">
         <h2 class="feed-title">Reportes Recientes en la Comunidad</h2>
         
-        <div class="publications-grid">
-          <div v-if="publicaciones.length === 0" class="empty-feed">
-            <p>No hay publicaciones que mostrar....💩</p>
-          </div>
-          
-          <div v-for="pub in publicaciones" :key="pub.id_publi" class="pub-card">
-            <h3 class="card-title">🐾 {{ pub.nombre_pet }}</h3>
-            <p class="card-description">{{ pub.descripcion }}</p>
-            
-            <div class="pub-meta">
-              <span class="badge">Especie ID: {{ pub.id_especie }}</span>
-              <span class="badge">Estado: {{ pub.id_estado }}</span>
-            </div>
-            
-            <div class="pub-date">
-              Publicado el: {{ new Date(pub.fecha_publi).toLocaleDateString() }}
-            </div>
-          </div> 
+        <div class="grid-publicaciones">
+    <div v-for="pub in publicaciones" :key="pub.id" class="pub-card">
+        <img :src="'http://localhost:4000/uploads/' + pub.imagen" 
+             :alt="pub.nombre" 
+             class="pub-image">
+             
+        <div class="pub-info">
+            <h3>{{ pub.nombre }}</h3>
+            <p>{{ pub.descripcion }}</p>
+            <p><small>Colonia: {{ pub.nombre_colonia }}</small></p>
         </div>
+    </div>
+</div>
       </main>
     </div>
   </div>
@@ -76,30 +70,27 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-const router = useRouter();
-const searchQuery = ref('');
 const publicaciones = ref([]);
+const router = useRouter();
 
-// Hacemos el fetch directamente aquí para asegurar la ruta
 const cargarPublicaciones = async () => {
-  try {
-    const response = await fetch('http://localhost:4000/api/publicaciones/publicaciones');
-    if (!response.ok) throw new Error('Error al conectar con el servidor');
-    
-    const data = await response.json();
-    publicaciones.value = data; 
-  } catch (error) {
-    console.error("Error al cargar publicaciones:", error);
-    alert("No se pudieron cargar las publicaciones.");
-  }
+    try {
+        const res = await fetch('http://localhost:4000/api/publicacione2/publicaciones2');
+        
+        if (!res.ok) throw new Error('Error al cargar publicaciones');
+        
+        const data = await res.json();
+        publicaciones.value = data; 
+    } catch (err) {
+        console.error("Error:", err);
+    }
 };
 
 onMounted(cargarPublicaciones);
 
 const handleLogout = () => {
-  sessionStorage.removeItem('migo_user');
-  sessionStorage.removeItem('id_usuario'); // Limpiamos también el ID
-  router.push('/');
+    sessionStorage.removeItem('migo_user');
+    router.push('/');
 };
 </script>
 

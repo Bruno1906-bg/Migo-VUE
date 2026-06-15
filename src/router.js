@@ -27,6 +27,8 @@ import ScreenServicios from './components/ScreenServicios/ScreenServicios.vue'
 //**SCREEN VENTANA AJUSTES */
 import ScreenAjustes from './components/ScreenAjustes/ScreenAjustes.vue'
 
+//**SCREEN DE DETALLES VETERINARIAS */
+import ScreenDetalles from './components/ScreenDetalles/ScreenDetalles.vue'
 
 //**NAVEGACION DE LA PAGINA WEB */
 const router = createRouter({
@@ -38,6 +40,7 @@ const router = createRouter({
     { path: '/dashboard', component: ScreenDashboard },
     {path: '/crearpublicacion', component: ScreenCrearPublicacion},
     {path: '/veterinarios', component: ScreenVeterinarios},
+    {path: '/detallesveterinaria', component: ScreenDetalles},
     {path: '/perfil', component: ScreenMiperfil},
     {path: '/servicios', component:  ScreenServicios},
     {path: '/ajustes', component: ScreenAjustes}

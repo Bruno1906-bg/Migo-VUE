@@ -68,29 +68,22 @@ app.get('/api/publicaciones/publicaciones', (req, res) => {
     });
 });
 
-//**CREACION DE PUBLICACION*/
-app.post('/api/publicaciones/crear', upload.single('foto'), (req, res) => {
-    const { id_usuario, id_colonia, id_especie, id_tipo, id_estado, nombre_pet, descripcion } = req.body;
+//**OBTENCIÓN DE PUBLICACIONES */
+app.get('/api/publicacione2/publicaciones2', (req, res) => {
+    const sql = `
+        SELECT p.id, p.nombre, p.descripcion, p.imagen, 
+               c.nombre_colonia, u.nombre
+        FROM publicaciones2 p
+        LEFT JOIN colonias c ON p.id_colonia = c.id_colonia
+        LEFT JOIN usuarios u ON p.id_usuario = u.id_usuario
+    `;
     
-    if (!id_usuario || !id_colonia || !id_especie || !id_tipo || !nombre_pet || !descripcion) {
-        return res.status(400).json({ message: 'Faltan campos obligatorios' });
-    }
-
-    const sql = `INSERT INTO publicaciones (id_usuario, id_colonia, id_especie, id_tipo, id_estado, nombre_pet, descripcion, fecha_publi) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`;
-    
-    db.query(sql, [id_usuario, id_colonia, id_especie, id_tipo, id_estado, nombre_pet, descripcion], (err, result) => {
+    db.query(sql, (err, results) => {
         if (err) {
-            console.error("Error SQL:", err);
-            return res.status(500).json({ message: 'Error en BD: ' + err.sqlMessage });
+            console.error("Error al obtener publicaciones:", err);
+            return res.status(500).json({ error: err.message });
         }
-
-        if (req.file) {
-            db.query('INSERT INTO fotos_publi (id_publi, nombre_archivo) VALUES (?, ?)', 
-                     [result.insertId, req.file.filename]);
-        }
-
-        res.status(201).json({ message: 'Publicación creada', id: result.insertId });
+        res.json(results);
     });
 });
 
