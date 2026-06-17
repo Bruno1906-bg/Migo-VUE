@@ -1,53 +1,63 @@
 const API_URL = 'http://localhost:4000/api';
 
-/**
- * Función para registrar una nueva publicación en la base de datos.
- * @param {Object} datos - Objeto con los datos del formulario (tipo, nombre_pet, etc.).
- */
 export const registrarPublicacion = async (datos) => {
-    const formData = new FormData();
-    
-    for (const key in datos) {
-        if (datos[key] !== null) {
-            formData.append(key, datos[key]);
-        }
-    }
-
     try {
         const response = await fetch(`${API_URL}/publicaciones`, {
             method: 'POST',
-            body: formData, 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id_usuario: datos.id_usuario,
+                id_colonia: datos.id_colonia,
+                id_especie: datos.id_especie,
+                id_tipo: datos.id_tipo,
+                id_estado: datos.id_estado,
+                nombre_pet: datos.nombre_pet,
+                descripcion: datos.descripcion
+            }),
         });
 
         const result = await response.json();
-
         if (!response.ok) {
             throw new Error(result.message || 'Error al guardar la publicación');
         }
 
-        return result; 
+        if (datos.foto) {
+            const formData = new FormData();
+            formData.append('foto', datos.foto);
+
+            const fotoResponse = await fetch(`${API_URL}/fotos/${result.id}`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            const fotoResult = await fotoResponse.json();
+            if (!fotoResponse.ok) {
+                throw new Error(fotoResult.message || 'Error al subir la foto');
+            }
+
+            result.foto = fotoResult.ruta_imagen;
+        }
+
+        return result;
     } catch (error) {
         console.error("Error en registrarPublicacion:", error);
-        throw error; 
+        throw error;
     }
 };
 
-/**
- * FUNCION PARA COLONIAS EN EL SELECTOR
- */
 export const obtenerColonias = async () => {
-    const res = await fetch('http://localhost:4000/api/colonias/colonias');
+    const res = await fetch(`${API_URL}/colonias`);
     return await res.json();
 };
 
-//**FUNCION PARA OBTENER ESPECIES EN EL SELECTOR */
+
 export const obtenerEspecies = async () => {
-    const res = await fetch('http://localhost:4000/api/especies/especies');
+    const res = await fetch(`${API_URL}/especies`);
     return await res.json();
 };
 
-//**FUNCION PARA OBTENER TIPOS DE PUBLICACIONES EN EL SELECTOR */
+
 export const obtenerTipopubli = async () => {
-    const res = await fetch('http://localhost:4000/api/tipos_publi/tipos_publi');
+    const res = await fetch(`${API_URL}/tipos_publi`);
     return await res.json();
 };

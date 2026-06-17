@@ -29,14 +29,26 @@
             <input v-model="form.direccion" type="text" id="direccion" placeholder="Ingrese su dirección">
           </div>
 
-          <div class="input-group full-width">
+          <!-- 🔹 Autocomplete de colonias -->
+          <div class="input-group full-width autocomplete">
             <label for="colonia">Colonia</label>
-            <select v-model="form.id_colonia" id="colonia" required>
-              <option value="" disabled selected>Selecciona una colonia</option>
-              <option v-for="c in colonias" :key="c.id_colonia" :value="c.id_colonia">
+            <input 
+              id="colonia" 
+              type="text" 
+              v-model="coloniaInput" 
+              placeholder="Escribe tu colonia..."
+              @input="filtrarColonias" 
+              required 
+            />
+            <ul v-if="filteredColonias.length" class="suggestions">
+              <li 
+                v-for="c in filteredColonias" 
+                :key="c.id_colonia" 
+                @click="seleccionarColonia(c)"
+              >
                 {{ c.nombre_colonia }}
-              </option>
-            </select>
+              </li>
+            </ul>
           </div>
 
           <div class="input-group full-width">
@@ -46,10 +58,11 @@
 
           <div class="input-group full-width">
             <label for="contrasena">Contraseña</label>
-            <input v-model="form.contrasena" type="password" id="contrasena" minlength="8" required placeholder="Ingrese su contraseña">
+            <input v-model="form.contrasena" type="password" id="contrasena" minlength="8" required
+              placeholder="Ingrese su contraseña">
           </div>
         </div>
-        
+
         <button type="submit" class="btn-register">Registrarse</button>
       </form>
 
@@ -65,39 +78,67 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
-import { useRouter } from 'vue-router'; 
-import { registrarUsuario, obtenerColonias } from './CrearCuenta'; 
+import { useRouter } from 'vue-router';
+import { registrarUsuario, obtenerColonias } from './CrearCuenta';
 
-const router = useRouter(); 
+const router = useRouter();
 const form = reactive({
   nombre: '', apellido: '', telefono: '', direccion: '', correo: '', contrasena: '', id_colonia: ''
 });
 
 const colonias = ref([]);
+const filteredColonias = ref([]);
+const coloniaInput = ref('');
+
 const message = ref('');
 const messageType = ref('');
 
 onMounted(async () => {
   try {
-    colonias.value = await obtenerColonias();
+    const data = await obtenerColonias();
+
+    // 🔹 Limpieza de duplicados
+    const unique = [];
+    const seen = new Set();
+    for (const c of data) {
+      if (!seen.has(c.nombre_colonia.toLowerCase())) {
+        seen.add(c.nombre_colonia.toLowerCase());
+        unique.push(c);
+      }
+    }
+    colonias.value = unique;
   } catch (e) {
     console.error("Error al cargar colonias", e);
   }
 });
+
+// 🔹 Funciones de autocomplete
+const filtrarColonias = () => {
+  const query = coloniaInput.value.toLowerCase();
+  filteredColonias.value = colonias.value.filter(c =>
+    c.nombre_colonia.toLowerCase().includes(query)
+  );
+};
+
+const seleccionarColonia = (colonia) => {
+  form.id_colonia = colonia.id_colonia;
+  coloniaInput.value = colonia.nombre_colonia;
+  filteredColonias.value = [];
+};
 
 const handleRegister = async () => {
   try {
     if (!form.id_colonia) {
       throw new Error("Por favor, selecciona una colonia.");
     }
-    
+
     await registrarUsuario(form);
-    
+
     message.value = "¡Registro exitoso! Redirigiendo al inicio de sesión...";
     messageType.value = "success";
 
     setTimeout(() => {
-      router.push('/login'); 
+      router.push('/login');
     }, 2000);
 
   } catch (err) {
@@ -106,5 +147,6 @@ const handleRegister = async () => {
   }
 };
 </script>
+
 
 <style scoped src="./ScreenCrearCuenta.css"></style>

@@ -24,19 +24,19 @@
           <input 
             type="text"
             v-model="searchQuery"
-            placeholder="Busca tu veterinaria ideal aqui..."
+            placeholder="Busca tu veterinaria ideal aquí..."
             class="search-input"
           >
         </div>
       </header>
 
       <main class="feed-section">
-        <h2 class="feed-title">Encuentra tu veterinaria ideal aqui..🐶😽</h2>
+        <h2 class="feed-title">Encuentra tu veterinaria ideal aquí 🐶😽</h2>
 
-        <p>Veterinarias encontradas: {{ veterinarios.length }}</p>
+        <p>Veterinarias encontradas: {{ filteredVeterinarios.length }}</p>
 
         <div class="grid-veterinarios">
-          <div v-for="vet in veterinarios" :key="vet.id" class="vet-card">
+          <div v-for="vet in filteredVeterinarios" :key="vet.id" class="vet-card">
             <img :src="getImageUrl(vet.imagen)" :alt="vet.nombre" class="vet-image">
             <div class="vet-info">
               <h3>{{ vet.nombre }}</h3>
@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <p v-if="veterinarios.length === 0" class="sin-resultados">
+        <p v-if="filteredVeterinarios.length === 0" class="sin-resultados">
           No se encontraron veterinarios..💩💩
         </p>
       </main>
@@ -55,28 +55,31 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-const veterinarios = ref([]);
-const searchQuery = ref('');
 const router = useRouter();
+const searchQuery = ref('');
 
-const cargarVeterinarios = async () => {
-  try {
-    const res = await fetch('http://localhost:4000/api/veterinarios/veterinarios');
-    console.log('Status de la API:', res.status);
-
-    if (!res.ok) throw new Error(`Error del servidor: ${res.status}`);
-
-    const data = await res.json();
-    console.log('Datos recibidos:', data);
-    veterinarios.value = data;
-
-  } catch (err) {
-    console.error('Error al cargar veterinarios:', err.message);
+// 🔹 Datos estáticos de ejemplo
+const veterinarios = ref([
+  {
+    id: 1,
+    nombre: "Veterinaria Patitas Felices",
+    descripcion: "Atención general para perros y gatos, vacunas y consultas.",
+    nombre_colonia: "Centro",
+    imagen: "local1.jpg"
   }
-};
+]);
+
+const filteredVeterinarios = computed(() => {
+  if (!searchQuery.value) return veterinarios.value;
+  return veterinarios.value.filter(vet =>
+    (vet.nombre + ' ' + vet.descripcion + ' ' + vet.nombre_colonia)
+      .toLowerCase()
+      .includes(searchQuery.value.toLowerCase())
+  );
+});
 
 const getImageUrl = (nombreImagen) => {
   if (!nombreImagen) return '';
@@ -87,8 +90,6 @@ const getImageUrl = (nombreImagen) => {
     return '';
   }
 };
-
-onMounted(cargarVeterinarios);
 
 const handleLogout = () => {
   sessionStorage.removeItem('migo_user');

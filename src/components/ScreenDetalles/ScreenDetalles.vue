@@ -1,5 +1,5 @@
 <template>
     <div>
-        Hola
+        Hola PAPIS
     </div>
 </template>

@@ -96,3 +96,53 @@ textarea { height: 80px; resize: none; }
   text-align: center;
   font-weight: bold;
 }
+/* Autocomplete */
+.autocomplete {
+  position: relative;
+  width: 100%;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  max-height: 120px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0 0;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.suggestions li {
+  padding: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.suggestions li:hover {
+  background: #f0f0f0;
+}
+
+.preview-container {
+  width: 100%;
+  height: 200px;       
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   
+  border-radius: 8px;
+}

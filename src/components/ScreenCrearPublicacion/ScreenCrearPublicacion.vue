@@ -30,12 +30,26 @@
               </select>
             </div>
 
-            <div class="field">
-              <label>Colonia</label>
-              <select v-model="form.id_colonia" required>
-                <option value="" disabled>Selecciona una colonia</option>
-                <option v-for="c in colonias" :key="c.id_colonia" :value="c.id_colonia">{{ c.nombre_colonia }}</option>
-              </select>
+            <!-- 🔹 Autocomplete de colonias -->
+            <div class="field autocomplete">
+              <label for="colonia">Colonia</label>
+              <input 
+                id="colonia"
+                type="text" 
+                v-model="coloniaInput" 
+                placeholder="Escribe tu colonia..."
+                @input="filtrarColonias"
+                required
+              />
+              <ul v-if="showSuggestions" class="suggestions">
+                <li 
+                  v-for="c in filteredColonias" 
+                  :key="c.id_colonia" 
+                  @click="seleccionarColonia(c)"
+                >
+                  {{ c.nombre_colonia }}
+                </li>
+              </ul>
             </div>
 
             <div class="field">
@@ -44,10 +58,20 @@
             </div>
           </div>
 
+          <!-- 🔹 Card de imagen con vista previa -->
           <div class="col-photo">
             <div class="upload-area" @click="$refs.fotoInput.click()">
-              <input type="file" ref="fotoInput" @change="handleFileChange" hidden accept="image/*">
-              <p>{{ fileName || 'Subir foto' }}</p>
+              <input 
+                type="file" 
+                ref="fotoInput" 
+                @change="handleFileChange" 
+                hidden 
+                accept="image/*"
+              >
+              <div v-if="previewUrl" class="preview-container">
+                <img :src="previewUrl" alt="Vista previa" class="preview-image" />
+              </div>
+              <p v-else>{{ fileName || 'Subir foto' }}</p>
             </div>
           </div>
         </div>
@@ -59,88 +83,136 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const fotoInput = ref(null);
 const fileName = ref('');
+const previewUrl = ref(null); // 🔹 nueva variable para la vista previa
 const colonias = ref([]);
+const filteredColonias = ref([]);
+const coloniaInput = ref('');
+const showSuggestions = ref(false);
 const especies = ref([]);
 const tipos = ref([]);
 
 const form = reactive({
-    id_usuario: sessionStorage.getItem('id_usuario') ? parseInt(sessionStorage.getItem('id_usuario')) : null,
-    id_tipo: '',
-    nombre_pet: '',
-    id_especie: '',
-    id_colonia: '',
-    descripcion: '',
-    id_estado: 1,
-    foto: null
+  id_usuario: sessionStorage.getItem('id_usuario') ? parseInt(sessionStorage.getItem('id_usuario')) : null,
+  id_tipo: '',
+  nombre_pet: '',
+  id_especie: '',
+  id_colonia: '',
+  descripcion: '',
+  id_estado: 1,
+  foto: null
 });
 
 const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        form.foto = file;
-        fileName.value = file.name;
-    }
+  const file = e.target.files[0];
+  if (file) {
+    form.foto = file;
+    fileName.value = file.name;
+    previewUrl.value = URL.createObjectURL(file); // 🔹 genera la vista previa
+  }
 };
 
 onMounted(async () => {
-    try {
-        const [resC, resE, resT] = await Promise.all([
-            fetch('http://localhost:4000/api/colonias/colonias'),
-            fetch('http://localhost:4000/api/especies/especies'),
-            fetch('http://localhost:4000/api/tipos_publi/tipos_publi')
-        ]);
-        colonias.value = await resC.json();
-        especies.value = await resE.json();
-        tipos.value = await resT.json();
-    } catch (err) {
-        console.error("Error al cargar catálogos", err);
-    }
+  try {
+    const [resC, resE, resT] = await Promise.all([
+      fetch('http://localhost:4000/api/colonias'),
+      fetch('http://localhost:4000/api/especies'),
+      fetch('http://localhost:4000/api/tipos_publi')
+    ]);
+
+    const coloniasData = await resC.json();
+    const especiesData = await resE.json();
+    const tiposData = await resT.json();
+
+    // 🔹 Eliminar duplicados
+    colonias.value = [...new Map(coloniasData.map(c => [c.nombre_colonia.toLowerCase(), c])).values()];
+    especies.value = [...new Map(especiesData.map(e => [e.nombre.toLowerCase(), e])).values()];
+    tipos.value = [...new Map(tiposData.map(t => [t.nombre.toLowerCase(), t])).values()];
+  } catch (err) {
+    console.error("Error al cargar catálogos", err);
+  }
+
+  // 🔹 Listener para cerrar sugerencias al hacer clic fuera
+  document.addEventListener('click', handleClickOutside);
 });
 
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
+
+// 🔹 Autocomplete funciones
+const filtrarColonias = () => {
+  const query = coloniaInput.value.toLowerCase();
+  filteredColonias.value = colonias.value.filter(c =>
+    c.nombre_colonia.toLowerCase().includes(query)
+  );
+  showSuggestions.value = filteredColonias.value.length > 0;
+};
+
+const seleccionarColonia = (colonia) => {
+  form.id_colonia = colonia.id_colonia;
+  coloniaInput.value = colonia.nombre_colonia;
+  showSuggestions.value = false;
+};
+
+const handleClickOutside = (event) => {
+  const input = document.getElementById('colonia');
+  if (input && !input.contains(event.target)) {
+    showSuggestions.value = false;
+  }
+};
+
 const handlePublicar = async () => {
-    // 1. Validar sesión
-    if (!form.id_usuario) {
-        alert("Sesión no detectada. Por favor, inicia sesión de nuevo.");
-        router.push('/login');
-        return;
+  if (!form.id_usuario) {
+    alert("Sesión no detectada. Por favor, inicia sesión de nuevo.");
+    router.push('/login');
+    return;
+  }
+
+  try {
+    // 1. Crear publicación (JSON)
+    const response = await fetch('http://localhost:4000/api/publicaciones', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id_usuario: form.id_usuario,
+        id_colonia: form.id_colonia,
+        id_especie: form.id_especie,
+        id_tipo: form.id_tipo,
+        id_estado: form.id_estado,
+        nombre_pet: form.nombre_pet,
+        descripcion: form.descripcion
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Error al crear publicación');
+
+    // 2. Subir foto si existe
+    if (form.foto) {
+      const formData = new FormData();
+      formData.append('foto', form.foto);
+
+      const fotoResponse = await fetch(`http://localhost:4000/api/fotos/${data.id}`, {
+        method: 'POST',
+        body: formData
+      });
+
+      const fotoData = await fotoResponse.json();
+      if (!fotoResponse.ok) throw new Error(fotoData.message || 'Error al subir foto');
     }
 
-    // 2. Crear FormData
-    const formData = new FormData();
-    formData.append('id_usuario', form.id_usuario);
-    formData.append('id_colonia', form.id_colonia);
-    formData.append('id_especie', form.id_especie);
-    formData.append('id_tipo', form.id_tipo);
-    formData.append('id_estado', form.id_estado);
-    formData.append('nombre_pet', form.nombre_pet);
-    formData.append('descripcion', form.descripcion);
-    if (form.foto) formData.append('foto', form.foto);
-    
-    // 3. Enviar al servidor
-    try {
-        const response = await fetch('http://localhost:4000/api/publicaciones/crear', {
-            method: 'POST',
-            body: formData
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-            alert("¡Publicación realizada con éxito!");
-            router.push('/dashboard');
-        } else {
-            alert("Error: " + data.message);
-        }
-    } catch (err) {
-        console.error("Error completo:", err);
-        alert("Error al conectar con el servidor.");
-    }
+    alert("¡Publicación realizada con éxito!");
+    router.push('/dashboard');
+  } catch (err) {
+    console.error("Error completo:", err);
+    alert("Error: " + err.message);
+  }
 };
 </script>
 
