@@ -22,7 +22,7 @@ https://universi799-my.sharepoint.com/:x:/g/personal/2402044_utrivieramaya_edu_m
 
 -Metricas y Parametros en EXCEL-
 
-[Dashboard Excel.xlsm](https://github.com/user-attachments/files/29009726/Dashboard.Excel.xlsm)
+[Dashboard.Excel (1).xlsm](https://github.com/user-attachments/files/29052035/Dashboard.Excel.1.xlsm)
 
 -Plantilla IEEE8.30/Requerimientos-
 
