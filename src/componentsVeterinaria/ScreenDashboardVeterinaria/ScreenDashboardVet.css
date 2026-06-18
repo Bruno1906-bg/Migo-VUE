@@ -1,0 +1,112 @@
+/* CONTENEDOR PRINCIPAL - Igual al de comunidad */
+.dashboard-vet-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f7f6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* SIDEBAR - Mismo estilo */
+.sidebar {
+  width: 260px;
+  background-color: white;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+}
+
+.sidebar-logo { padding: 30px; text-align: center; }
+.sidebar-logo img { width: 120px; border-radius: 10px; }
+.sidebar-menu { flex-grow: 1; padding: 20px; }
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #555;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+
+.menu-item:hover { background-color: #e0f2f1; color: #14a098; }
+.menu-item.active { background-color: #14a098; color: white; }
+
+.sidebar-footer { padding: 20px; border-top: 1px solid #eee; }
+.btn-logout {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: 1px solid #ff5e5e;
+  color: #ff5e5e;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-logout:hover { background: #ff5e5e; color: white; }
+
+/* CONTENIDO PRINCIPAL */
+.main-content {
+  flex-grow: 1;
+  margin-left: 260px;
+  padding: 30px;
+}
+
+/* BARRA SUPERIOR VETERINARIO */
+.top-bar-vet {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+}
+
+/* TARJETAS DE ESTADÍSTICA (NUEVO) */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  border: 1px solid #f0f0f0;
+}
+
+.stat-card h4 { color: #888; font-size: 0.9rem; margin-bottom: 10px; }
+.stat-card p { font-size: 1.5rem; color: #14a098; font-weight: bold; }
+
+/* GRID DE SERVICIOS - Mismo estilo que publicaciones */
+.grid-servicios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.service-card {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+  border: 1px solid #f0f0f0;
+  transition: 0.3s;
+}
+
+.service-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+
+.service-card h3 { color: #14a098; margin-bottom: 10px; }
+.service-actions { margin-top: 15px; display: flex; gap: 10px; }
+
+.btn-edit { background: #f0f0f0; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
+.btn-delete { background: #ffe5e5; color: #ff5e5e; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; }

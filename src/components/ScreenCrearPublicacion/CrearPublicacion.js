@@ -25,7 +25,7 @@ export const registrarPublicacion = async (datos) => {
             const formData = new FormData();
             formData.append('foto', datos.foto);
 
-            const fotoResponse = await fetch(`${API_URL}/fotos/${result.id}`, {
+            const fotoResponse = await fetch(`${API_URL}/fotos/${result.id_publi}`, {
                 method: 'POST',
                 body: formData,
             });

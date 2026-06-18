@@ -55,6 +55,7 @@ const handleLogin = async () => {
 
       <div class="login-footer">
         <p>¿No tienes una cuenta? <router-link to="/crearcuenta">Regístrate aquí</router-link></p>
+        <p class="footer-2">¿Deseas iniciar como negocio? <router-link to="/loginvet">Iniciar como negocio</router-link></p>
         <router-link to="/" class="btn-back">Volver al inicio</router-link>
       </div>
     </div>

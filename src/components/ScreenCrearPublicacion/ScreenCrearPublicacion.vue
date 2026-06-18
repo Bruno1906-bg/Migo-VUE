@@ -30,7 +30,6 @@
               </select>
             </div>
 
-            <!-- 🔹 Autocomplete de colonias -->
             <div class="field autocomplete">
               <label for="colonia">Colonia</label>
               <input 
@@ -47,7 +46,7 @@
                   :key="c.id_colonia" 
                   @click="seleccionarColonia(c)"
                 >
-                  {{ c.nombre_colonia }}
+                  {{ c.nombre }}
                 </li>
               </ul>
             </div>
@@ -58,7 +57,6 @@
             </div>
           </div>
 
-          <!-- 🔹 Card de imagen con vista previa -->
           <div class="col-photo">
             <div class="upload-area" @click="$refs.fotoInput.click()">
               <input 
@@ -89,7 +87,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const fotoInput = ref(null);
 const fileName = ref('');
-const previewUrl = ref(null); // 🔹 nueva variable para la vista previa
+const previewUrl = ref(null);
 const colonias = ref([]);
 const filteredColonias = ref([]);
 const coloniaInput = ref('');
@@ -113,7 +111,7 @@ const handleFileChange = (e) => {
   if (file) {
     form.foto = file;
     fileName.value = file.name;
-    previewUrl.value = URL.createObjectURL(file); // 🔹 genera la vista previa
+    previewUrl.value = URL.createObjectURL(file);
   }
 };
 
@@ -125,19 +123,14 @@ onMounted(async () => {
       fetch('http://localhost:4000/api/tipos_publi')
     ]);
 
-    const coloniasData = await resC.json();
-    const especiesData = await resE.json();
-    const tiposData = await resT.json();
+    // Asignación directa de datos
+    colonias.value = await resC.json();
+    especies.value = await resE.json();
+    tipos.value = await resT.json();
 
-    // 🔹 Eliminar duplicados
-    colonias.value = [...new Map(coloniasData.map(c => [c.nombre_colonia.toLowerCase(), c])).values()];
-    especies.value = [...new Map(especiesData.map(e => [e.nombre.toLowerCase(), e])).values()];
-    tipos.value = [...new Map(tiposData.map(t => [t.nombre.toLowerCase(), t])).values()];
   } catch (err) {
     console.error("Error al cargar catálogos", err);
   }
-
-  // 🔹 Listener para cerrar sugerencias al hacer clic fuera
   document.addEventListener('click', handleClickOutside);
 });
 
@@ -145,18 +138,17 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside);
 });
 
-// 🔹 Autocomplete funciones
 const filtrarColonias = () => {
   const query = coloniaInput.value.toLowerCase();
   filteredColonias.value = colonias.value.filter(c =>
-    c.nombre_colonia.toLowerCase().includes(query)
+    c.nombre.toLowerCase().includes(query)
   );
   showSuggestions.value = filteredColonias.value.length > 0;
 };
 
 const seleccionarColonia = (colonia) => {
   form.id_colonia = colonia.id_colonia;
-  coloniaInput.value = colonia.nombre_colonia;
+  coloniaInput.value = colonia.nombre;
   showSuggestions.value = false;
 };
 
@@ -169,13 +161,12 @@ const handleClickOutside = (event) => {
 
 const handlePublicar = async () => {
   if (!form.id_usuario) {
-    alert("Sesión no detectada. Por favor, inicia sesión de nuevo.");
+    alert("Sesión no detectada.");
     router.push('/login');
     return;
   }
 
   try {
-    // 1. Crear publicación (JSON)
     const response = await fetch('http://localhost:4000/api/publicaciones', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -193,24 +184,23 @@ const handlePublicar = async () => {
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'Error al crear publicación');
 
-    // 2. Subir foto si existe
     if (form.foto) {
       const formData = new FormData();
       formData.append('foto', form.foto);
 
-      const fotoResponse = await fetch(`http://localhost:4000/api/fotos/${data.id}`, {
+      // Usamos id_publi como definimos en el backend
+      const fotoResponse = await fetch(`http://localhost:4000/api/fotos/${data.id_publi}`, {
         method: 'POST',
         body: formData
       });
 
-      const fotoData = await fotoResponse.json();
-      if (!fotoResponse.ok) throw new Error(fotoData.message || 'Error al subir foto');
+      if (!fotoResponse.ok) throw new Error('Error al subir foto');
     }
 
     alert("¡Publicación realizada con éxito!");
     router.push('/dashboard');
   } catch (err) {
-    console.error("Error completo:", err);
+    console.error(err);
     alert("Error: " + err.message);
   }
 };

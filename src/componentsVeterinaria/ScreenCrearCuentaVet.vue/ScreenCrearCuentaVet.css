@@ -6,10 +6,8 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/* 2. Wrapper para centrado absoluto en pantalla */
-.login-wrapper {
+.register-wrapper {
     min-height: 100vh;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,48 +15,51 @@
     padding: 20px;
 }
 
-/* 3. Contenedor principal del Login */
-.login-container {
+/* 2. Contenedor Principal (Estilo MIGO) */
+.register-container {
     background-color: #ffffff;
     width: 100%;
-    max-width: 450px;
+    max-width: 500px;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-    text-align: center;
 }
 
-/* 4. Cabecera */
-.login-header {
+/* 3. Cabecera */
+.register-header {
+    text-align: center;
     margin-bottom: 30px;
 }
 
-.login-logo {
-    height: 80px;
-    width: auto;
+.register-logo {
+    height: 70px;
     margin-bottom: 15px;
 }
 
-.login-header h2 {
-    font-size: 1.6rem;
+.register-header h2 {
     color: #011627;
+    font-size: 1.5rem;
     margin-bottom: 5px;
 }
 
-.login-header p {
+.register-header p {
+    color: #666;
     font-size: 0.9rem;
-    color: rgba(1, 22, 39, 0.6);
 }
 
-/* 5. Formulario */
-.login-form {
-    text-align: left;
-    display: flex;
-    flex-direction: column;
+/* 4. Grid del Formulario */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas para nombre/apellido */
     gap: 15px;
 }
 
+.full-width {
+    grid-column: span 2;
+}
+
 .input-group label {
+    display: block;
     font-size: 0.85rem;
     font-weight: 600;
     margin-bottom: 6px;
@@ -67,37 +68,49 @@
 
 .input-group input {
     width: 100%;
-    padding: 12px 15px;
+    padding: 12px;
     border: 1.5px solid #e1e1e1;
     border-radius: 12px;
     font-size: 0.95rem;
-    outline: none;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s;
 }
 
 .input-group input:focus {
     border-color: #2EC4B6;
+    outline: none;
 }
 
-/* 6. Campo contraseña con botón ocultar/mostrar */
-.password-field {
+/* 5. Autocomplete (Colonia) */
+.autocomplete {
     position: relative;
-    display: flex;
-    align-items: center;
 }
 
-.password-toggle {
+.suggestions {
     position: absolute;
-    right: 12px;
-    background: none;
-    border: none;
+    width: 100%;
+    background: white;
+    border: 1px solid #e1e1e1;
+    border-radius: 0 0 12px 12px;
+    list-style: none;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+}
+
+.suggestions li {
+    padding: 10px;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+}
+
+.suggestions li:hover {
+    background-color: #f0fcfb;
     color: #2EC4B6;
 }
 
-/* 7. Botón Iniciar Sesión */
-.btn-login {
+/* 6. Botón Principal */
+.btn-register {
     width: 100%;
     background-color: #2EC4B6;
     color: #ffffff;
@@ -108,40 +121,39 @@
     font-weight: 600;
     cursor: pointer;
     margin-top: 10px;
-    transition: background 0.3s ease;
+    transition: background 0.3s;
 }
 
-.btn-login:hover {
+.btn-register:hover {
     background-color: #26a89c;
 }
 
-/* 8. Mensajes y Footer */
+/* 7. Mensajes y Footer */
 .form-message {
+    text-align: center;
     margin-top: 15px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: #e74c3c;
 }
 
-.login-footer {
-    margin-top:30px;
+.success { color: #2EC4B6; }
+.error { color: #e74c3c; }
+
+.register-footer {
+    margin-top: 25px;
+    text-align: center;
     font-size: 0.85rem;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
+    color: #666;
 }
 
-.login-footer a {
+.register-footer a {
     color: #2EC4B6;
     text-decoration: none;
     font-weight: 600;
 }
 
-.footer-2 {
-    margin-top: 15px;
-}
-
 .btn-back {
     display: block;
-    margin-top: 10px;
+    margin-top: 15px;
     color: #999;
 }

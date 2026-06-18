@@ -40,27 +40,38 @@
       </div>
     </section>
 
-    <main>
+    <main class="anuncios-grid">
       <section class="Anuncio3">
-      <div class="Anuncio3-content">
-        <h1>Realiza tu primera publicacion.</h1>
-        <p>Realiza una publicacion o ve la de otros usuarios..📸🐶😽</p>
-        <div class="cta-container">
-          <router-link to="/login" class="cta-button login">Publicacion</router-link>
+        <div class="Anuncio3-content">
+          <h1>Realiza tu primera publicacion.</h1>
+          <p>Realiza una publicacion o ve la de otros usuarios..📸🐶😽</p>
+          <div class="cta-container">
+            <router-link to="/login" class="cta-button login">Publicacion</router-link>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
  
-    <section class="Anuncio4">
-      <div class="Anuncio4-content">
-        <h1>Consulta servicios.</h1>
-        <p>Consulta los mejores servicios para tu mascota..🔎🧑‍⚕️👩‍⚕️</p>
+      <section class="Anuncio4">
+        <div class="Anuncio4-content">
+          <h1>Consulta servicios.</h1>
+          <p>Consulta los mejores servicios para tu mascota..🔎🧑‍⚕️👩‍⚕️</p>
+          <div class="cta-container">
+            <router-link to="/login" class="cta-button login">Servicios</router-link>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <section class="Anuncio5">
+      <div class="Anuncio5-content">
+        <h1>¿Eres dueño de algun negocio?</h1>
+        <p>Registrate aqui para darte a conocer!😊</p>
         <div class="cta-container">
-          <router-link to="/login" class="cta-button login">Servicios</router-link>
+          <router-link to="/loginVet" class="cta-button login">Registrar mi negocio</router-link>
         </div>
       </div>
     </section>
-    </main>
+
     <footer class="pie-pagina">
       <p>MIGO || FBJB-CodeTeam </p>
     </footer>

@@ -1,36 +1,22 @@
 //**CREACION DE RUTAS*/
+//**RUTAS DE USUARIO */
 import { createRouter, createWebHistory } from 'vue-router'
-//**SCREEN LANDING PAGE */
 import ScreenLandingPage from './components/ScreenLandingPage/ScreenLandingPage.vue'
-
-//**SCREEN PANEL PRINCIPAL */
 import ScreenDashboard from './components/ScreenDashboard/ScreenDashboard.vue'
-
-//**SCREEN CREAR PUBLICACION */
 import ScreenCrearPublicacion from './components/ScreenCrearPublicacion/ScreenCrearPublicacion.vue'
-
-//**SCREEN LOGIN */
 import ScreenLogin from './components/ScreenLogin/ScreenLogin.vue'
-
-//**SCREEN CREACION DE LA CUENTA */
 import ScreenCrearCuenta from './components/ScreenCrearCuenta/ScreenCrearCuenta.vue'
-
-//**SCREEN PANEL DE VETERINARIOS*/
 import ScreenVeterinarios from './components/ScreenVeterinarios/ScreenVeterinarios.vue'
-
-//**SCREEN MI PERFIL */
 import ScreenMiperfil from './components/ScreenMiperfil/ScreenMiperfil.vue'
-
-//**SCREEN PANEL DE OTROS SERVICIOS */
 import ScreenServicios from './components/ScreenServicios/ScreenServicios.vue'
-
-//**SCREEN VENTANA AJUSTES */
 import ScreenAjustes from './components/ScreenAjustes/ScreenAjustes.vue'
-
-//**SCREEN DE DETALLES VETERINARIAS */
 import ScreenDetalles from './components/ScreenDetalles/ScreenDetalles.vue'
 
-//**NAVEGACION DE LA PAGINA WEB */
+//**RUTAS VETERINARIA */
+import ScreenLoginVet from './componentsVeterinaria/ScreenLoginVeterinaria/ScreenLoginVet.vue'
+import ScreenDashboardVet from './componentsVeterinaria/ScreenDashboardVeterinaria/ScreenDashboardVet.vue'
+import ScreenCrearCuentaVet from './componentsVeterinaria/ScreenCrearCuentaVet.vue/ScreenCrearCuentaVet.vue'
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -43,7 +29,10 @@ const router = createRouter({
     {path: '/detallesveterinaria', component: ScreenDetalles},
     {path: '/perfil', component: ScreenMiperfil},
     {path: '/servicios', component:  ScreenServicios},
-    {path: '/ajustes', component: ScreenAjustes}
+    {path: '/ajustes', component: ScreenAjustes},
+    {path: '/loginvet', component: ScreenLoginVet},
+    {path: '/crearcuentavet', component: ScreenCrearCuentaVet},
+    {path: '/dashboardvet', component: ScreenDashboardVet}
   ]
 });
 

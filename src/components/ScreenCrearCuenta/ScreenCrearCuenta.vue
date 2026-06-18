@@ -46,7 +46,7 @@
                 :key="c.id_colonia" 
                 @click="seleccionarColonia(c)"
               >
-                {{ c.nombre_colonia }}
+                {{ c.nombre }}
               </li>
             </ul>
           </div>
@@ -97,12 +97,11 @@ onMounted(async () => {
   try {
     const data = await obtenerColonias();
 
-    // 🔹 Limpieza de duplicados
     const unique = [];
     const seen = new Set();
     for (const c of data) {
-      if (!seen.has(c.nombre_colonia.toLowerCase())) {
-        seen.add(c.nombre_colonia.toLowerCase());
+      if (!seen.has(c.nombre.toLowerCase())) {
+        seen.add(c.nombre.toLowerCase());
         unique.push(c);
       }
     }
@@ -112,17 +111,16 @@ onMounted(async () => {
   }
 });
 
-// 🔹 Funciones de autocomplete
 const filtrarColonias = () => {
   const query = coloniaInput.value.toLowerCase();
   filteredColonias.value = colonias.value.filter(c =>
-    c.nombre_colonia.toLowerCase().includes(query)
+    c.nombre.toLowerCase().includes(query)
   );
 };
 
 const seleccionarColonia = (colonia) => {
   form.id_colonia = colonia.id_colonia;
-  coloniaInput.value = colonia.nombre_colonia;
+  coloniaInput.value = colonia.nombre;
   filteredColonias.value = [];
 };
 
