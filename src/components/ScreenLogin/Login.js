@@ -16,18 +16,20 @@ const fetchJson = async (url, options = {}) => {
 
 
 export const loginUsuario = async (correo, contrasena) => {
-    return await fetchJson(`${API_BASE_URL}/login`, {
-        method: 'POST',
-        body: JSON.stringify({ correo, contrasena }),
-    });
+    try {
+        return await fetchJson(`${API_BASE_URL}/login`, {
+            method: 'POST',
+            body: JSON.stringify({ correo, contrasena }),
+        });
+    } catch (error) {
+        // Manejo de errores específicos
+        if (error.message.includes("No tienes acceso")) {
+            throw new Error("Este correo pertenece a un veterinario, no a un usuario.");
+        }
+        throw error;
+    }
 };
 
-export const registrarUsuario = async (datos) => {
-    return await fetchJson(`${API_BASE_URL}/usuarios`, {
-        method: 'POST',
-        body: JSON.stringify(datos),
-    });
-};
 
 
 export const obtenerColonias = async () => {
