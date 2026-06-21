@@ -72,11 +72,7 @@
             <div class="pub-info">
               <h3>{{ pub.nombre_pet }}</h3>
               <p>{{ pub.descripcion }}</p>
-              <p><small>Colonia: {{ pub.nombre_colonia }}</small></p>
-              <p><small>Publicado por: {{ pub.usuario }}</small></p>
-              <p><small>Especie: {{ pub.especie }}</small></p>
-              <p><small>Tipo: {{ pub.tipo }}</small></p>
-              <p><small>Estado: {{ pub.estado }}</small></p>
+              <button class="btn-ver-mas" @click="irDetallesPubli(pub.id_publi)">Ver Detalles</button>
             </div>
           </div>
         </div>
@@ -110,6 +106,13 @@ const abrirImagen = (src) => {
 
 const cerrarImagen = () => {
   imagenAmpliada.value = null;
+};
+
+const irDetallesPubli = (idPubli) => {
+  router.push({
+    path:'/masinfopubli',
+    query: { id_publi: idPubli}
+  });
 };
 
 // 🔹 Filtros

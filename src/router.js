@@ -11,6 +11,8 @@ import ScreenMiperfil from './components/ScreenMiperfil/ScreenMiperfil.vue'
 import ScreenServicios from './components/ScreenServicios/ScreenServicios.vue'
 import ScreenAjustes from './components/ScreenAjustes/ScreenAjustes.vue'
 import ScreenDetalles from './components/ScreenDetalles/ScreenDetalles.vue'
+import ScreenMoreInfo from './components/ScreenMoreInfo/ScreenMoreInfo.vue'
+import ScreenMoreInfoPubli from './components/ScreenMoreInfoPubli/ScreenMoreInfoPubli.vue'
 
 //**RUTAS VETERINARIA */
 import ScreenLoginVet from './componentsVeterinaria/ScreenLoginVeterinaria/ScreenLoginVet.vue'
@@ -24,6 +26,7 @@ const router = createRouter({
     {path: '/login', component: ScreenLogin},
     {path: '/crearcuenta', component: ScreenCrearCuenta},
     { path: '/dashboard', component: ScreenDashboard },
+    { path: '/masinfopubli', component: ScreenMoreInfoPubli },
     {path: '/crearpublicacion', component: ScreenCrearPublicacion},
     {path: '/veterinarios', component: ScreenVeterinarios},
     {path: '/detallesveterinaria', component: ScreenDetalles},
@@ -32,7 +35,8 @@ const router = createRouter({
     {path: '/ajustes', component: ScreenAjustes},
     {path: '/loginvet', component: ScreenLoginVet},
     {path: '/crearcuentavet', component: ScreenCrearCuentaVet},
-    {path: '/dashboardvet', component: ScreenDashboardVet}
+    {path: '/dashboardvet', component: ScreenDashboardVet},
+    {path: '/masinfo', component: ScreenMoreInfo}
   ]
 });
 

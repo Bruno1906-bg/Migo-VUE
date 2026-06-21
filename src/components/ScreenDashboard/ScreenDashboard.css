@@ -220,3 +220,45 @@
   background: #fff;
   cursor: pointer;
 }
+
+/* Botón principal "Ver más detalles" */
+.btn-ver-mas {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  background-color: #14a098; /* Color marca MIGO */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-ver-mas:hover {
+  background-color: #0f827a; /* Un tono más oscuro para el hover */
+}
+
+/* Contenedor de botones para edición/eliminación (si los añades después) */
+.pub-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-edit-pub, .btn-delete-pub {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background: white;
+  transition: all 0.2s;
+}
+
+.btn-edit-pub { color: #14a098; }
+.btn-edit-pub:hover { background: #14a098; color: white; }
+
+.btn-delete-pub { color: #ff4d4d; }
+.btn-delete-pub:hover { background: #ff4d4d; color: white; }

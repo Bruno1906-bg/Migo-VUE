@@ -4,7 +4,7 @@
       <div class="sidebar-logo">
         <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
       </div>
-      
+
       <nav class="sidebar-menu">
         <router-link to="/dashboard" class="menu-item">° Publicaciones</router-link>
         <router-link to="/perfil" class="menu-item">° Mi Perfil</router-link>
@@ -21,12 +21,8 @@
     <div class="main-content">
       <header class="top-bar">
         <div class="search-container">
-          <input 
-            type="text"
-            v-model="searchQuery"
-            placeholder="Busca tu veterinaria ideal aquí..."
-            class="search-input"
-          >
+          <input type="text" v-model="searchQuery" placeholder="Busca tu veterinaria ideal aquí..."
+            class="search-input">
         </div>
       </header>
 
@@ -36,12 +32,15 @@
         <p>Veterinarias encontradas: {{ filteredVeterinarios.length }}</p>
 
         <div class="grid-veterinarios">
-          <div v-for="vet in filteredVeterinarios" :key="vet.id" class="vet-card">
-            <img :src="getImageUrl(vet.imagen)" :alt="vet.nombre" class="vet-image">
+          <div v-for="vet in filteredVeterinarios" :key="vet.id_vet" class="vet-card">
+            <img :src="getImageUrl(vet.imagen_logo)" :alt="vet.nombre_establecimiento" class="vet-image">
             <div class="vet-info">
-              <h3>{{ vet.nombre }}</h3>
+              <h3>{{ vet.nombre_establecimiento }}</h3>
               <p>{{ vet.descripcion }}</p>
-              <p><strong>Colonia:</strong> {{ vet.nombre_colonia }}</p>
+              <p><strong>Ubicacion:</strong> {{ vet.nombre_colonia }}</p>
+              <p><strong>Contacto:</strong> {{ vet.correo_negocio }}</p>
+              <p><strong>Telefono:</strong> {{ vet.telefono_local }}</p>
+              <button class="btn-cita" @click="irCita(vet.id_vet)">Ver detalles</button>
             </div>
           </div>
         </div>
@@ -55,46 +54,55 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const searchQuery = ref('');
+const veterinarios = ref([]);
 
-// 🔹 Datos estáticos de ejemplo
-const veterinarios = ref([
-  {
-    id: 1,
-    nombre: "Veterinaria Patitas Felices",
-    descripcion: "Atención general para perros y gatos, vacunas y consultas.",
-    nombre_colonia: "Centro",
-    imagen: "local1.jpg"
+const cargarVeterinarios = async () => {
+  try {
+    const res = await fetch('http://localhost:4000/api/veterinarias');
+    if (!res.ok) throw new Error('Error al cargar veterinarias');
+    veterinarios.value = await res.json();
+  } catch (err) {
+    console.error("Error al obtener veterinarios:", err);
   }
-]);
+};
+
+onMounted(cargarVeterinarios);
 
 const filteredVeterinarios = computed(() => {
   if (!searchQuery.value) return veterinarios.value;
-  return veterinarios.value.filter(vet =>
-    (vet.nombre + ' ' + vet.descripcion + ' ' + vet.nombre_colonia)
-      .toLowerCase()
-      .includes(searchQuery.value.toLowerCase())
-  );
+  return veterinarios.value.filter(vet => {
+    const busqueda = (
+        vet.nombre_establecimiento + ' ' + 
+        vet.descripcion + ' ' + 
+        (vet.nombre_colonia || '') + ' ' + 
+        vet.correo_negocio + ' ' + 
+        vet.telefono_local
+    ).toLowerCase();
+    
+    return busqueda.includes(searchQuery.value.toLowerCase());
+  });
 });
 
+// ESTA ES LA FORMA ORIGINAL Y MÁS SENCILLA
 const getImageUrl = (nombreImagen) => {
   if (!nombreImagen) return '';
-  try {
-    return new URL(`../../assets/imgvet/${nombreImagen}`, import.meta.url).href;
-  } catch (error) {
-    console.error('Imagen no encontrada:', nombreImagen);
-    return '';
-  }
+  // Esto busca la imagen relativa al archivo actual
+  return new URL(`../../assets/imgvet/${nombreImagen}`, import.meta.url).href;
 };
 
 const handleLogout = () => {
   sessionStorage.removeItem('migo_user');
   router.push('/');
 };
+
+const irCita = (idVet) => {
+  router.push({path:'/masinfo', query: { id_vet: idVet }});
+}
 </script>
 
 <style scoped src="./ScreenVeterinarios.css"></style>
