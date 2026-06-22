@@ -21,8 +21,12 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_m
 https://universi799-my.sharepoint.com/:x:/g/personal/2402044_utrivieramaya_edu_mx/IQBIn-drnBkERZrQyRaHXyTSAf2FrPF-7DNsq-lJP8yIkcY?e=9rfqZx&or=WORD-WEB.BODY.NT&ct=1779838943407
 
 -Metricas y Parametros en EXCEL-
-
+Semana pasada*
 [Dashboard Excel.xlsm](https://github.com/user-attachments/files/29141341/Dashboard.Excel.xlsm)
+
+Actual*
+[Dashboard.Excel.xlsm](https://github.com/user-attachments/files/29227357/Dashboard.Excel.xlsm)
+
 
 -Plantilla IEEE8.30/Requerimientos-
 
