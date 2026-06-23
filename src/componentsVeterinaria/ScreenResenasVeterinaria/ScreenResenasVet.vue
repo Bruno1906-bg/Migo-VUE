@@ -18,6 +18,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
+
 const idVet = sessionStorage.getItem('id_vet');
 const resenas = ref([]);
 
