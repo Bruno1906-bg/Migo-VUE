@@ -8,7 +8,7 @@
       
       <nav class="sidebar-menu">
         <router-link to="/dashboardvet" class="menu-item active">° Mi Negocio</router-link>
-        <router-link>° Reseñas</router-link>
+        <router-link to="/dashboardvet/resenas" class="menu-item">° Reseñas</router-link>
       </nav>
 
       <div class="sidebar-footer">
@@ -17,21 +17,15 @@
     </aside>
 
     <main class="main-content">
-      
+      <router-view />
     </main>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const nombreVeterinaria = ref('Clínica Veterinaria Migo');
-const servicios = ref([]);
-
-onMounted(async () => {
-});
 
 const handleLogout = () => {
   sessionStorage.clear();

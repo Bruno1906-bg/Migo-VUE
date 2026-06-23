@@ -18,10 +18,16 @@ import ScreenMoreInfoPubli from './components/ScreenMoreInfoPubli/ScreenMoreInfo
 import ScreenLoginVet from './componentsVeterinaria/ScreenLoginVeterinaria/ScreenLoginVet.vue'
 import ScreenDashboardVet from './componentsVeterinaria/ScreenDashboardVeterinaria/ScreenDashboardVet.vue'
 import ScreenCrearCuentaVet from './componentsVeterinaria/ScreenCrearCuentaVet.vue/ScreenCrearCuentaVet.vue'
+import ScreenResenasVet from './componentsVeterinaria/ScreenResenasVeterinaria/ScreenResenasVet.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    {path: '/dashboardvet', component: ScreenDashboardVet,
+    children: [
+      {path: 'resenas', component: ScreenResenasVet}
+    ]
+  },     
     { path: '/', component: ScreenLandingPage },
     {path: '/login', component: ScreenLogin},
     {path: '/crearcuenta', component: ScreenCrearCuenta},
@@ -35,7 +41,6 @@ const router = createRouter({
     {path: '/ajustes', component: ScreenAjustes},
     {path: '/loginvet', component: ScreenLoginVet},
     {path: '/crearcuentavet', component: ScreenCrearCuentaVet},
-    {path: '/dashboardvet', component: ScreenDashboardVet},
     {path: '/masinfo', component: ScreenMoreInfo}
   ]
 });
