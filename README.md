@@ -60,7 +60,9 @@
 
 [Plan de desplegado](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQC3iob2GKzfSrstGIUK906QASF2PhQHEfDzE2Sioh4Acqs?e=uvGMwd)
 
-[Matriz de Riesgos MIGO](https://github.com/user-attachments/files/29310983/Matriz.de.Riesgos.MIGO.docx)
+[Matriz de Riesgos MIGO](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQD-eMjg78YrQ7QqPYuTI4rmAeS66DiZAevaNx1WnPymSzU?e=v5u5iO)
+
+[Rollback o plan de contingencia](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQDRueDvTKxMSKeNE9oXg54wAb9U1KoikxSps9u0Gd5ERKE?e=sNwuux)
 
 --CONTROL DE VERSIONES--
 
