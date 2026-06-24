@@ -58,7 +58,7 @@
 
 --GESTION--
 
-[PLAN DE DESPLEGADO APROBADO]()
+[PLAN DE DESPLEGADO APROBADO](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQC3iob2GKzfSrstGIUK906QASF2PhQHEfDzE2Sioh4Acqs?e=uvGMwd)
 
 [MATRIZ DE RIESGOS DE DESPLEGADO](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQAlXcfQ2pXlS57GnNf12-5bAVKJQx_gr0DWy0Lo097nYrI?e=CoI59G)
 
