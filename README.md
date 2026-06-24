@@ -2,7 +2,7 @@
 
 --METRICAS Y PARAMETROS EN EXCEL--
 
-[Dashboard Excel.xlsm](https://github.com/user-attachments/files/29298983/Dashboard.Excel.xlsm)
+[Dashboard Excel](https://github.com/user-attachments/files/29312433/Dashboard.Excel.xlsm)
 
 --PLAN DE TRABAJO--
 
