@@ -21,12 +21,8 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_m
 https://universi799-my.sharepoint.com/:x:/g/personal/2402044_utrivieramaya_edu_mx/IQBIn-drnBkERZrQyRaHXyTSAf2FrPF-7DNsq-lJP8yIkcY?e=9rfqZx&or=WORD-WEB.BODY.NT&ct=1779838943407
 
 -Metricas y Parametros en EXCEL-
-Semana pasada*
-[Dashboard Excel.xlsm](https://github.com/user-attachments/files/29141341/Dashboard.Excel.xlsm)
 
-Actual*
-[Dashboard.Excel.xlsm](https://github.com/user-attachments/files/29227357/Dashboard.Excel.xlsm)
-
+[Dashboard Excel.xlsm](https://github.com/user-attachments/files/29272998/Dashboard.Excel.xlsm)
 
 -Plantilla IEEE8.30/Requerimientos-
 
@@ -36,21 +32,9 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_m
 
 https://docs.google.com/forms/d/1JoFm_RPcyFNfSV1AhxnY7maLdQTIsZ3CIXxzOGSpB0M/edit#responses
 
--Modelo de negocio Migo-
-
-<img width="1141" height="817" alt="Modelo_Negocio_MIGO" src="https://github.com/user-attachments/assets/b293a268-758c-45c3-a598-8ee1e5154b9f" />
-
 -Diseños de Interfaces en FIGMA-
 
 https://www.figma.com/design/nCnZo8WIk8Tdqsu60nVrwZ/Wireframes?node-id=0-1&p=f&t=vqyf1YhMBRUs2gK9-0
-
--Sketches del diseño-
-
-<img width="900" height="900" alt="Sketches-Migo" src="https://github.com/user-attachments/assets/03b7e0de-56f5-470c-aa85-ee2ea8da9acb" />
-
-<img width="900" height="900" alt="Sketches-Migo2" src="https://github.com/user-attachments/assets/71578d6a-274e-4070-b48a-509bcb5c5f94" />
-
-<img width="1046" height="804" alt="Sketches-Migo3" src="https://github.com/user-attachments/assets/3c16eb47-3e6b-48e3-ad39-6d9734dadeaa" />
 
 -Link Presentacion Canva-
 
@@ -70,10 +54,11 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402044_
 
 -Link de Repo Proyecto Migo-
 
-[Frontend](https://github.com/Bruno1906-bg/MIGO)
-[Backend](https://github.com/2402015-crypto/Migo_Backend)
+https://github.com/Bruno1906-bg/MIGO
 
--Actividades con el profe Geovanny-
+https://github.com/2402015-crypto/Migo_Backend
+
+-Actividades con el Profesor Geovanny-
 
 [ACT6-EVIDENCIAS_MIGO.pdf](https://github.com/user-attachments/files/28622734/ACT6-EVIDENCIAS_MIGO.pdf)
 
@@ -84,5 +69,9 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402044_
 [ACT4-METRICAS GESTION DE PROYECTO - Migo - V1 (1).pdf](https://github.com/user-attachments/files/28622187/ACT4-METRICAS.GESTION.DE.PROYECTO.-.Migo.-.V1.1.pdf)
 
 [ACT3-Metodología de desarrollo y planeación inicial de un proyecto (2).pdf](https://github.com/user-attachments/files/28622186/ACT3-Metodologia.de.desarrollo.y.planeacion.inicial.de.un.proyecto.2.pdf)
+
+-Modelo de negocio Migo-
+
+<img width="1141" height="817" alt="Modelo_Negocio_MIGO" src="https://github.com/user-attachments/assets/b293a268-758c-45c3-a598-8ee1e5154b9f" />
 
 
