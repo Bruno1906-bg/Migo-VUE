@@ -17,27 +17,31 @@ import ScreenLoginVet from './componentsVeterinaria/ScreenLoginVeterinaria/Scree
 import ScreenDashboardVet from './componentsVeterinaria/ScreenDashboardVeterinaria/ScreenDashboardVet.vue'
 import ScreenCrearCuentaVet from './componentsVeterinaria/ScreenCrearCuentaVet.vue/ScreenCrearCuentaVet.vue'
 import ScreenResenasVet from './componentsVeterinaria/ScreenResenasVeterinaria/ScreenResenasVet.vue'
+import ScreenMiNegocio from './componentsVeterinaria/ScreenMiNegocio/ScreenMiNegocio.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    {path: '/dashboardvet', component: ScreenDashboardVet,
-    children: [
-      {path: 'resenas', component: ScreenResenasVet}
-    ]
-  },     
+    {
+      path: '/dashboardvet', component: ScreenDashboardVet,
+      children: [
+        { path: '', component: ScreenMiNegocio },
+        { path: 'resenas', component: ScreenResenasVet },
+        { path: 'minegocio', component: ScreenMiNegocio }
+      ]
+    },
     { path: '/', component: ScreenLandingPage },
-    {path: '/login', component: ScreenLogin},
-    {path: '/crearcuenta', component: ScreenCrearCuenta},
+    { path: '/login', component: ScreenLogin },
+    { path: '/crearcuenta', component: ScreenCrearCuenta },
     { path: '/dashboard', component: ScreenDashboard },
     { path: '/masinfopubli', component: ScreenMoreInfoPubli },
-    {path: '/crearpublicacion', component: ScreenCrearPublicacion},
-    {path: '/veterinarios', component: ScreenVeterinarios},
-    {path: '/perfil', component: ScreenMiperfil},
-    {path: '/ajustes', component: ScreenAjustes},
-    {path: '/loginvet', component: ScreenLoginVet},
-    {path: '/crearcuentavet', component: ScreenCrearCuentaVet},
-    {path: '/masinfo', component: ScreenMoreInfo}
+    { path: '/crearpublicacion', component: ScreenCrearPublicacion },
+    { path: '/veterinarios', component: ScreenVeterinarios },
+    { path: '/perfil', component: ScreenMiperfil },
+    { path: '/ajustes', component: ScreenAjustes },
+    { path: '/loginvet', component: ScreenLoginVet },
+    { path: '/crearcuentavet', component: ScreenCrearCuentaVet },
+    { path: '/masinfo', component: ScreenMoreInfo }
   ]
 });
 
