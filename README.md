@@ -48,12 +48,6 @@
 
 [Reunion_Scrum-1.pdf](https://github.com/user-attachments/files/28603799/Reunion_Scrum-1.pdf)
 
---LINKS DE REPOSITORIOS--
-
-[FRONTEND](https://github.com/Bruno1906-bg/MIGO)
-
-[BACKEND](https://github.com/2402015-crypto/Migo_Backend)
-
 --DOCUMENTACION DEL DESPLEGADO--
 
 --GESTION--
@@ -67,6 +61,10 @@
 [Matriz RACI](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQADeuz6FsV1Q4Gh0JAUCmREAaqDPzH_lY7ykFQLCJQR5wY?e=PGcc94)
 
 --CONTROL DE VERSIONES--
+
+[LINK DE REPOSITORIO FRONTEND](https://github.com/Bruno1906-bg/MIGO)
+
+[LINK DE REPOSITORIO BACKEND](https://github.com/2402015-crypto/Migo_Backend)
 
 --INFRAESTRUCTURA--
 
