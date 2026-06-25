@@ -1,64 +1,32 @@
---DOCUMENTACIÓN DEL PROYECTO INTEGRADOR--
+--PROYECTO MIGO--
 
--Link proyecto MIGO/integradora-
+--METRICAS Y PARAMETROS EN EXCEL--
 
-https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQBNZzLIKhqiQZ1sR-ltua0sAWDpUETfXxBo7WUevUZhuNU?e=VkyJgz
+[Dashboard Excel](https://1drv.ms/x/c/7078d49fa903b00e/IQBND_KabafgQpRuX9lLeykcAQzeAtub6MM-wi5jBTxeT4E?e=YGpSaX)
 
--Documentacion del profe geovanny/Planeacion inicial del proyecto-
+--PLAN DE TRABAJO--
 
-https://universi799-my.sharepoint.com/:w:/r/personal/2402137_utrivieramaya_edu_mx/_layouts/15/Doc.aspx?sourcedoc=%7B3110ac6b-3036-4e02-a97f-cf4a4beeb90d%7D&action=default
+[PLAN DE TRABAJO](https://universi799-my.sharepoint.com/:x:/g/personal/2402044_utrivieramaya_edu_mx/IQBIn-drnBkERZrQyRaHXyTSAf2FrPF-7DNsq-lJP8yIkcY?e=9rfqZx&or=WORD-WEB.BODY.NT&ct=1779838943407)
 
--Matriz  de  riesgos y comunicaciones-
+--PRODUCT BACKLOG--
 
-https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQAlXcfQ2pXlS57GnNf12-5bAVKJQx_gr0DWy0Lo097nYrI?e=CoI59G
+[BACKLOG](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQBFg6TamWaAT5hrcSWI-tfpAQsP3pt-_f1iv6xD7on-CE8?e=WS5iB5)
 
--Product Backlog/Modulos del proyecto-
+--REQUERIMIENTOS IEEE8.30--
 
-https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQBFg6TamWaAT5hrcSWI-tfpAQsP3pt-_f1iv6xD7on-CE8?e=WS5iB5
+[Formato IEEE8.30](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQCznXtuGcn9QomEGWqOrZpmAQhrzb-axY47iqCuJbuOyUk?e=oefP4W)
 
--Cronograma y plan de  trabajo/Sprint Backlog-
+-ENCUESTA REALIZADA A USUARIOS-
 
-https://universi799-my.sharepoint.com/:x:/g/personal/2402044_utrivieramaya_edu_mx/IQBIn-drnBkERZrQyRaHXyTSAf2FrPF-7DNsq-lJP8yIkcY?e=9rfqZx&or=WORD-WEB.BODY.NT&ct=1779838943407
+[Encuensta realizada a usuarios](https://docs.google.com/forms/d/1JoFm_RPcyFNfSV1AhxnY7maLdQTIsZ3CIXxzOGSpB0M/edit#responses)
 
--Metricas y Parametros en EXCEL-
+--DOCUMENTACION Y PLANEACION INICIAL DEL PROYECTO--
 
-[Dashboard Excel.xlsm](https://github.com/user-attachments/files/29272998/Dashboard.Excel.xlsm)
+[PLANTEAMIENTO DEL PROYECTO](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQBNZzLIKhqiQZ1sR-ltua0sAWDpUETfXxBo7WUevUZhuNU?e=VkyJgz)
 
--Plantilla IEEE8.30/Requerimientos-
+[PLANEACION INICIAL DE UN PROYECTO](https://universi799-my.sharepoint.com/:w:/r/personal/2402137_utrivieramaya_edu_mx/_layouts/15/Doc.aspx?sourcedoc=%7B3110ac6b-3036-4e02-a97f-cf4a4beeb90d%7D&action=default)
 
-https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQCznXtuGcn9QomEGWqOrZpmAQhrzb-axY47iqCuJbuOyUk?e=oefP4W
-
--Encuesta realizadas  a usuarios-
-
-https://docs.google.com/forms/d/1JoFm_RPcyFNfSV1AhxnY7maLdQTIsZ3CIXxzOGSpB0M/edit#responses
-
--Diseños de Interfaces en FIGMA-
-
-https://www.figma.com/design/nCnZo8WIk8Tdqsu60nVrwZ/Wireframes?node-id=0-1&p=f&t=vqyf1YhMBRUs2gK9-0
-
--Link Presentacion Canva-
-
-https://canva.link/invmwm15xp6j6zp
-
--Plantilla de reuniones SCRUM-
-
-https://universi799-my.sharepoint.com/:w:/g/personal/2402044_
-
--Evidencias de reuniones realizadas-
-
-[Reunion_Scrum-3.pdf](https://github.com/user-attachments/files/28603801/Reunion_Scrum-3.pdf)
-
-[Reunion_Scrum-2.pdf](https://github.com/user-attachments/files/28603800/Reunion_Scrum-2.pdf)
-
-[Reunion_Scrum-1.pdf](https://github.com/user-attachments/files/28603799/Reunion_Scrum-1.pdf)
-
--Link de Repo Proyecto Migo-
-
-https://github.com/Bruno1906-bg/MIGO
-
-https://github.com/2402015-crypto/Migo_Backend
-
--Actividades con el Profesor Geovanny-
+--ACTIVIDADES REALIZADAS CON EL PROFESOR GEOVANNY--
 
 [ACT6-EVIDENCIAS_MIGO.pdf](https://github.com/user-attachments/files/28622734/ACT6-EVIDENCIAS_MIGO.pdf)
 
@@ -70,8 +38,55 @@ https://github.com/2402015-crypto/Migo_Backend
 
 [ACT3-Metodología de desarrollo y planeación inicial de un proyecto (2).pdf](https://github.com/user-attachments/files/28622186/ACT3-Metodologia.de.desarrollo.y.planeacion.inicial.de.un.proyecto.2.pdf)
 
--Modelo de negocio Migo-
+--EVIDENCIAS DE REUNIONES REALIZADAS--
 
-<img width="1141" height="817" alt="Modelo_Negocio_MIGO" src="https://github.com/user-attachments/assets/b293a268-758c-45c3-a598-8ee1e5154b9f" />
+[Plantilla de reuniones SCRUM](https://universi799-my.sharepoint.com/:w:/g/personal/2402044_)
 
+[Reunion_Scrum-3.pdf](https://github.com/user-attachments/files/28603801/Reunion_Scrum-3.pdf)
 
+[Reunion_Scrum-2.pdf](https://github.com/user-attachments/files/28603800/Reunion_Scrum-2.pdf)
+
+[Reunion_Scrum-1.pdf](https://github.com/user-attachments/files/28603799/Reunion_Scrum-1.pdf)
+
+--LINKS DE REPOSITORIOS--
+
+[FRONTEND](https://github.com/Bruno1906-bg/MIGO)
+
+[BACKEND](https://github.com/2402015-crypto/Migo_Backend)
+
+--DOCUMENTACION DEL DESPLEGADO--
+
+--GESTION--
+
+[Plan de desplegado](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQC3iob2GKzfSrstGIUK906QASF2PhQHEfDzE2Sioh4Acqs?e=uvGMwd)
+
+[Matriz de Riesgos MIGO](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQD-eMjg78YrQ7QqPYuTI4rmAeS66DiZAevaNx1WnPymSzU?e=v5u5iO)
+
+[Rollback o plan de contingencia](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQDRueDvTKxMSKeNE9oXg54wAb9U1KoikxSps9u0Gd5ERKE?e=sNwuux)
+
+[Matriz RACI](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQADeuz6FsV1Q4Gh0JAUCmREAaqDPzH_lY7ykFQLCJQR5wY?e=PGcc94)
+
+--CONTROL DE VERSIONES--
+
+--INFRAESTRUCTURA--
+
+--BASE DE DATOS--
+
+--SEGURIDAD--
+
+--APLICACION--
+
+--OPERACION--
+
+--CIERRE--
+
+--DISEÑO--
+
+[DISEÑOS DE INTERFACES EN FIGMA](https://www.figma.com/design/nCnZo8WIk8Tdqsu60nVrwZ/Wireframes?node-id=0-1&p=f&t=vqyf1YhMBRUs2gK9-0
+)
+
+[LINK DE PRESENTACION EN CANVA](https://canva.link/invmwm15xp6j6zp)
+
+--MODELO DE NEGOCIOS--
+
+<img width="1150" height="830" alt="Modelo_Negocio_MIGO" src="https://github.com/user-attachments/assets/b293a268-758c-45c3-a598-8ee1e5154b9f" />
