@@ -85,6 +85,9 @@ import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+
+const API_URL = 'https://migobackenddeploy-production.up.railway.app/api';
+
 const fotoInput = ref(null);
 const fileName = ref('');
 const previewUrl = ref(null);
@@ -118,9 +121,9 @@ const handleFileChange = (e) => {
 onMounted(async () => {
   try {
     const [resC, resE, resT] = await Promise.all([
-      fetch('http://localhost:4000/api/colonias'),
-      fetch('http://localhost:4000/api/especies'),
-      fetch('http://localhost:4000/api/tipos_publi')
+      fetch(`${API_URL}/colonias`),
+      fetch(`${API_URL}/especies`),
+      fetch(`${API_URL}/tipos_publi`)
     ]);
 
     // Asignación directa de datos
@@ -167,7 +170,7 @@ const handlePublicar = async () => {
   }
 
   try {
-    const response = await fetch('http://localhost:4000/api/publicaciones', {
+    const response = await fetch(`${API_URL}/publicaciones`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -189,7 +192,7 @@ const handlePublicar = async () => {
       formData.append('foto', form.foto);
 
       // Usamos id_publi como definimos en el backend
-      const fotoResponse = await fetch(`http://localhost:4000/api/fotos/${data.id_publi}`, {
+      const fotoResponse = await fetch(`${API_URL}/fotos/${data.id_publi}`, {
         method: 'POST',
         body: formData
       });
