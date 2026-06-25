@@ -29,6 +29,28 @@
           <p><strong>Tipo:</strong> {{ pub.tipo }}</p>
           <p><strong>Publicado por:</strong> {{ pub.usuario }}</p>
         </div>
+
+        <!-- Botón de contacto -->
+        <button @click="mostrarContacto = !mostrarContacto" class="btn-contacto">
+          Contacto
+        </button>
+
+        <!-- Card de contacto -->
+        <div v-if="mostrarContacto && usuarioPub" class="contact-card">
+          <div class="contact-avatar">
+            <Avatar 
+              :name="usuarioPub.nombre || 'U'" 
+              :size="80" 
+              :color="avatarColor" 
+              :rounded="true" 
+            />
+          </div>
+          <div class="contact-info">
+            <p><strong>{{ usuarioPub.nombre }} {{ usuarioPub.apellido }}</strong></p>
+            <p>{{ usuarioPub.correo }}</p>
+            <p>{{ usuarioPub.telefono }}</p>
+          </div>
+        </div>
       </div>
 
       <div class="seccion-resenas">
@@ -68,6 +90,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import Avatar from "vue3-avatar";
 
 const route = useRoute();
 const router = useRouter();
@@ -80,6 +103,11 @@ const currentUser = JSON.parse(sessionStorage.getItem('migo_user'));
 const comentarioEnEdicion = ref(null); 
 const textoEdicion = ref('');
 
+// Estado para contacto
+const mostrarContacto = ref(false);
+const usuarioPub = ref(null);
+const avatarColor = ref('#14a098');
+
 const cargarDatos = async () => {
   const idBuscado = route.query.id_publi;
   const idLimpio = String(idBuscado).split(':')[0];
@@ -87,6 +115,13 @@ const cargarDatos = async () => {
     const res = await fetch('http://localhost:4000/api/publicaciones');
     const todasLasPubs = await res.json();
     pub.value = todasLasPubs.find(p => String(p.id_publi) === idLimpio);
+
+    if (pub.value) {
+      // 🔹 Cargar info del usuario que publicó
+      const resUser = await fetch(`http://localhost:4000/api/usuarios/${pub.value.id_usuario}`);
+      if (resUser.ok) usuarioPub.value = await resUser.json();
+    }
+
     await cargarComentarios(idLimpio);
   } catch (err) { console.error("Error al cargar:", err); }
 };

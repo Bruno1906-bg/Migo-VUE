@@ -158,3 +158,55 @@
 
 .btn-delete-pub { color: #ff5e5e; border-color: #ff5e5e; }
 .btn-delete-pub:hover { background: #ff5e5e; color: white; }
+
+/* ==========================================================================
+   BOTÓN DE CONTACTO
+   ========================================================================== */
+.btn-contacto {
+  margin-top: 15px;
+  background-color: #14a098;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-contacto:hover {
+  background-color: #0f7d77;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   CARD DE CONTACTO
+   ========================================================================== */
+.contact-card {
+  margin-top: 15px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.contact-avatar {
+  flex-shrink: 0;
+}
+
+.contact-info p {
+  margin: 2px 0;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Animación suave al aparecer */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
