@@ -64,6 +64,8 @@
 
 [Rollback o plan de contingencia](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQDRueDvTKxMSKeNE9oXg54wAb9U1KoikxSps9u0Gd5ERKE?e=sNwuux)
 
+[Matriz RACI](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQADeuz6FsV1Q4Gh0JAUCmREAaqDPzH_lY7ykFQLCJQR5wY?e=PGcc94)
+
 --CONTROL DE VERSIONES--
 
 --INFRAESTRUCTURA--
