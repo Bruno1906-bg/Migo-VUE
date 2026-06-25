@@ -72,6 +72,8 @@
 
 --SEGURIDAD--
 
+[Reporte de seguridad](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQCTzkJHh2_eSKftV321IpJaAQLDL0iUWPCUwE6bc9g26fM?e=nbzP70)
+
 --APLICACION--
 
 --OPERACION--
