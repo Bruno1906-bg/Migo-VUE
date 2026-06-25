@@ -8,9 +8,7 @@ import ScreenLogin from './components/ScreenLogin/ScreenLogin.vue'
 import ScreenCrearCuenta from './components/ScreenCrearCuenta/ScreenCrearCuenta.vue'
 import ScreenVeterinarios from './components/ScreenVeterinarios/ScreenVeterinarios.vue'
 import ScreenMiperfil from './components/ScreenMiperfil/ScreenMiperfil.vue'
-import ScreenServicios from './components/ScreenServicios/ScreenServicios.vue'
 import ScreenAjustes from './components/ScreenAjustes/ScreenAjustes.vue'
-import ScreenDetalles from './components/ScreenDetalles/ScreenDetalles.vue'
 import ScreenMoreInfo from './components/ScreenMoreInfo/ScreenMoreInfo.vue'
 import ScreenMoreInfoPubli from './components/ScreenMoreInfoPubli/ScreenMoreInfoPubli.vue'
 
@@ -35,9 +33,7 @@ const router = createRouter({
     { path: '/masinfopubli', component: ScreenMoreInfoPubli },
     {path: '/crearpublicacion', component: ScreenCrearPublicacion},
     {path: '/veterinarios', component: ScreenVeterinarios},
-    {path: '/detallesveterinaria', component: ScreenDetalles},
     {path: '/perfil', component: ScreenMiperfil},
-    {path: '/servicios', component:  ScreenServicios},
     {path: '/ajustes', component: ScreenAjustes},
     {path: '/loginvet', component: ScreenLoginVet},
     {path: '/crearcuentavet', component: ScreenCrearCuentaVet},

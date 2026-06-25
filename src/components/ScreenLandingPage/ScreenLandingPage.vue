@@ -27,9 +27,9 @@
         <p>Seguimiento a publicaciones de mascotas perdidas.</p>
       </div>
       <div class="feature-item">
-        <img src="../../assets/imagen4.jpg" alt="veterinarias">
-        <h4>Brindamos servicios para mascotas.</h4>
-        <p>Encuentra el servicio ideal para tu mascota de veterinarios certificados.</p>
+        <img src="../../assets/imagen2.jpg" alt="adopcion">
+        <h4>Adopción de mascotas.</h4>
+        <p>Encuentra la mascota ideal para ti.</p>
       </div>
     </section>
 
@@ -43,20 +43,20 @@
     <main class="anuncios-grid">
       <section class="Anuncio3">
         <div class="Anuncio3-content">
-          <h1>Realiza tu primera publicacion.</h1>
-          <p>Realiza una publicacion o ve la de otros usuarios..📸🐶😽</p>
+          <h1>Realiza tu primera publicación.</h1>
+          <p>Realiza una publicación o ve la de otros usuarios..📸🐶😽</p>
           <div class="cta-container">
-            <router-link to="/login" class="cta-button login">Publicacion</router-link>
+            <router-link to="/login" class="cta-button login">Publicación</router-link>
           </div>
         </div>
       </section>
  
       <section class="Anuncio4">
         <div class="Anuncio4-content">
-          <h1>Consulta servicios.</h1>
-          <p>Consulta los mejores servicios para tu mascota..🔎🧑‍⚕️👩‍⚕️</p>
+          <h1>¿Quieres adoptar una mascota?</h1>
+          <p>Encuentra la mascota ideal para ti!🐶😽</p>
           <div class="cta-container">
-            <router-link to="/login" class="cta-button login">Servicios</router-link>
+            <router-link to="/login" class="cta-button login">Adopta</router-link>
           </div>
         </div>
       </section>
@@ -64,8 +64,8 @@
 
     <section class="Anuncio5">
       <div class="Anuncio5-content">
-        <h1>¿Eres dueño de algun negocio?</h1>
-        <p>Registrate aqui para darte a conocer!😊</p>
+        <h1>¿Eres dueño de algún negocio?</h1>
+        <p>Regístrate aquí para darte a conocer!😊</p>
         <div class="cta-container">
           <router-link to="/loginVet" class="cta-button login">Registrar mi negocio</router-link>
         </div>
@@ -81,5 +81,4 @@
 <script setup>
 </script>
 
-<style scoped src="./ScreenLandingPage.css">
-</style>
+<style scoped src="./ScreenLandingPage.css"></style>

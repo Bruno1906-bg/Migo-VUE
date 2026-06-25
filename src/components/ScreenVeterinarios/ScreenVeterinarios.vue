@@ -9,8 +9,6 @@
         <router-link to="/dashboard" class="menu-item">° Publicaciones</router-link>
         <router-link to="/perfil" class="menu-item">° Mi Perfil</router-link>
         <router-link to="/veterinarios" class="menu-item active">° Veterinarios</router-link>
-        <router-link to="/servicios" class="menu-item">° Otros servicios</router-link>
-        <router-link to="/ajustes" class="menu-item">° Ajustes</router-link>
       </nav>
 
       <div class="sidebar-footer">
