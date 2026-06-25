@@ -1,5 +1,9 @@
 --PROYECTO MIGO--
 
+--LINK DEL SITIO DESPLEGADO (FRONTEND)--
+
+[PAGINA MIGO](https://comforting-capybara-8c1237.netlify.app/)
+
 --METRICAS Y PARAMETROS EN EXCEL--
 
 [Dashboard Excel](https://1drv.ms/x/c/7078d49fa903b00e/IQBND_KabafgQpRuX9lLeykcAQzeAtub6MM-wi5jBTxeT4E?e=YGpSaX)
