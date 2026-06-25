@@ -24,10 +24,20 @@
       <main class="feed-section">
         <h2 class="feed-title">Mi Perfil</h2>
 
-        <div v-if="usuario" class="perfil-container">
-          <!-- Avatar ilustrado -->
-          <div class="perfil-avatar" v-html="avatarSvg"></div>
+        <!-- Avatar circular con inicial (afuera del card) -->
+        <div class="perfil-avatar-left">
+         <Avatar 
+  :name="usuario?.nombre || 'U'" 
+  :size="150" 
+  :color="avatarColor" 
+  :rounded="true" 
+  :fontSize="60" 
+/>
 
+        </div>
+
+        <!-- Card de datos -->
+        <div v-if="usuario" class="perfil-container">
           <!-- Información editable -->
           <div class="perfil-info">
             <div class="perfil-field">
@@ -91,12 +101,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { createAvatar } from '@dicebear/core';
-import { adventurer } from '@dicebear/collection';
+import Avatar from "vue3-avatar";
 
 const router = useRouter();
 
-// Inicializar usuario como objeto vacío para evitar errores de null
 const usuario = ref({
   nombre: '',
   apellido: '',
@@ -108,6 +116,7 @@ const usuario = ref({
 });
 
 const colonias = ref([]);
+const avatarColor = ref('#14a098');
 const editableFields = ref({
   nombre: false,
   apellido: false,
@@ -117,8 +126,20 @@ const editableFields = ref({
   colonia: false
 });
 
-const avatarSvg = ref('');
 const idUsuario = sessionStorage.getItem('id_usuario');
+
+function shadeColor(color, percent) {
+  let f = parseInt(color.slice(1),16), 
+      t = percent < 0 ? 0 : 255, 
+      p = percent < 0 ? percent*-1 : percent, 
+      R = f>>16, 
+      G = f>>8&0x00FF, 
+      B = f&0x0000FF;
+  return "#" + (0x1000000 + 
+    (Math.round((t-R)*p)+R)*0x10000 + 
+    (Math.round((t-G)*p)+G)*0x100 + 
+    (Math.round((t-B)*p)+B)).toString(16).slice(1);
+}
 
 const toggleEdit = (field) => {
   editableFields.value[field] = !editableFields.value[field];
@@ -145,22 +166,18 @@ const handleLogout = () => {
 
 onMounted(async () => {
   try {
-    // Perfil
     const response = await fetch(`http://localhost:4000/api/usuarios/${idUsuario}`);
     usuario.value = await response.json();
 
-    // Colonias desde la base de datos
     const resColonias = await fetch("http://localhost:4000/api/colonias");
     colonias.value = await resColonias.json();
 
-    // Generar avatar ilustrado con DiceBear
-    avatarSvg.value = createAvatar(adventurer, {
-      seed: usuario.value.nombre || 'Usuario',
-      size: 90,
-      backgroundColor: ['14a098']
-    }).toString();
-  } catch (error) {
-    console.error("Error cargando perfil:", error);
+    const baseColors = ['#14a098', '#0f7d77', '#1abc9c', '#16a085'];
+    const index = idUsuario % baseColors.length;
+    const tone = (idUsuario % 3 - 1) * 0.2; // -0.2, 0, +0.2
+    avatarColor.value = shadeColor(baseColors[index], tone);
+
+     } catch (error) {
   }
 });
 </script>

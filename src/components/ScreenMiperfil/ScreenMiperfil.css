@@ -99,11 +99,16 @@
   margin: 0 auto 30px auto;
 }
 
-/* Avatar arriba */
-.perfil-avatar {
+/* Avatar fuera del card */
+.perfil-avatar-left {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 25px auto; /* centrado arriba del card */
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  align-items: center;
 }
 
 /* Información editable */
@@ -163,18 +168,18 @@
   color: #0f7d77;
 }
 
-/* Botón guardar */
+/* Botón guardar (como antes, debajo de los campos) */
 .btn-save {
-  margin-top: 25px;
+  margin-top: 20px;
   background-color: #14a098;
   color: white;
   border: none;
-  padding: 12px 20px;
+  padding: 10px 18px;
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
-  align-self: flex-start;
+  align-self: flex-start; /* alineado a la izquierda */
 }
 
 .btn-save:hover {
@@ -201,6 +206,19 @@
     padding: 20px;
     margin: 15px;
   }
+
+ .perfil-avatar-left {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 30px auto; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+}
+
+
 
   .perfil-field label {
     width: 100px;
