@@ -1,8 +1,91 @@
+<template>
+  <div class="modal-overlay">
+    <div class="modal-card">
+      <header>
+        <h2>Nueva Publicación</h2>
+        <router-link to="/dashboard" class="close-btn">✕</router-link>
+      </header>
+
+      <form @submit.prevent="handlePublicar">
+        <div class="form-grid">
+          <div class="col-inputs">
+            <div class="field">
+              <label>¿Qué sucede?</label>
+              <select v-model="form.id_tipo" required>
+                <option value="" disabled>Selecciona una opción</option>
+                <option v-for="t in tipos" :key="t.id_tipo" :value="t.id_tipo">{{ t.nombre }}</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Nombre de la mascota</label>
+              <input v-model="form.nombre_pet" type="text" placeholder="Ej. Firulais" required>
+            </div>
+
+            <div class="field">
+              <label>Especie</label>
+              <select v-model="form.id_especie" required>
+                <option value="" disabled>Selecciona una especie</option>
+                <option v-for="e in especies" :key="e.id_especie" :value="e.id_especie">{{ e.nombre }}</option>
+              </select>
+            </div>
+
+            <div class="field autocomplete">
+              <label for="colonia">Colonia</label>
+              <input 
+                id="colonia"
+                type="text" 
+                v-model="coloniaInput" 
+                placeholder="Escribe tu colonia..."
+                @input="filtrarColonias"
+                required
+              />
+              <ul v-if="showSuggestions" class="suggestions">
+                <li 
+                  v-for="c in filteredColonias" 
+                  :key="c.id_colonia" 
+                  @click="seleccionarColonia(c)"
+                >
+                  {{ c.nombre }}
+                </li>
+              </ul>
+            </div>
+
+            <div class="field">
+              <label>Descripción</label>
+              <textarea v-model="form.descripcion" required></textarea>
+            </div>
+          </div>
+
+          <div class="col-photo">
+            <div class="upload-area" @click="$refs.fotoInput.click()">
+              <input 
+                type="file" 
+                ref="fotoInput" 
+                @change="handleFileChange" 
+                hidden 
+                accept="image/*"
+              >
+              <div v-if="previewUrl" class="preview-container">
+                <img :src="previewUrl" alt="Vista previa" class="preview-image" />
+              </div>
+              <p v-else>{{ fileName || 'Subir foto' }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn-primary">Publicar Reporte</button>
+      </form>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+
 const API_URL = 'https://migobackenddeploy-production.up.railway.app/api';
 
 const fotoInput = ref(null);
@@ -83,29 +166,37 @@ const handlePublicar = async () => {
     return;
   }
 
-  // Crear FormData para enviar imagen y datos juntos
-  const formData = new FormData();
-  formData.append('id_usuario', form.id_usuario);
-  formData.append('id_colonia', form.id_colonia);
-  formData.append('id_especie', form.id_especie);
-  formData.append('id_tipo', form.id_tipo);
-  formData.append('id_estado', form.id_estado);
-  formData.append('nombre_pet', form.nombre_pet);
-  formData.append('descripcion', form.descripcion);
-  if (form.foto) {
-    formData.append('imagen', form.foto);
-  }
-
   try {
-    // Usamos el endpoint unificado que procesa todo
-    const response = await fetch(`${API_URL}/publicaciones-con-foto`, {
+    // 1. Crear la publicación
+    const response = await fetch(`${API_URL}/publicaciones`, {
       method: 'POST',
-      body: formData 
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id_usuario: form.id_usuario,
+        id_colonia: form.id_colonia,
+        id_especie: form.id_especie,
+        id_tipo: form.id_tipo,
+        id_estado: form.id_estado,
+        nombre_pet: form.nombre_pet,
+        descripcion: form.descripcion
+      })
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Error al crear publicación');
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Error al crear publicación');
+
+    // 2. Subir foto si existe
+    if (form.foto) {
+      const formData = new FormData();
+      formData.append('imagen', form.foto);
+      formData.append('id_publi', data.id_publi);
+
+      const fotoResponse = await fetch(`${API_URL}/fotos`, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!fotoResponse.ok) throw new Error('Error al subir foto');
     }
 
     alert("¡Publicación realizada con éxito!");
@@ -116,3 +207,5 @@ const handlePublicar = async () => {
   }
 };
 </script>
+
+<style scoped src="./ScreenCrearPublicacion.css"></style>
