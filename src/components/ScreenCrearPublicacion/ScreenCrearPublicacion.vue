@@ -125,12 +125,9 @@ onMounted(async () => {
       fetch(`${API_URL}/especies`),
       fetch(`${API_URL}/tipos_publi`)
     ]);
-
-    // Asignación directa de datos
     colonias.value = await resC.json();
     especies.value = await resE.json();
     tipos.value = await resT.json();
-
   } catch (err) {
     console.error("Error al cargar catálogos", err);
   }
@@ -170,6 +167,7 @@ const handlePublicar = async () => {
   }
 
   try {
+    // 1. Crear la publicación
     const response = await fetch(`${API_URL}/publicaciones`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -187,12 +185,13 @@ const handlePublicar = async () => {
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'Error al crear publicación');
 
+    // 2. Subir foto si existe
     if (form.foto) {
       const formData = new FormData();
-      formData.append('foto', form.foto);
+      formData.append('imagen', form.foto);
+      formData.append('id_publi', data.id_publi);
 
-      // Usamos id_publi como definimos en el backend
-      const fotoResponse = await fetch(`${API_URL}/fotos/${data.id_publi}`, {
+      const fotoResponse = await fetch(`${API_URL}/fotos`, {
         method: 'POST',
         body: formData
       });

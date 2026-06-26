@@ -59,10 +59,10 @@
           >
             <img 
               v-if="pub.ruta_imagen" 
-              :src="API_BASE_URL + pub.ruta_imagen" 
+              :src="pub.ruta_imagen" 
               :alt="pub.nombre_pet" 
               class="pub-image"
-              @click="abrirImagen(API_BASE_URL + pub.ruta_imagen)"
+              @click="abrirImagen(pub.ruta_imagen)"
             >
             
             <div class="pub-info">
@@ -72,6 +72,10 @@
             </div>
           </div>
         </div>
+
+        <p v-if="filteredPublicaciones.length === 0" class="sin-resultados">
+          No hay publicaciones aún...
+        </p>
       </main>
     </div>
 
@@ -87,7 +91,6 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-// URL base de producción
 const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const router = useRouter();
 
@@ -105,8 +108,8 @@ const cerrarImagen = () => {
 
 const irDetallesPubli = (idPubli) => {
   router.push({
-    path:'/masinfopubli',
-    query: { id_publi: idPubli}
+    path: '/masinfopubli',
+    query: { id_publi: idPubli }
   });
 };
 
@@ -123,9 +126,9 @@ const cargarPublicaciones = async () => {
     if (!res.ok) throw new Error('Error al cargar publicaciones');
     publicaciones.value = await res.json();
 
-    estados.value = [...new Set(publicaciones.value.map(p => p.estado))];
-    especies.value = [...new Set(publicaciones.value.map(p => p.especie))];
-    tipos.value = [...new Set(publicaciones.value.map(p => p.tipo))];
+    estados.value = [...new Set(publicaciones.value.map(p => p.estado).filter(Boolean))];
+    especies.value = [...new Set(publicaciones.value.map(p => p.especie).filter(Boolean))];
+    tipos.value = [...new Set(publicaciones.value.map(p => p.tipo).filter(Boolean))];
   } catch (err) {
     console.error("Error:", err);
   }
@@ -150,6 +153,7 @@ const filteredPublicaciones = computed(() => {
 
 const handleLogout = () => {
   sessionStorage.removeItem('migo_user');
+  sessionStorage.removeItem('id_usuario');
   router.push('/');
 };
 </script>
