@@ -74,6 +74,11 @@
 
 --BASE DE DATOS--
 
+[Respaldo BD] (https://universi799-my.sharepoint.com/:w:/g/personal/2402111_utrivieramaya_edu_mx/IQAfjmbyyl-HTJ_-Td3E-B91AeiYCEUDazeuvW9ZDRCwFTw?e=rIZgH1) 
+[backup.zip](https://github.com/user-attachments/files/29363301/backup.zip)
+
+
+
 --SEGURIDAD--
 
 [Reporte de seguridad](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQCTzkJHh2_eSKftV321IpJaAQLDL0iUWPCUwE6bc9g26fM?e=nbzP70)
