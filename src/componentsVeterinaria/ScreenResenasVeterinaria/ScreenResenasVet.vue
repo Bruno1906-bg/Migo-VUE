@@ -18,13 +18,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const idVet = sessionStorage.getItem('id_vet');
 const resenas = ref([]);
 
 onMounted(async () => {
   try {
-    const response = await fetch(`http://localhost:4000/api/resenas/${idVet}`);
+    const response = await fetch(`${API_BASE_URL}/api/resenas/${idVet}`);
     if (!response.ok) throw new Error("Error al obtener reseñas");
     resenas.value = await response.json();
   } catch (error) {

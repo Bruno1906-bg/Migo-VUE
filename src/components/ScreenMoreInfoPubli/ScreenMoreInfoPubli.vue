@@ -16,7 +16,7 @@
       <button @click="$router.back()" class="btn-volver">← Volver</button>
 
       <div class="card-detalles">
-        <img :src="'http://localhost:4000' + pub.ruta_imagen" class="publi-grande" alt="Mascota">
+        <img :src="API_BASE_URL + pub.ruta_imagen" class="publi-grande" alt="Mascota">
         <h1>{{ pub.nombre_pet }}</h1>
         <p class="desc">{{ pub.descripcion }}</p>
         
@@ -28,12 +28,10 @@
           <p><strong>Publicado por:</strong> {{ pub.usuario }}</p>
         </div>
 
-        <!-- Botón de contacto -->
         <button @click="mostrarContacto = !mostrarContacto" class="btn-contacto">
           Contacto
         </button>
 
-        <!-- Card de contacto -->
         <div v-if="mostrarContacto && usuarioPub" class="contact-card">
           <div class="contact-avatar">
             <Avatar 
@@ -90,18 +88,19 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Avatar from "vue3-avatar";
 
+// URL base de producción
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const route = useRoute();
 const router = useRouter();
+
 const pub = ref(null);
 const comentarios = ref([]);
 const nuevoComentario = ref('');
 const currentUser = JSON.parse(sessionStorage.getItem('migo_user'));
 
-// Estados para edición
 const comentarioEnEdicion = ref(null); 
 const textoEdicion = ref('');
 
-// Estado para contacto
 const mostrarContacto = ref(false);
 const usuarioPub = ref(null);
 const avatarColor = ref('#14a098');
@@ -110,13 +109,12 @@ const cargarDatos = async () => {
   const idBuscado = route.query.id_publi;
   const idLimpio = String(idBuscado).split(':')[0];
   try {
-    const res = await fetch('http://localhost:4000/api/publicaciones');
+    const res = await fetch(`${API_BASE_URL}/api/publicaciones`);
     const todasLasPubs = await res.json();
     pub.value = todasLasPubs.find(p => String(p.id_publi) === idLimpio);
 
     if (pub.value) {
-      // 🔹 Cargar info del usuario que publicó
-      const resUser = await fetch(`http://localhost:4000/api/usuarios/${pub.value.id_usuario}`);
+      const resUser = await fetch(`${API_BASE_URL}/api/usuarios/${pub.value.id_usuario}`);
       if (resUser.ok) usuarioPub.value = await resUser.json();
     }
 
@@ -126,7 +124,7 @@ const cargarDatos = async () => {
 
 const cargarComentarios = async (id) => {
   try {
-    const res = await fetch(`http://localhost:4000/api/comentarios/${id}`);
+    const res = await fetch(`${API_BASE_URL}/api/comentarios/${id}`);
     if (res.ok) comentarios.value = await res.json();
   } catch (err) { console.error("Error cargando comentarios:", err); }
 };
@@ -134,7 +132,7 @@ const cargarComentarios = async (id) => {
 const enviarComentario = async () => {
   if (!nuevoComentario.value.trim()) return;
   const id = route.query.id_publi.split(':')[0];
-  await fetch('http://localhost:4000/api/comentarios', {
+  await fetch(`${API_BASE_URL}/api/comentarios`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id_publi: id, id_usuario: currentUser.id_usuario, comentario: nuevoComentario.value })
@@ -143,14 +141,13 @@ const enviarComentario = async () => {
   cargarComentarios(id);
 };
 
-// Lógica de Edición
 const iniciarEdicion = (c) => {
   comentarioEnEdicion.value = c.id_comentario;
   textoEdicion.value = c.comentario;
 };
 
 const guardarEdicion = async (id) => {
-  await fetch(`http://localhost:4000/api/comentarios/${id}`, {
+  await fetch(`${API_BASE_URL}/api/comentarios/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 
@@ -165,7 +162,7 @@ const guardarEdicion = async (id) => {
 const eliminarComentario = async (idComentario) => {
   if (!confirm('¿Eliminar comentario?')) return;
   const id = route.query.id_publi.split(':')[0];
-  await fetch(`http://localhost:4000/api/comentarios/${idComentario}/${currentUser.id_usuario}`, { method: 'DELETE' });
+  await fetch(`${API_BASE_URL}/api/comentarios/${idComentario}/${currentUser.id_usuario}`, { method: 'DELETE' });
   cargarComentarios(id);
 };
 

@@ -34,7 +34,6 @@
       <main class="feed-section">
         <h2 class="feed-title">Reportes Recientes en la Comunidad</h2>
 
-        <!-- 🔹 Barra de filtros -->
         <div class="filters-bar">
           <select v-model="selectedEstado" class="filter-select">
             <option value="">Todos los estados</option>
@@ -58,13 +57,12 @@
             :key="pub.id_publi" 
             class="pub-card"
           >
-            <!-- Imagen con click para ampliar -->
             <img 
               v-if="pub.ruta_imagen" 
-              :src="'http://localhost:4000' + pub.ruta_imagen" 
+              :src="API_BASE_URL + pub.ruta_imagen" 
               :alt="pub.nombre_pet" 
               class="pub-image"
-              @click="abrirImagen('http://localhost:4000' + pub.ruta_imagen)"
+              @click="abrirImagen(API_BASE_URL + pub.ruta_imagen)"
             >
             
             <div class="pub-info">
@@ -77,7 +75,6 @@
       </main>
     </div>
 
-    <!-- 🔹 Modal para ampliar imagen -->
     <div v-if="imagenAmpliada" class="modal-overlay" @click="cerrarImagen">
       <div class="modal-content">
         <img :src="imagenAmpliada" alt="Imagen ampliada">
@@ -86,16 +83,16 @@
   </div>
 </template>
 
-
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-const publicaciones = ref([]);
-const searchQuery = ref('');
+// URL base de producción
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const router = useRouter();
 
-// 🔹 Estado para el modal de imagen
+const publicaciones = ref([]);
+const searchQuery = ref('');
 const imagenAmpliada = ref(null);
 
 const abrirImagen = (src) => {
@@ -113,7 +110,6 @@ const irDetallesPubli = (idPubli) => {
   });
 };
 
-// 🔹 Filtros
 const selectedEstado = ref('');
 const selectedEspecie = ref('');
 const selectedTipo = ref('');
@@ -123,11 +119,10 @@ const tipos = ref([]);
 
 const cargarPublicaciones = async () => {
   try {
-    const res = await fetch('http://localhost:4000/api/publicaciones');
+    const res = await fetch(`${API_BASE_URL}/api/publicaciones`);
     if (!res.ok) throw new Error('Error al cargar publicaciones');
     publicaciones.value = await res.json();
 
-    // Extraer valores únicos para filtros
     estados.value = [...new Set(publicaciones.value.map(p => p.estado))];
     especies.value = [...new Set(publicaciones.value.map(p => p.especie))];
     tipos.value = [...new Set(publicaciones.value.map(p => p.tipo))];

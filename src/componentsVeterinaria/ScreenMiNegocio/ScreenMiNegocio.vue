@@ -46,6 +46,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const negocio = ref({
   nombre_establecimiento: '',
   descripcion: '',
@@ -56,15 +57,14 @@ const negocio = ref({
 });
 
 const colonias = ref([]);
-const idVet = sessionStorage.getItem('id_vet'); // guardado al hacer login
+const idVet = sessionStorage.getItem('id_vet'); 
 
 const cargarNegocio = async () => {
   try {
-    //  Usa el endpoint correcto (singular)
-    const res = await fetch(`http://localhost:4000/api/veterinaria/${idVet}`);
+    const res = await fetch(`${API_BASE_URL}/api/veterinaria/${idVet}`);
     if (res.ok) negocio.value = await res.json();
 
-    const resColonias = await fetch("http://localhost:4000/api/colonias");
+    const resColonias = await fetch(`${API_BASE_URL}/api/colonias`);
     colonias.value = await resColonias.json();
   } catch (err) {
     console.error("Error cargando negocio:", err);
@@ -73,7 +73,7 @@ const cargarNegocio = async () => {
 
 const guardarNegocio = async () => {
   try {
-    await fetch(`http://localhost:4000/api/veterinarias/${idVet}`, {
+    await fetch(`${API_BASE_URL}/api/veterinarias/${idVet}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(negocio.value)
@@ -92,12 +92,12 @@ const subirLogo = async (event) => {
   formData.append('logo', file);
 
   try {
-    const res = await fetch(`http://localhost:4000/api/veterinarias/${idVet}/logo`, {
+    const res = await fetch(`${API_BASE_URL}/api/veterinarias/${idVet}/logo`, {
       method: 'POST',
       body: formData
     });
     const data = await res.json();
-    negocio.value.imagen_logo = data.imagen_logo; // ruta devuelta por el backend (/uploads/archivo.jpg)
+    negocio.value.imagen_logo = data.imagen_logo;
   } catch (err) {
     console.error("Error al subir logo:", err);
   }
@@ -105,13 +105,11 @@ const subirLogo = async (event) => {
 
 const getImageUrl = (ruta) => {
   if (!ruta) return '';
-  return `http://localhost:4000${ruta}`; 
+  // Esto ahora concatena la URL de producción con la ruta de la imagen
+  return `${API_BASE_URL}${ruta}`; 
 };
-
-
 
 onMounted(cargarNegocio);
 </script>
-
 
 <style scoped src="./ScreenMiNegocio.css"></style>

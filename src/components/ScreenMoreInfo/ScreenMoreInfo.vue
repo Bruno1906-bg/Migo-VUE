@@ -75,6 +75,7 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const route = useRoute();
 const router = useRouter();
 
@@ -91,9 +92,9 @@ const cargarDatosCompletos = async () => {
   const idVet = route.query.id_vet;
   if (!idVet) return;
   try {
-    const resVet = await fetch(`http://localhost:4000/api/veterinaria/${idVet}`);
+    const resVet = await fetch(`${API_BASE_URL}/api/veterinaria/${idVet}`);
     vet.value = await resVet.json();
-    const resResenas = await fetch(`http://localhost:4000/api/resenas/${idVet}`);
+    const resResenas = await fetch(`${API_BASE_URL}/api/resenas/${idVet}`);
     resenas.value = await resResenas.json();
   } catch (err) { console.error(err); }
 };
@@ -105,10 +106,15 @@ const getImageUrl = (nombreImagen) => {
 
 const enviarResena = async () => {
   if (!currentUser) return alert("Inicia sesión");
-  await fetch('http://localhost:4000/api/resenas', {
+  await fetch(`${API_BASE_URL}/api/resenas`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id_vet: route.query.id_vet, id_usuario: currentUser.id_usuario, comentario: nuevaResena.value, calificacion: nuevaCalificacion.value })
+    body: JSON.stringify({ 
+      id_vet: route.query.id_vet, 
+      id_usuario: currentUser.id_usuario, 
+      comentario: nuevaResena.value, 
+      calificacion: nuevaCalificacion.value 
+    })
   });
   nuevaResena.value = '';
   cargarDatosCompletos();
@@ -121,7 +127,7 @@ const iniciarEdicion = (r) => {
 };
 
 const guardarEdicion = async (id) => {
-  await fetch(`http://localhost:4000/api/resenas/${id}`, {
+  await fetch(`${API_BASE_URL}/api/resenas/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ comentario: editTexto.value, calificacion: editCalificacion.value })
@@ -132,7 +138,7 @@ const guardarEdicion = async (id) => {
 
 const eliminarResena = async (id) => {
   if (!confirm('¿Borrar reseña?')) return;
-  await fetch(`http://localhost:4000/api/resenas/${id}`, { method: 'DELETE' });
+  await fetch(`${API_BASE_URL}/api/resenas/${id}`, { method: 'DELETE' });
   cargarDatosCompletos();
 };
 

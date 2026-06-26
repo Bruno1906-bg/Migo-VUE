@@ -1,6 +1,5 @@
 <template>
   <div class="dashboard-layout">
-    <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-logo">
         <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
@@ -17,26 +16,21 @@
       </div>
     </aside>
 
-    <!-- Contenido principal -->
     <div class="main-content">
       <main class="feed-section">
         <h2 class="feed-title">Mi Perfil</h2>
 
-        <!-- Avatar circular con inicial (afuera del card) -->
         <div class="perfil-avatar-left">
-         <Avatar 
-  :name="usuario?.nombre || 'U'" 
-  :size="150" 
-  :color="avatarColor" 
-  :rounded="true" 
-  :fontSize="60" 
-/>
-
+          <Avatar 
+            :name="usuario?.nombre || 'U'" 
+            :size="150" 
+            :color="avatarColor" 
+            :rounded="true" 
+            :fontSize="60" 
+          />
         </div>
 
-        <!-- Card de datos -->
         <div v-if="usuario" class="perfil-container">
-          <!-- Información editable -->
           <div class="perfil-info">
             <div class="perfil-field">
               <label>Nombre:</label>
@@ -80,11 +74,10 @@
 
             <div class="perfil-field">
               <label>Fecha de registro:</label>
-              <p>{{ new Date(usuario.fecha_registro).toLocaleDateString() }}</p>
+              <p>{{ usuario.fecha_registro ? new Date(usuario.fecha_registro).toLocaleDateString() : 'N/A' }}</p>
             </div>
           </div>
 
-          <!-- Botón guardar -->
           <button class="btn-save" @click="guardarPerfil">Guardar cambios</button>
         </div>
 
@@ -101,6 +94,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Avatar from "vue3-avatar";
 
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const router = useRouter();
 
 const usuario = ref({
@@ -116,12 +110,8 @@ const usuario = ref({
 const colonias = ref([]);
 const avatarColor = ref('#14a098');
 const editableFields = ref({
-  nombre: false,
-  apellido: false,
-  correo: false,
-  telefono: false,
-  direccion: false,
-  colonia: false
+  nombre: false, apellido: false, correo: false, 
+  telefono: false, direccion: false, colonia: false
 });
 
 const idUsuario = sessionStorage.getItem('id_usuario');
@@ -145,7 +135,7 @@ const toggleEdit = (field) => {
 
 const guardarPerfil = async () => {
   try {
-    await fetch(`http://localhost:4000/api/usuarios/${idUsuario}`, {
+    await fetch(`${API_BASE_URL}/api/usuarios/${idUsuario}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(usuario.value)
@@ -163,19 +153,20 @@ const handleLogout = () => {
 };
 
 onMounted(async () => {
+  if (!idUsuario) return;
   try {
-    const response = await fetch(`http://localhost:4000/api/usuarios/${idUsuario}`);
+    const response = await fetch(`${API_BASE_URL}/api/usuarios/${idUsuario}`);
     usuario.value = await response.json();
 
-    const resColonias = await fetch("http://localhost:4000/api/colonias");
+    const resColonias = await fetch(`${API_BASE_URL}/api/colonias`);
     colonias.value = await resColonias.json();
 
     const baseColors = ['#14a098', '#0f7d77', '#1abc9c', '#16a085'];
     const index = idUsuario % baseColors.length;
-    const tone = (idUsuario % 3 - 1) * 0.2; // -0.2, 0, +0.2
+    const tone = (idUsuario % 3 - 1) * 0.2;
     avatarColor.value = shadeColor(baseColors[index], tone);
-
-     } catch (error) {
+  } catch (error) {
+    console.error("Error al cargar datos:", error);
   }
 });
 </script>

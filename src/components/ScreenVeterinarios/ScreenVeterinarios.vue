@@ -35,9 +35,9 @@
             <div class="vet-info">
               <h3>{{ vet.nombre_establecimiento }}</h3>
               <p>{{ vet.descripcion }}</p>
-              <p><strong>Ubicacion:</strong> {{ vet.nombre_colonia }}</p>
+              <p><strong>Ubicación:</strong> {{ vet.nombre_colonia }}</p>
               <p><strong>Contacto:</strong> {{ vet.correo_negocio }}</p>
-              <p><strong>Telefono:</strong> {{ vet.telefono_local }}</p>
+              <p><strong>Teléfono:</strong> {{ vet.telefono_local }}</p>
               <button class="btn-cita" @click="irCita(vet.id_vet)">Ver detalles</button>
             </div>
           </div>
@@ -55,13 +55,16 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
+// URL base de producción
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const router = useRouter();
 const searchQuery = ref('');
 const veterinarios = ref([]);
 
 const cargarVeterinarios = async () => {
   try {
-    const res = await fetch('http://localhost:4000/api/veterinarias');
+    // URL actualizada a Railway
+    const res = await fetch(`${API_BASE_URL}/api/veterinarias`);
     if (!res.ok) throw new Error('Error al cargar veterinarias');
     veterinarios.value = await res.json();
   } catch (err) {
@@ -86,10 +89,8 @@ const filteredVeterinarios = computed(() => {
   });
 });
 
-// ESTA ES LA FORMA ORIGINAL Y MÁS SENCILLA
 const getImageUrl = (nombreImagen) => {
   if (!nombreImagen) return '';
-  // Esto busca la imagen relativa al archivo actual
   return new URL(`../../assets/imgvet/${nombreImagen}`, import.meta.url).href;
 };
 
