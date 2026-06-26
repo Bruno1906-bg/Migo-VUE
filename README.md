@@ -80,7 +80,7 @@
 
 --APLICACION--
 
-[Registro de eventos (Logs)] https://github.com/Bruno1906-bg/Migo-VUE/tree/main/Registro%20de%20eventos%20(Logs)
+[Registro de eventos LOGS](https://github.com/Bruno1906-bg/Migo-VUE/tree/main/Registro%20de%20eventos%20(Logs))
 
 --OPERACION--
 
