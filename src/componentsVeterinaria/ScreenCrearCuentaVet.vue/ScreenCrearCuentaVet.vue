@@ -38,6 +38,11 @@
             </ul>
           </div>
 
+          <div class="input-group full-width">
+            <label for="telefono">Teléfono de contacto</label>
+            <input v-model="form.telefono" type="text" id="telefono" placeholder="Ej. 109 876 5432" required>
+          </div>
+
           <div class="input-group">
             <label for="correo">Correo Electrónico</label>
             <input v-model="form.correo" type="email" id="correo" required>

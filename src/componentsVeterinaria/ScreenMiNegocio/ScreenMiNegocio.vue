@@ -28,7 +28,7 @@
       </div>
 
       <div class="form-field">
-        <label>Teléfono:</label>
+        <label>Teléfono de contacto:</label>
         <input v-model="negocio.telefono_local" type="text" required />
       </div>
 
