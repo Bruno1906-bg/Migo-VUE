@@ -75,7 +75,10 @@
 --BASE DE DATOS--
 
 [Respaldo BD] (https://universi799-my.sharepoint.com/:w:/g/personal/2402111_utrivieramaya_edu_mx/IQAfjmbyyl-HTJ_-Td3E-B91AeiYCEUDazeuvW9ZDRCwFTw?e=rIZgH1) 
-[backup.zip](https://github.com/user-attachments/files/29363301/backup.zip)
+Respaldo (descomprimir archivo): [backup.zip](https://github.com/user-attachments/files/29363301/backup.zip)
+
+[Scripts de migracion validados] (https://universi799-my.sharepoint.com/:w:/g/personal/2402111_utrivieramaya_edu_mx/IQDEXmL1c8fcSZlbgCr1P5ZDASs6QlyxHDpHlSIc7tF-bKI?e=S8Kbjm)
+
 
 
 
