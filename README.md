@@ -70,6 +70,8 @@
 
 [LINK DE REPOSITORIO BACKEND](https://github.com/2402015-crypto/Migo_Backend)
 
+[LINK DE  REPOSITORIO BACKEND DEPLOY](https://github.com/Bruno1906-bg/Migo_Backend_Deploy)
+
 --INFRAESTRUCTURA--
 
 --BASE DE DATOS--
@@ -78,9 +80,6 @@
 Respaldo (descomprimir archivo): [backup.zip](https://github.com/user-attachments/files/29363301/backup.zip)
 
 [Scripts de migracion validados] (https://universi799-my.sharepoint.com/:w:/g/personal/2402111_utrivieramaya_edu_mx/IQDEXmL1c8fcSZlbgCr1P5ZDASs6QlyxHDpHlSIc7tF-bKI?e=S8Kbjm)
-
-
-
 
 --SEGURIDAD--
 
@@ -93,6 +92,8 @@ Respaldo (descomprimir archivo): [backup.zip](https://github.com/user-attachment
 --OPERACION--
 
 --CIERRE--
+
+[Reporte de desplegado final](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQB4RXdSrsf-RZR_LdYJkBmaAYaMohHCOqMTHQ-CLQcffQ0?e=QeAktX)
 
 --DISEÑO--
 
