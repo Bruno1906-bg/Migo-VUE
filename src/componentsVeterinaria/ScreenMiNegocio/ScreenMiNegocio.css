@@ -1,0 +1,93 @@
+.mi-negocio-container {
+  padding: 30px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.mi-negocio-container h2 {
+  margin-bottom: 25px;
+  color: #14a098;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* --- Formulario --- */
+.negocio-form {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  max-width: 700px;
+}
+
+.form-field {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+  border-color: #14a098;
+  outline: none;
+}
+
+/* --- Botón Guardar --- */
+.btn-save {
+  background-color: #14a098;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-save:hover {
+  background-color: #0f7d77;
+  transform: translateY(-2px);
+}
+
+/* --- Logo Preview --- */
+.preview-logo {
+  margin-top: 10px;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #14a098;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .negocio-form {
+    padding: 20px;
+  }
+
+  .preview-logo {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    display: block;
+  }
+}

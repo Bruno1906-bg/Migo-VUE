@@ -65,6 +65,8 @@
 import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
+// URL base de producción
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const router = useRouter();
 const form = reactive({
   nombre: '', apellido: '', correo: '', contrasena: '', 
@@ -78,8 +80,12 @@ const message = ref('');
 const messageType = ref('');
 
 onMounted(async () => {
-  const res = await fetch('http://localhost:4000/api/colonias');
-  colonias.value = await res.json();
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/colonias`);
+    colonias.value = await res.json();
+  } catch (err) {
+    console.error("Error al cargar colonias:", err);
+  }
 });
 
 const filtrarColonias = () => {
@@ -95,7 +101,7 @@ const seleccionarColonia = (colonia) => {
 
 const handleRegister = async () => {
   try {
-    const response = await fetch('http://localhost:4000/api/registro-vet', {
+    const response = await fetch(`${API_BASE_URL}/api/registro-vet`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)

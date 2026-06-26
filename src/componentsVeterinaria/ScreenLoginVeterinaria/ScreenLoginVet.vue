@@ -21,7 +21,7 @@ const handleLoginVet = async () => {
     // Guardamos la sesión
     sessionStorage.setItem('migo_user', JSON.stringify(usuarioVet));
     sessionStorage.setItem('id_usuario', usuarioVet.id_usuario);
-    sessionStorage.setItem('id_vet', usuarioVet.id_vet); // Guardamos también el ID de la clínica
+    sessionStorage.setItem('id_vet', usuarioVet.id_vet); 
     
     router.push('/dashboardvet'); 
   } catch (error) {
