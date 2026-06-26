@@ -83,6 +83,8 @@ Respaldo (descomprimir archivo): [backup.zip](https://github.com/user-attachment
 
 [Matriz de permisos BD](https://universi799-my.sharepoint.com/:w:/g/personal/2402111_utrivieramaya_edu_mx/IQBVu60yFJwbTapzzmX6VmvWAf9K_NWHKGSzsMJeSuWvWfY?e=opbKrs)
 
+[Plan de restauracion BD](https://universi799-my.sharepoint.com/:w:/g/personal/2402111_utrivieramaya_edu_mx/IQAagnlA_bCYSI0ul2v0oDOKAROrfZ7aKQ6KmEzU0WwvjRs?e=K7QcaH)
+
 --SEGURIDAD--
 
 [Reporte de seguridad](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQCTzkJHh2_eSKftV321IpJaAQLDL0iUWPCUwE6bc9g26fM?e=nbzP70)
