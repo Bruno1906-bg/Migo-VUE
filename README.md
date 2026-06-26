@@ -72,6 +72,9 @@
 
 [LINK DE  REPOSITORIO BACKEND DEPLOY](https://github.com/Bruno1906-bg/Migo_Backend_Deploy)
 
+<img width="1150" height="830" alt="image" src="https://github.com/user-attachments/assets/0f7052cc-faf0-43a2-b352-fc44f8599988" />
+
+
 --INFRAESTRUCTURA--
 
 --BASE DE DATOS--
