@@ -95,6 +95,8 @@ Respaldo (descomprimir archivo): [backup.zip](https://github.com/user-attachment
 
 --OPERACION--
 
+[Plan de Monitoreo Post Deployment - MIGO](https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_mx/IQA1o1chUJbdSZ0VnaZ_rVeRAeJfWEXYhTywLS4FZLugUTI?e=OFgRca)
+
 --CIERRE--
 
 [Reporte de desplegado final](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQB4RXdSrsf-RZR_LdYJkBmaAYaMohHCOqMTHQ-CLQcffQ0?e=QeAktX)
