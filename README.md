@@ -56,7 +56,7 @@
 
 --GESTION--
 
-[Plan de desplegado](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQC3iob2GKzfSrstGIUK906QASF2PhQHEfDzE2Sioh4Acqs?e=uvGMwd)
+[Plan de desplegado](https://universi799-my.sharepoint.com/:x:/g/personal/2402137_utrivieramaya_edu_mx/IQDwIPvLuyf7SIgP7Kj9UEgIASn7Tn1wQyXB0OHL-ddsIy8?e=ahYh1s)
 
 [Matriz de Riesgos MIGO](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQD-eMjg78YrQ7QqPYuTI4rmAeS66DiZAevaNx1WnPymSzU?e=v5u5iO)
 
