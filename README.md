@@ -77,6 +77,8 @@
 
 --INFRAESTRUCTURA--
 
+[Reporte de hardware](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQCZ7s7-iTzDRZ_TfIu6xX9kAbZBicHeJ25AaSYCJTxliCo?e=FYHmPl)
+
 --BASE DE DATOS--
 
 [Respaldo BD](https://universi799-my.sharepoint.com/:w:/g/personal/2402111_utrivieramaya_edu_mx/IQAfjmbyyl-HTJ_-Td3E-B91AeiYCEUDazeuvW9ZDRCwFTw?e=rIZgH1) 
