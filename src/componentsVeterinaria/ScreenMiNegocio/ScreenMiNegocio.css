@@ -43,8 +43,7 @@
 }
 
 .form-field input,
-.form-field textarea,
-.form-field select {
+.form-field textarea {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -53,10 +52,42 @@
 }
 
 .form-field input:focus,
-.form-field textarea:focus,
-.form-field select:focus {
+.form-field textarea:focus {
   border-color: #14a098;
   outline: none;
+}
+
+/* --- Autocomplete colonias --- */
+.autocomplete {
+  position: relative;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%; /* justo debajo del input */
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  max-height: 180px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0 0;
+  z-index: 20;
+}
+
+.suggestions li {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.suggestions li:hover {
+  background-color: #f0f0f0;
 }
 
 /* --- Botón Guardar --- */

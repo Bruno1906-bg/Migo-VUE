@@ -15,14 +15,18 @@
           <textarea v-model="negocio.descripcion" required></textarea>
         </div>
 
-        <div class="form-field">
+        <!-- ✅ Autocomplete de colonias -->
+        <div class="form-field autocomplete">
           <label>Colonia:</label>
-          <select v-model="negocio.id_colonia" required>
-            <option v-for="col in colonias" :key="col.id_colonia" :value="col.id_colonia">
-              {{ col.nombre }}
-            </option>
-          </select>
+          <input type="text" v-model="coloniaInput" placeholder="Escribe tu colonia..." @input="filtrarColonias"
+            required />
+          <ul v-if="filteredColonias.length" class="suggestions">
+            <li v-for="c in filteredColonias" :key="c.id_colonia" @click="seleccionarColonia(c)">
+              {{ c.nombre }}
+            </li>
+          </ul>
         </div>
+
 
         <div class="form-field">
           <label>Correo de contacto:</label>
@@ -97,6 +101,22 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
+const coloniaInput = ref('')
+const filteredColonias = ref([])
+
+const filtrarColonias = () => {
+  const query = coloniaInput.value.toLowerCase()
+  filteredColonias.value = colonias.value.filter(c =>
+    c.nombre.toLowerCase().includes(query)
+  )
+}
+
+const seleccionarColonia = (colonia) => {
+  negocio.value.id_colonia = colonia.id_colonia
+  coloniaInput.value = colonia.nombre
+  filteredColonias.value = []
+}
+
 const negocio = ref({
   nombre_establecimiento: '',
   descripcion: '',
@@ -108,10 +128,10 @@ const negocio = ref({
 });
 
 const colonias = ref([]);
-const diasSemana = ref([]); 
+const diasSemana = ref([]);
 const horarios = ref({});
-const servicios = ref([]); 
-const serviciosSeleccionados = ref([]); 
+const servicios = ref([]);
+const serviciosSeleccionados = ref([]);
 const nuevoServicio = ref('');
 const idVet = sessionStorage.getItem('id_vet');
 
@@ -122,6 +142,12 @@ const cargarNegocio = async () => {
 
     const resColonias = await fetch("http://localhost:4000/api/colonias");
     colonias.value = await resColonias.json();
+
+    // ✅ Inicializar coloniaInput si ya existe en negocio
+    if (negocio.value.id_colonia) {
+      const colonia = colonias.value.find(c => c.id_colonia === negocio.value.id_colonia)
+      if (colonia) coloniaInput.value = colonia.nombre
+    }
 
     const resDias = await fetch("http://localhost:4000/api/dias-semana");
     if (resDias.ok) {
@@ -158,6 +184,12 @@ const cargarNegocio = async () => {
 
 const guardarNegocio = async () => {
   try {
+    // ✅ Validar colonia antes de guardar
+    if (!negocio.value.id_colonia) {
+      alert("Debes seleccionar una colonia válida de la lista")
+      return
+    }
+
     await fetch(`http://localhost:4000/api/veterinarias/${idVet}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -239,5 +271,6 @@ const getImageUrl = (ruta) => {
 
 onMounted(cargarNegocio);
 </script>
+
 
 <style scoped src="./ScreenMiNegocio.css"></style>
