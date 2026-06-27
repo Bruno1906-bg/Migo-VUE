@@ -29,7 +29,7 @@
           <p><strong>Sitio Web:</strong> <a :href="vet.sitio_web" target="_blank">{{ vet.sitio_web }}</a></p>
         </div>
 
-        <!-- ✅ Contenedor de horarios y servicios en dos cards -->
+        <!-- Contenedor de horarios y servicios en dos cards -->
         <div class="cards-info">
           <!-- Horarios -->
           <div class="card-info" v-if="vet.horarios && vet.horarios.length">
