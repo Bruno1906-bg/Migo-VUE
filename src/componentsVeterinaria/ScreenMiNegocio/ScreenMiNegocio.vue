@@ -15,7 +15,7 @@
           <textarea v-model="negocio.descripcion" required></textarea>
         </div>
 
-        <!-- ✅ Autocomplete de colonias -->
+        <!-- Autocomplete de colonias -->
         <div class="form-field autocomplete">
           <label>Colonia:</label>
           <input type="text" v-model="coloniaInput" placeholder="Escribe tu colonia..." @input="filtrarColonias"
@@ -52,7 +52,6 @@
         <button type="submit" class="btn-save">Guardar cambios</button>
       </form>
 
-      <!-- ✅ Contenedor de cards a la derecha -->
       <div class="cards-right">
         <!-- Card de horarios -->
         <div class="horarios-card">
@@ -71,7 +70,6 @@
           </form>
         </div>
 
-        <!-- ✅ Card de servicios debajo -->
         <div class="servicios-card">
           <h3>Servicios ofrecidos</h3>
 
@@ -143,7 +141,6 @@ const cargarNegocio = async () => {
     const resColonias = await fetch("http://localhost:4000/api/colonias");
     colonias.value = await resColonias.json();
 
-    // ✅ Inicializar coloniaInput si ya existe en negocio
     if (negocio.value.id_colonia) {
       const colonia = colonias.value.find(c => c.id_colonia === negocio.value.id_colonia)
       if (colonia) coloniaInput.value = colonia.nombre
@@ -184,7 +181,6 @@ const cargarNegocio = async () => {
 
 const guardarNegocio = async () => {
   try {
-    // ✅ Validar colonia antes de guardar
     if (!negocio.value.id_colonia) {
       alert("Debes seleccionar una colonia válida de la lista")
       return

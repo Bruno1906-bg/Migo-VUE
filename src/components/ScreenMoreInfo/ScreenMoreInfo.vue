@@ -28,8 +28,32 @@
           <p><strong>Teléfono:</strong> {{ vet.telefono_local }}</p>
           <p><strong>Sitio Web:</strong> <a :href="vet.sitio_web" target="_blank">{{ vet.sitio_web }}</a></p>
         </div>
+
+        <!-- ✅ Contenedor de horarios y servicios en dos cards -->
+        <div class="cards-info">
+          <!-- Horarios -->
+          <div class="card-info" v-if="vet.horarios && vet.horarios.length">
+            <h3>Horarios de Atención</h3>
+            <ul>
+              <li v-for="h in vet.horarios" :key="h.id_dia">
+                {{ h.dia }}: 
+                <span v-if="h.cerrado">Cerrado</span>
+                <span v-else>{{ h.hora_apertura }} - {{ h.hora_cierre }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Servicios -->
+          <div class="card-info" v-if="vet.servicios && vet.servicios.length">
+            <h3>Servicios ofrecidos</h3>
+            <ul>
+              <li v-for="s in vet.servicios" :key="s.id_servicio">{{ s.nombre }}</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
+      <!-- Sección reseñas -->
       <div class="seccion-resenas">
         <h3>Reseñas y Calificaciones</h3>
         
@@ -69,8 +93,6 @@
   </div>
 </template>
 
-<style scoped src="./ScreenMoreInfo.css"></style>
-
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -91,16 +113,17 @@ const cargarDatosCompletos = async () => {
   const idVet = route.query.id_vet;
   if (!idVet) return;
   try {
-    const resVet = await fetch(`http://localhost:4000/api/veterinaria/${idVet}`);
+    const resVet = await fetch(`http://localhost:4000/api/veterinaria/${idVet}/detallado`);
     vet.value = await resVet.json();
+
     const resResenas = await fetch(`http://localhost:4000/api/resenas/${idVet}`);
     resenas.value = await resResenas.json();
   } catch (err) { console.error(err); }
 };
 
-const getImageUrl = (nombreImagen) => {
-  if (!nombreImagen) return '';
-  return new URL(`../../assets/imgvet/${nombreImagen}`, import.meta.url).href;
+const getImageUrl = (ruta) => {
+  if (!ruta) return '';
+  return `http://localhost:4000${ruta}`;
 };
 
 const enviarResena = async () => {
@@ -140,3 +163,5 @@ const handleLogout = () => { sessionStorage.removeItem('migo_user'); router.push
 
 onMounted(cargarDatosCompletos);
 </script>
+
+<style scoped src="./ScreenMoreInfo.css"></style>

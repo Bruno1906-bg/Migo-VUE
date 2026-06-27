@@ -35,9 +35,17 @@
             <div class="vet-info">
               <h3>{{ vet.nombre_establecimiento }}</h3>
               <p>{{ vet.descripcion }}</p>
-              <p><strong>Ubicacion:</strong> {{ vet.nombre_colonia }}</p>
-              <p><strong>Contacto:</strong> {{ vet.correo_negocio }}</p>
-              <p><strong>Telefono:</strong> {{ vet.telefono_local }}</p>
+              <p><strong>Ubicación:</strong> {{ vet.nombre_colonia }}</p>
+
+              <!-- Mostrar horario del día actual -->
+              <p>
+                <strong>Horario hoy:</strong>
+                {{ obtenerHorarioHoy(vet.horarios) }}
+              </p>
+
+              <!-- Mostrar servicios -->
+              <p><strong>Servicios:</strong> {{ obtenerServicios(vet.servicios) }}</p>
+
               <button class="btn-cita" @click="irCita(vet.id_vet)">Ver detalles</button>
             </div>
           </div>
@@ -59,9 +67,12 @@ const router = useRouter();
 const searchQuery = ref('');
 const veterinarios = ref([]);
 
+// Día actual
+const diaActual = new Date().getDay();
+
 const cargarVeterinarios = async () => {
   try {
-    const res = await fetch('http://localhost:4000/api/veterinarias');
+    const res = await fetch('http://localhost:4000/api/veterinarias/detallado');
     if (!res.ok) throw new Error('Error al cargar veterinarias');
     veterinarios.value = await res.json();
   } catch (err) {
@@ -78,20 +89,36 @@ const filteredVeterinarios = computed(() => {
         vet.nombre_establecimiento + ' ' + 
         vet.descripcion + ' ' + 
         (vet.nombre_colonia || '') + ' ' + 
-        vet.correo_negocio + ' ' + 
-        vet.telefono_local
+        (vet.correo_negocio || '') + ' ' + 
+        (vet.telefono_local || '')
     ).toLowerCase();
     
     return busqueda.includes(searchQuery.value.toLowerCase());
   });
 });
 
-// ESTA ES LA FORMA ORIGINAL Y MÁS SENCILLA
-const getImageUrl = (nombreImagen) => {
-  if (!nombreImagen) return '';
-  // Esto busca la imagen relativa al archivo actual
-  return new URL(`../../assets/imgvet/${nombreImagen}`, import.meta.url).href;
+// Función para mostrar horario del día actual
+const obtenerHorarioHoy = (horarios) => {
+  if (!horarios || !horarios[diaActual]) return "No disponible";
+
+  const hoy = horarios[diaActual];
+  if (hoy.cerrado) return "Cerrado";
+
+  return `${hoy.hora_apertura} - ${hoy.hora_cierre}`;
 };
+
+// Función para mostrar servicios
+const obtenerServicios = (servicios) => {
+  if (!servicios || servicios.length === 0) return "No registrados";
+  return servicios.map(s => s.nombre).join(", ");
+};
+
+// Imagen del negocio
+const getImageUrl = (ruta) => {
+  if (!ruta) return '';
+  return `http://localhost:4000${ruta}`;
+};
+
 
 const handleLogout = () => {
   sessionStorage.removeItem('migo_user');
