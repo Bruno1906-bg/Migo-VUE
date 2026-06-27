@@ -128,6 +128,59 @@
   margin-left: 8px;
 }
 
+/* --- Card de servicios --- */
+.servicios-card {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  margin-top: 20px;
+}
+
+.servicios-card h3 {
+  margin-bottom: 15px;
+  color: #14a098;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.servicios-card .form-field {
+  margin-bottom: 15px;
+}
+
+.servicios-card input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  transition: border-color 0.3s;
+}
+
+.servicios-card input[type="text"]:focus {
+  border-color: #14a098;
+  outline: none;
+}
+
+.servicio-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.servicio-row label {
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+}
+
+.servicio-row input[type="checkbox"] {
+  margin-right: 10px;
+  accent-color: #14a098;
+}
+
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .negocio-layout {
@@ -139,7 +192,8 @@
     max-width: 100%;
   }
 
-  .horarios-card {
+  .horarios-card,
+  .servicios-card {
     margin-top: 20px;
   }
 

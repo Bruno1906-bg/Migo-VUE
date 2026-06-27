@@ -1,6 +1,7 @@
 <template>
   <div class="mi-negocio-container">
     <h2>Mi Negocio</h2>
+
     <div class="negocio-layout">
       <!-- Formulario principal -->
       <form @submit.prevent="guardarNegocio" class="negocio-form">
@@ -47,21 +48,47 @@
         <button type="submit" class="btn-save">Guardar cambios</button>
       </form>
 
-      <!-- Card de horarios -->
-      <div class="horarios-card">
-        <h3>Horarios de Atención</h3>
-        <form @submit.prevent="guardarHorarios">
-          <div v-for="dia in diasSemana" :key="dia.id_dia" class="horario-row">
-            <label>{{ dia.nombre }}</label>
-            <input type="time" v-model="horarios[dia.id_dia].hora_apertura" />
-            <input type="time" v-model="horarios[dia.id_dia].hora_cierre" />
-            <label>
-              <input type="checkbox" v-model="horarios[dia.id_dia].cerrado" />
-              Cerrado
-            </label>
+      <!-- ✅ Contenedor de cards a la derecha -->
+      <div class="cards-right">
+        <!-- Card de horarios -->
+        <div class="horarios-card">
+          <h3>Horarios de Atención</h3>
+          <form @submit.prevent="guardarHorarios">
+            <div v-for="dia in diasSemana" :key="dia.id_dia" class="horario-row">
+              <label>{{ dia.nombre }}</label>
+              <input type="time" v-model="horarios[dia.id_dia].hora_apertura" />
+              <input type="time" v-model="horarios[dia.id_dia].hora_cierre" />
+              <label>
+                <input type="checkbox" v-model="horarios[dia.id_dia].cerrado" />
+                Cerrado
+              </label>
+            </div>
+            <button type="submit" class="btn-save">Guardar Horarios</button>
+          </form>
+        </div>
+
+        <!-- ✅ Card de servicios debajo -->
+        <div class="servicios-card">
+          <h3>Servicios ofrecidos</h3>
+
+          <!-- Input para agregar servicio nuevo -->
+          <div class="form-field">
+            <label>Agregar nuevo servicio:</label>
+            <input v-model="nuevoServicio" type="text" placeholder="Ej. Consulta general" />
+            <button @click.prevent="agregarServicio" class="btn-save">Agregar</button>
           </div>
-          <button type="submit" class="btn-save">Guardar Horarios</button>
-        </form>
+
+          <!-- Lista de servicios -->
+          <form @submit.prevent="guardarServicios">
+            <div v-for="servicio in servicios" :key="servicio.id_servicio" class="servicio-row">
+              <label>
+                <input type="checkbox" v-model="serviciosSeleccionados" :value="servicio.id_servicio" />
+                {{ servicio.nombre }}
+              </label>
+            </div>
+            <button type="submit" class="btn-save">Guardar Servicios</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -82,9 +109,11 @@ const negocio = ref({
 
 const colonias = ref([]);
 const diasSemana = ref([]); 
-const idVet = sessionStorage.getItem('id_vet');
-
 const horarios = ref({});
+const servicios = ref([]); 
+const serviciosSeleccionados = ref([]); 
+const nuevoServicio = ref('');
+const idVet = sessionStorage.getItem('id_vet');
 
 const cargarNegocio = async () => {
   try {
@@ -94,20 +123,14 @@ const cargarNegocio = async () => {
     const resColonias = await fetch("http://localhost:4000/api/colonias");
     colonias.value = await resColonias.json();
 
-    // Cargar días de la semana desde la BD
     const resDias = await fetch("http://localhost:4000/api/dias-semana");
     if (resDias.ok) {
       diasSemana.value = await resDias.json();
       diasSemana.value.forEach(d => {
-        horarios.value[d.id_dia] = {
-          hora_apertura: '',
-          hora_cierre: '',
-          cerrado: false
-        };
+        horarios.value[d.id_dia] = { hora_apertura: '', hora_cierre: '', cerrado: false };
       });
     }
 
-    // Cargar horarios existentes
     const resHorarios = await fetch(`http://localhost:4000/api/horarios/${idVet}`);
     if (resHorarios.ok) {
       const data = await resHorarios.json();
@@ -118,6 +141,15 @@ const cargarNegocio = async () => {
           cerrado: h.cerrado === 1
         };
       });
+    }
+
+    const resServicios = await fetch("http://localhost:4000/api/servicios");
+    if (resServicios.ok) servicios.value = await resServicios.json();
+
+    const resVetServicios = await fetch(`http://localhost:4000/api/vet-servicios/${idVet}`);
+    if (resVetServicios.ok) {
+      const data = await resVetServicios.json();
+      serviciosSeleccionados.value = data.map(s => s.id_servicio);
     }
   } catch (err) {
     console.error("Error cargando negocio:", err);
@@ -147,6 +179,37 @@ const guardarHorarios = async () => {
     alert("Horarios actualizados correctamente");
   } catch (err) {
     console.error("Error al guardar horarios:", err);
+  }
+};
+
+const agregarServicio = async () => {
+  if (!nuevoServicio.value.trim()) return alert("Escribe un nombre para el servicio");
+
+  try {
+    const res = await fetch("http://localhost:4000/api/servicios", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nombre: nuevoServicio.value })
+    });
+    const data = await res.json();
+
+    servicios.value.push({ id_servicio: data.id_servicio, nombre: nuevoServicio.value });
+    nuevoServicio.value = '';
+  } catch (err) {
+    console.error("Error al agregar servicio:", err);
+  }
+};
+
+const guardarServicios = async () => {
+  try {
+    await fetch(`http://localhost:4000/api/vet-servicios/${idVet}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(serviciosSeleccionados.value)
+    });
+    alert("Servicios actualizados correctamente");
+  } catch (err) {
+    console.error("Error al guardar servicios:", err);
   }
 };
 
