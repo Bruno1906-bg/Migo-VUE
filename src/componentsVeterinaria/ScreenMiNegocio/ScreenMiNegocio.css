@@ -12,6 +12,13 @@
   font-weight: 700;
 }
 
+/* --- Layout principal --- */
+.negocio-layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
 /* --- Formulario --- */
 .negocio-form {
   background: #fff;
@@ -20,6 +27,7 @@
   padding: 25px;
   box-shadow: 0 6px 15px rgba(0,0,0,0.08);
   max-width: 700px;
+  flex: 2;
 }
 
 .form-field {
@@ -78,10 +86,61 @@
   border: 2px solid #14a098;
 }
 
+/* --- Card de horarios --- */
+.horarios-card {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+.horarios-card h3 {
+  margin-bottom: 15px;
+  color: #14a098;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.horario-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 12px;
+}
+
+.horario-row label {
+  min-width: 90px;
+  font-weight: 500;
+  color: #333;
+}
+
+.horario-row input[type="time"] {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.horario-row input[type="checkbox"] {
+  margin-left: 8px;
+}
+
 /* --- Responsive --- */
 @media (max-width: 768px) {
+  .negocio-layout {
+    flex-direction: column;
+  }
+
   .negocio-form {
     padding: 20px;
+    max-width: 100%;
+  }
+
+  .horarios-card {
+    margin-top: 20px;
   }
 
   .preview-logo {
