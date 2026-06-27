@@ -9,6 +9,7 @@
       <nav class="sidebar-menu">
         <router-link to="/dashboardvet" class="menu-item active">° Mi Negocio</router-link>
         <router-link to="/dashboardvet/resenas" class="menu-item">° Reseñas</router-link>
+          <router-link to="/dashboardvet/ajustes-vet" class="menu-item">° Ajustes</router-link>
       </nav>
 
       <div class="sidebar-footer">
