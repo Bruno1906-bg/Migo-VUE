@@ -1,14 +1,8 @@
 <template>
   <div class="dashboard-layout">
+ 
+    <div class="sidebar-overlay" :class="{ active: menuAbierto }" @click="menuAbierto = false"></div>
 
-    <!-- Overlay sidebar móvil -->
-    <div
-      class="sidebar-overlay"
-      :class="{ active: menuAbierto }"
-      @click="menuAbierto = false"
-    ></div>
-
-    <!-- Sidebar -->
     <aside class="sidebar" :class="{ open: menuAbierto }">
       <div class="sidebar-logo">
         <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
@@ -23,19 +17,13 @@
       </div>
     </aside>
 
-    <!-- Contenido principal -->
     <div class="main-content">
       <header class="top-bar">
         <button class="btn-hamburger" @click="menuAbierto = !menuAbierto" aria-label="Abrir menú">
           <span></span><span></span><span></span>
         </button>
         <div class="search-container">
-          <input
-            type="text"
-            v-model="searchQuery"
-            placeholder="Busca una publicación aquí..."
-            class="search-input"
-          >
+          <input type="text" v-model="searchQuery" placeholder="Busca una publicación aquí..." class="search-input">
         </div>
         <router-link to="/crearpublicacion">
           <button class="btn-create">Nueva Publicación</button>
@@ -61,18 +49,9 @@
         </div>
 
         <div class="grid-publicaciones">
-          <div
-            v-for="pub in filteredPublicaciones"
-            :key="pub.id_publi"
-            class="pub-card"
-          >
-            <img
-              v-if="pub.ruta_imagen"
-              :src="'http://localhost:4000' + pub.ruta_imagen"
-              :alt="pub.nombre_pet"
-              class="pub-image"
-              @click="abrirImagen('http://localhost:4000' + pub.ruta_imagen)"
-            >
+          <div v-for="pub in filteredPublicaciones" :key="pub.id_publi" class="pub-card">
+            <img v-if="pub.ruta_imagen" :src="'http://localhost:4000' + pub.ruta_imagen" :alt="pub.nombre_pet"
+              class="pub-image" @click="abrirImagen('http://localhost:4000' + pub.ruta_imagen)">
 
             <div class="pub-info">
               <h3>{{ pub.nombre_pet }}</h3>
@@ -80,13 +59,11 @@
 
               <div class="pub-actions">
                 <button class="btn-ver-mas" @click="irDetallesPubli(pub.id_publi)">Ver Detalles</button>
-                <!-- Botón editar solo visible para el dueño -->
-                <button
-                  v-if="pub.id_usuario === idUsuarioActual"
-                  class="btn-editar"
-                  @click="abrirModalEdicion(pub)"
-                >
+                <button v-if="pub.id_usuario === idUsuarioActual" class="btn-editar" @click="abrirModalEdicion(pub)">
                   Editar
+                </button>
+                <button v-if="pub.id_usuario === idUsuarioActual" class="btn-eliminar" @click="eliminarPublicacion(pub.id_publi)">
+                  Eliminar
                 </button>
               </div>
             </div>
@@ -95,14 +72,12 @@
       </main>
     </div>
 
-    <!-- Modal imagen ampliada -->
     <div v-if="imagenAmpliada" class="modal-overlay" @click="cerrarImagen">
       <div class="modal-content-img">
         <img :src="imagenAmpliada" alt="Imagen ampliada">
       </div>
     </div>
 
-    <!-- ===== MODAL EDICIÓN ===== -->
     <div v-if="modalEdicion" class="modal-overlay" @click.self="cerrarModalEdicion">
       <div class="modal-edicion">
         <header class="modal-edicion-header">
@@ -134,19 +109,10 @@
 
           <div class="field autocomplete">
             <label for="colonia-edicion">Colonia</label>
-            <input
-              id="colonia-edicion"
-              type="text"
-              v-model="coloniaInputEdicion"
-              placeholder="Escribe tu colonia..."
-              @input="filtrarColoniasEdicion"
-            />
+            <input id="colonia-edicion" type="text" v-model="coloniaInputEdicion" placeholder="Escribe tu colonia..."
+              @input="filtrarColoniasEdicion" />
             <ul v-if="showSuggestionsEdicion" class="suggestions">
-              <li
-                v-for="c in filteredColoniasEdicion"
-                :key="c.id_colonia"
-                @click="seleccionarColoniaEdicion(c)"
-              >
+              <li v-for="c in filteredColoniasEdicion" :key="c.id_colonia" @click="seleccionarColoniaEdicion(c)">
                 {{ c.nombre }}
               </li>
             </ul>
@@ -176,12 +142,10 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-// ── Usuario actual ──────────────────────────────────────────
 const idUsuarioActual = sessionStorage.getItem('id_usuario')
   ? parseInt(sessionStorage.getItem('id_usuario'))
   : null;
 
-// ── Publicaciones ───────────────────────────────────────────
 const publicaciones = ref([]);
 const searchQuery = ref('');
 const selectedEstado = ref('');
@@ -191,20 +155,16 @@ const estados = ref([]);
 const especies = ref([]);
 const tipos = ref([]);
 
-// ── Catálogos (para el modal de edición) ───────────────────
 const colonias_cat = ref([]);
 const especies_cat = ref([]);
 const tipos_cat = ref([]);
 
-// ── Sidebar móvil ───────────────────────────────────────────
 const menuAbierto = ref(false);
 
-// ── Modal imagen ────────────────────────────────────────────
 const imagenAmpliada = ref(null);
 const abrirImagen = (src) => { imagenAmpliada.value = src; };
 const cerrarImagen = () => { imagenAmpliada.value = null; };
 
-// ── Modal edición ───────────────────────────────────────────
 const modalEdicion = ref(false);
 const guardando = ref(false);
 const publicacionSeleccionada = ref(null);
@@ -219,7 +179,6 @@ const formEdicion = ref({
   descripcion: ''
 });
 
-// Autocomplete colonia en modal edición
 const coloniaInputEdicion = ref('');
 const filteredColoniasEdicion = ref([]);
 const showSuggestionsEdicion = ref(false);
@@ -243,13 +202,13 @@ const abrirModalEdicion = (pub) => {
   formEdicion.value = {
     id_publi: pub.id_publi,
     id_usuario: pub.id_usuario,
-    id_tipo: pub.id_tipo_raw ?? '',       // ver nota abajo
+    id_tipo: pub.id_tipo_raw ?? '',
     nombre_pet: pub.nombre_pet,
-    id_especie: pub.id_especie_raw ?? '', // ver nota abajo
+    id_especie: pub.id_especie_raw ?? '',
     id_colonia: pub.id_colonia_raw ?? '',
     descripcion: pub.descripcion
   };
-  // Precarga el nombre de la colonia en el input
+
   coloniaInputEdicion.value = pub.nombre_colonia ?? '';
   showSuggestionsEdicion.value = false;
   modalEdicion.value = true;
@@ -258,6 +217,30 @@ const abrirModalEdicion = (pub) => {
 const cerrarModalEdicion = () => {
   modalEdicion.value = false;
   guardando.value = false;
+};
+
+// Función de eliminar correctamente ubicada
+const eliminarPublicacion = async (idPubli) => {
+  if (!confirm('¿Estás seguro de que deseas eliminar esta publicación?')) {
+    return;
+  }
+
+  try {
+    const res = await fetch(`http://localhost:4000/api/publicaciones/${idPubli}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id_usuario: idUsuarioActual })
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Error al eliminar');
+
+    alert('Publicación eliminada correctamente');
+    await cargarPublicaciones(); 
+  } catch (err) {
+    console.error(err);
+    alert('Error al intentar eliminar: ' + err.message);
+  }
 };
 
 const guardarEdicion = async () => {
@@ -283,7 +266,7 @@ const guardarEdicion = async () => {
 
     alert('¡Publicación actualizada!');
     cerrarModalEdicion();
-    await cargarPublicaciones(); // Refresca la lista
+    await cargarPublicaciones();
   } catch (err) {
     console.error(err);
     alert('Error: ' + err.message);
@@ -292,7 +275,6 @@ const guardarEdicion = async () => {
   }
 };
 
-// ── Carga de datos ──────────────────────────────────────────
 const cargarPublicaciones = async () => {
   try {
     const res = await fetch('http://localhost:4000/api/publicaciones');
@@ -326,7 +308,6 @@ onMounted(async () => {
   await Promise.all([cargarPublicaciones(), cargarCatalogos()]);
 });
 
-// ── Filtro de publicaciones ─────────────────────────────────
 const filteredPublicaciones = computed(() => {
   return publicaciones.value.filter(pub => {
     const matchesSearch = !searchQuery.value ||
@@ -340,7 +321,6 @@ const filteredPublicaciones = computed(() => {
   });
 });
 
-// ── Navegación ──────────────────────────────────────────────
 const irDetallesPubli = (idPubli) => {
   router.push({ path: '/masinfopubli', query: { id_publi: idPubli } });
 };

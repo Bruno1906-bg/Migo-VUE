@@ -274,9 +274,24 @@
   color: white;
 }
 
-/* ===========================
-   MODAL IMAGEN AMPLIADA
-=========================== */
+.btn-eliminar {
+  padding: 10px 14px;
+  background-color: white;
+  color: #a02214;
+  border: 2px solid #a02214;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-eliminar:hover {
+  background-color: #a02214;
+  color: white;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -569,9 +584,6 @@
   }
 }
 
-/* ===========================
-   TABLET
-=========================== */
 @media (min-width: 769px) and (max-width: 1024px) {
   .sidebar {
     width: 200px;
