@@ -210,3 +210,38 @@
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Botón Hamburguesa */
+.btn-hamburger { display: none; background: none; border: none; padding: 10px; cursor: pointer; margin-bottom: 15px; }
+.btn-hamburger span { display: block; width: 25px; height: 3px; background: #14a098; margin: 5px 0; }
+.close-sidebar { display: none; }
+
+@media (max-width: 768px) {
+  .btn-hamburger { display: block; }
+  .main-content { margin-left: 0; padding: 20px; }
+  
+  .sidebar { 
+    transform: translateX(-100%); 
+    transition: 0.3s; 
+    z-index: 1000; 
+  }
+  .sidebar.open { transform: translateX(0); }
+  
+  .sidebar-overlay { 
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 900; 
+  }
+  .sidebar-overlay.active { display: block; }
+  
+  .info-grid { 
+    grid-template-columns: 1fr; /* Columna única en móvil */
+    gap: 10px; 
+  }
+
+  .publi-grande { 
+    max-height: 250px; /* Imagen más pequeña en móvil */
+  }
+
+  .close-sidebar {
+    display: block; position: absolute; top: 10px; right: 10px; border: none; background: none; font-size: 1.5rem;
+  }
+}

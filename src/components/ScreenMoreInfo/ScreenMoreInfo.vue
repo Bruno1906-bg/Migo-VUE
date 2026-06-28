@@ -1,6 +1,9 @@
 <template>
   <div class="detalle-vet-container-layout">
-    <aside class="sidebar">
+    <div class="sidebar-overlay" :class="{ active: menuAbierto }" @click="menuAbierto = false"></div>
+
+    <aside class="sidebar" :class="{ open: menuAbierto }">
+      <button class="close-sidebar" @click="menuAbierto = false">✕</button>
       <div class="sidebar-logo">
         <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
       </div>
@@ -15,7 +18,12 @@
     </aside>
 
     <main class="main-content-detalle" v-if="vet">
-      <button @click="$router.back()" class="btn-volver">← Volver</button>
+      <div class="top-bar-mobile">
+        <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
+          <span></span><span></span><span></span>
+        </button>
+        <button @click="$router.back()" class="btn-volver">← Volver</button>
+      </div>
 
       <div class="card-detalles">
         <img :src="getImageUrl(vet.imagen_logo)" class="logo-grande" alt="Logo">
@@ -29,22 +37,17 @@
           <p><strong>Sitio Web:</strong> <a :href="vet.sitio_web" target="_blank">{{ vet.sitio_web }}</a></p>
         </div>
 
-        <!-- Contenedor de horarios y servicios en dos cards -->
         <div class="cards-info">
-          <!-- Horarios -->
-          <div class="card-info" v-if="vet.horarios && vet.horarios.length">
+          <div class="card-info" v-if="vet.horarios?.length">
             <h3>Horarios de Atención</h3>
             <ul>
               <li v-for="h in vet.horarios" :key="h.id_dia">
-                {{ h.dia }}: 
-                <span v-if="h.cerrado">Cerrado</span>
-                <span v-else>{{ h.hora_apertura }} - {{ h.hora_cierre }}</span>
+                {{ h.dia }}: <span>{{ h.cerrado ? 'Cerrado' : `${h.hora_apertura} - ${h.hora_cierre}` }}</span>
               </li>
             </ul>
           </div>
 
-          <!-- Servicios -->
-          <div class="card-info" v-if="vet.servicios && vet.servicios.length">
+          <div class="card-info" v-if="vet.servicios?.length">
             <h3>Servicios ofrecidos</h3>
             <ul>
               <li v-for="s in vet.servicios" :key="s.id_servicio">{{ s.nombre }}</li>
@@ -53,10 +56,8 @@
         </div>
       </div>
 
-      <!-- Sección reseñas -->
       <div class="seccion-resenas">
         <h3>Reseñas y Calificaciones</h3>
-        
         <div class="form-resena">
           <select v-model="nuevaCalificacion" class="select-calificacion">
             <option v-for="n in 5" :key="n" :value="n">{{ n }} ⭐</option>
@@ -80,7 +81,6 @@
               <p>Usuario: <strong>{{ r.nombre_completo }}</strong></p>
               <p>{{ r.comentario }}</p>
               <small>Calificación: {{ r.calificacion }} ⭐</small>
-              
               <div v-if="currentUser && currentUser.id_usuario === r.id_usuario" class="actions">
                 <button @click="iniciarEdicion(r)" class="btn-edit">Editar</button>
                 <button @click="eliminarResena(r.id_resena)" class="btn-delete">Eliminar</button>
@@ -107,6 +107,7 @@ const nuevaCalificacion = ref(5);
 const editingId = ref(null);
 const editTexto = ref('');
 const editCalificacion = ref(5);
+const menuAbierto = ref(false);
 const currentUser = JSON.parse(sessionStorage.getItem('migo_user'));
 
 const cargarDatosCompletos = async () => {
@@ -115,16 +116,12 @@ const cargarDatosCompletos = async () => {
   try {
     const resVet = await fetch(`http://localhost:4000/api/veterinaria/${idVet}/detallado`);
     vet.value = await resVet.json();
-
     const resResenas = await fetch(`http://localhost:4000/api/resenas/${idVet}`);
     resenas.value = await resResenas.json();
   } catch (err) { console.error(err); }
 };
 
-const getImageUrl = (ruta) => {
-  if (!ruta) return '';
-  return `http://localhost:4000${ruta}`;
-};
+const getImageUrl = (ruta) => ruta ? `http://localhost:4000${ruta}` : '';
 
 const enviarResena = async () => {
   if (!currentUser) return alert("Inicia sesión");

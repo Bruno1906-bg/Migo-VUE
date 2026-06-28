@@ -75,7 +75,7 @@
     </div>
   </div>
 </template>
-
+ 
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
@@ -144,6 +144,23 @@ const handleRegister = async () => {
     messageType.value = "error";
   }
 };
+
+const cerrarSugerencias = (event) => {
+  if (!event.target.closest('.autocomplete')) {
+    filteredColonias.value = [];
+  }
+};
+
+onMounted(async () => {
+  // ... tu código actual de carga de colonias ...
+  document.addEventListener('click', cerrarSugerencias);
+});
+
+// Importante: Limpiar el evento al destruir el componente
+import { onUnmounted } from 'vue';
+onUnmounted(() => {
+  document.removeEventListener('click', cerrarSugerencias);
+});
 </script>
 
 

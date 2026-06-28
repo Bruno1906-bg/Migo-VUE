@@ -32,18 +32,18 @@
 
             <div class="field autocomplete">
               <label for="colonia">Colonia</label>
-              <input 
+              <input
                 id="colonia"
-                type="text" 
-                v-model="coloniaInput" 
+                type="text"
+                v-model="coloniaInput"
                 placeholder="Escribe tu colonia..."
                 @input="filtrarColonias"
                 required
               />
               <ul v-if="showSuggestions" class="suggestions">
-                <li 
-                  v-for="c in filteredColonias" 
-                  :key="c.id_colonia" 
+                <li
+                  v-for="c in filteredColonias"
+                  :key="c.id_colonia"
                   @click="seleccionarColonia(c)"
                 >
                   {{ c.nombre }}
@@ -59,11 +59,11 @@
 
           <div class="col-photo">
             <div class="upload-area" @click="$refs.fotoInput.click()">
-              <input 
-                type="file" 
-                ref="fotoInput" 
-                @change="handleFileChange" 
-                hidden 
+              <input
+                type="file"
+                ref="fotoInput"
+                @change="handleFileChange"
+                hidden
                 accept="image/*"
               >
               <div v-if="previewUrl" class="preview-container">
@@ -73,8 +73,10 @@
             </div>
           </div>
         </div>
-        
-        <button type="submit" class="btn-primary">Publicar Reporte</button>
+
+        <button type="submit" class="btn-primary" :disabled="cargando">
+          {{ cargando ? 'Publicando...' : 'Publicar Reporte' }}
+        </button>
       </form>
     </div>
   </div>
@@ -94,6 +96,7 @@ const coloniaInput = ref('');
 const showSuggestions = ref(false);
 const especies = ref([]);
 const tipos = ref([]);
+const cargando = ref(false);
 
 const form = reactive({
   id_usuario: sessionStorage.getItem('id_usuario') ? parseInt(sessionStorage.getItem('id_usuario')) : null,
@@ -123,7 +126,6 @@ onMounted(async () => {
       fetch('http://localhost:4000/api/tipos_publi')
     ]);
 
-    // Asignación directa de datos
     colonias.value = await resC.json();
     especies.value = await resE.json();
     tipos.value = await resT.json();
@@ -160,9 +162,13 @@ const handleClickOutside = (event) => {
 };
 
 const handlePublicar = async () => {
+  if (cargando.value) return; // Guard anti-doble-submit
+  cargando.value = true;
+
   if (!form.id_usuario) {
     alert("Sesión no detectada.");
     router.push('/login');
+    cargando.value = false;
     return;
   }
 
@@ -188,7 +194,6 @@ const handlePublicar = async () => {
       const formData = new FormData();
       formData.append('foto', form.foto);
 
-      // Usamos id_publi como definimos en el backend
       const fotoResponse = await fetch(`http://localhost:4000/api/fotos/${data.id_publi}`, {
         method: 'POST',
         body: formData
@@ -202,6 +207,8 @@ const handlePublicar = async () => {
   } catch (err) {
     console.error(err);
     alert("Error: " + err.message);
+  } finally {
+    cargando.value = false;
   }
 };
 </script>

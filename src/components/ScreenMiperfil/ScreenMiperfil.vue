@@ -1,7 +1,8 @@
 <template>
   <div class="dashboard-layout">
-    <!-- Sidebar -->
-    <aside class="sidebar">
+    <div class="sidebar-overlay" :class="{ active: menuAbierto }" @click="menuAbierto = false"></div>
+
+    <aside class="sidebar" :class="{ open: menuAbierto }">
       <div class="sidebar-logo">
         <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
       </div>
@@ -17,79 +18,37 @@
       </div>
     </aside>
 
-    <!-- Contenido principal -->
     <div class="main-content">
+      <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
+        <span></span><span></span><span></span>
+      </button>
+
       <main class="feed-section">
         <h2 class="feed-title">Mi Perfil</h2>
 
-        <!-- Avatar circular con inicial (afuera del card) -->
         <div class="perfil-avatar-left">
-         <Avatar 
-  :name="usuario?.nombre || 'U'" 
-  :size="150" 
-  :color="avatarColor" 
-  :rounded="true" 
-  :fontSize="60" 
-/>
-
+           <Avatar :name="usuario?.nombre || 'U'" :size="150" :color="avatarColor" :rounded="true" :fontSize="60" />
         </div>
 
-        <!-- Card de datos -->
         <div v-if="usuario" class="perfil-container">
-          <!-- Información editable -->
           <div class="perfil-info">
-            <div class="perfil-field">
-              <label>Nombre:</label>
-              <input v-model="usuario.nombre" type="text" :disabled="!editableFields.nombre" />
-              <span class="edit-icon" @click="toggleEdit('nombre')">⇲</span>
-            </div>
-
-            <div class="perfil-field">
-              <label>Apellido:</label>
-              <input v-model="usuario.apellido" type="text" :disabled="!editableFields.apellido" />
-              <span class="edit-icon" @click="toggleEdit('apellido')">⇲</span>
-            </div>
-
-            <div class="perfil-field">
-              <label>Correo:</label>
-              <input v-model="usuario.correo" type="email" :disabled="!editableFields.correo" />
-              <span class="edit-icon" @click="toggleEdit('correo')">⇲</span>
-            </div>
-
-            <div class="perfil-field">
-              <label>Teléfono:</label>
-              <input v-model="usuario.telefono" type="text" :disabled="!editableFields.telefono" />
-              <span class="edit-icon" @click="toggleEdit('telefono')">⇲</span>
-            </div>
-
-            <div class="perfil-field">
-              <label>Dirección:</label>
-              <input v-model="usuario.direccion" type="text" :disabled="!editableFields.direccion" />
-              <span class="edit-icon" @click="toggleEdit('direccion')">⇲</span>
-            </div>
-
-            <div class="perfil-field">
-              <label>Colonia:</label>
-              <select v-model="usuario.id_colonia" :disabled="!editableFields.colonia">
-                <option v-for="col in colonias" :key="col.id_colonia" :value="col.id_colonia">
-                  {{ col.nombre }}
-                </option>
+            <div class="perfil-field" v-for="(val, key) in editableFields" :key="key">
+              <label>{{ key.charAt(0).toUpperCase() + key.slice(1) }}:</label>
+              <template v-if="key !== 'colonia'">
+                <input v-model="usuario[key]" type="text" :disabled="!editableFields[key]" />
+              </template>
+              <select v-else v-model="usuario.id_colonia" :disabled="!editableFields.colonia">
+                <option v-for="col in colonias" :key="col.id_colonia" :value="col.id_colonia">{{ col.nombre }}</option>
               </select>
-              <span class="edit-icon" @click="toggleEdit('colonia')">⇲</span>
+              <span class="edit-icon" @click="toggleEdit(key)">✎</span>
             </div>
-
+            
             <div class="perfil-field">
-              <label>Fecha de registro:</label>
+              <label>Registro:</label>
               <p>{{ new Date(usuario.fecha_registro).toLocaleDateString() }}</p>
             </div>
           </div>
-
-          <!-- Botón guardar -->
           <button class="btn-save" @click="guardarPerfil">Guardar cambios</button>
-        </div>
-
-        <div v-else class="no-data">
-          <p>Cargando perfil...</p>
         </div>
       </main>
     </div>
@@ -102,6 +61,7 @@ import { useRouter } from 'vue-router';
 import Avatar from "vue3-avatar";
 
 const router = useRouter();
+const menuAbierto = ref(false);
 
 const usuario = ref({
   nombre: '',

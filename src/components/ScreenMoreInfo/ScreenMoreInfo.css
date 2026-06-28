@@ -318,3 +318,38 @@ textarea {
 .edit-mode button:last-of-type {
   background: #f0f0f0;
 }
+
+/* Sidebar oculto en móvil y flotante */
+.sidebar { width: 260px; background: white; border-right: 1px solid #e0e0e0; position: fixed; height: 100vh; z-index: 1000; transition: 0.3s; }
+.main-content-detalle { flex-grow: 1; margin-left: 260px; padding: 40px; }
+
+/* Botón hamburguesa */
+.btn-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 10px; }
+.btn-hamburger span { display: block; width: 25px; height: 3px; background: #14a098; margin: 5px 0; }
+.close-sidebar { display: none; }
+
+@media (max-width: 768px) {
+  .btn-hamburger { display: block; }
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .main-content-detalle { margin-left: 0; padding: 20px; }
+  .close-sidebar { display: block; position: absolute; top: 10px; right: 10px; border: none; background: none; font-size: 1.5rem; }
+  
+  .info-grid { grid-template-columns: 1fr; }
+  .cards-info { flex-direction: column; }
+  .card-info { min-width: 100%; flex: 1; }
+  .top-bar-mobile { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+}
+
+/* Ajustes de imagen para que no desborde */
+.logo-grande {
+  width: 100%; /* Ajustado para no exceder contenedores */
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+/* Overlay */
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 900; }
+.sidebar-overlay.active { display: block; }

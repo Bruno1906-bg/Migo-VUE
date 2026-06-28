@@ -145,3 +145,41 @@
     margin-top: 10px;
     color: #999;
 }
+
+@media (max-width: 480px) {
+  /* Hacemos que el wrapper tenga un poco más de aire en móviles */
+  .login-wrapper {
+    padding: 15px;
+    align-items: flex-start; /* Permite scroll si el teclado es grande */
+    overflow-y: auto;
+  }
+
+  .login-container {
+    padding: 25px; /* Reducimos padding para ganar espacio */
+    margin-top: 20px;
+    border-radius: 15px;
+  }
+
+  .login-logo {
+    height: 60px; /* Logo más pequeño en móvil */
+  }
+
+  .login-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .login-header p {
+    font-size: 0.85rem;
+  }
+
+  /* Ajuste de inputs para evitar zoom automático en iOS */
+  .input-group input {
+    font-size: 16px; /* Evita el zoom automático en Safari */
+    padding: 14px 15px;
+  }
+
+  .btn-login {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+}

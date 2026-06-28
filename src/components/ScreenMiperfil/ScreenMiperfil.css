@@ -10,7 +10,7 @@
 .sidebar {
   width: 260px;
   background-color: white;
-  border-right: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0; 
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -234,5 +234,47 @@
   .btn-save {
     padding: 8px 14px;
     font-size: 0.9rem;
+  }
+}
+
+/* Botón Hamburguesa */
+.btn-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.btn-hamburger span {
+  display: block; width: 25px; height: 3px; background: #14a098; margin: 5px 0;
+}
+
+/* Sidebar en móvil (Drawer) */
+@media (max-width: 768px) {
+  .btn-hamburger { display: block; }
+  
+  .sidebar {
+    transform: translateX(-100%);
+    transition: 0.3s;
+    z-index: 1000;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 900;
+  }
+  .sidebar-overlay.active { display: block; }
+
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
   }
 }
