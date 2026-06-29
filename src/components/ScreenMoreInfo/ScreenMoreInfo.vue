@@ -26,38 +26,65 @@
       </div>
 
       <div class="card-detalles">
-        <img :src="getImageUrl(vet.imagen_logo)" class="logo-grande" alt="Logo">
+        <!-- ✅ Logo: solo muestra si tiene imagen válida -->
+        <img
+          v-if="vet.imagen_logo"
+          :src="vet.imagen_logo"
+          class="logo-grande"
+          alt="Logo"
+        >
+
         <h1>{{ vet.nombre_establecimiento }}</h1>
         <p class="desc">{{ vet.descripcion }}</p>
-        
+
         <div class="info-grid">
           <p><strong>Ubicación:</strong> {{ vet.nombre_colonia }}</p>
-          <p><strong>Email:</strong> {{ vet.correo_negocio }}</p>
-          <p><strong>Teléfono:</strong> {{ vet.telefono_local }}</p>
-          <p><strong>Sitio Web:</strong> <a :href="vet.sitio_web" target="_blank">{{ vet.sitio_web }}</a></p>
+          <p><strong>Email:</strong> {{ vet.correo_negocio || '—' }}</p>
+          <p><strong>Teléfono:</strong> {{ vet.telefono_local || '—' }}</p>
+          <p>
+            <strong>Sitio Web:</strong>
+            <a v-if="vet.sitio_web" :href="vet.sitio_web" target="_blank">{{ vet.sitio_web }}</a>
+            <span v-else>—</span>
+          </p>
         </div>
 
         <div class="cards-info">
-          <div class="card-info" v-if="vet.horarios?.length">
+          <!-- ✅ Horarios: muestra siempre que haya registros, con cerrado tratado como número -->
+          <div class="card-info" v-if="vet.horarios && vet.horarios.length > 0">
             <h3>Horarios de Atención</h3>
             <ul>
               <li v-for="h in vet.horarios" :key="h.id_dia">
-                {{ h.dia }}: <span>{{ h.cerrado ? 'Cerrado' : `${h.hora_apertura} - ${h.hora_cierre}` }}</span>
+                <strong>{{ h.dia }}:</strong>
+                <span v-if="h.cerrado == 1 || h.cerrado === true"> Cerrado</span>
+                <span v-else>
+                  {{ formatHora(h.hora_apertura) }} - {{ formatHora(h.hora_cierre) }}
+                </span>
               </li>
             </ul>
           </div>
+          <div class="card-info" v-else>
+            <h3>Horarios de Atención</h3>
+            <p class="sin-info">No hay horarios registrados aún.</p>
+          </div>
 
-          <div class="card-info" v-if="vet.servicios?.length">
+          <!-- ✅ Servicios -->
+          <div class="card-info" v-if="vet.servicios && vet.servicios.length > 0">
             <h3>Servicios ofrecidos</h3>
             <ul>
               <li v-for="s in vet.servicios" :key="s.id_servicio">{{ s.nombre }}</li>
             </ul>
           </div>
+          <div class="card-info" v-else>
+            <h3>Servicios ofrecidos</h3>
+            <p class="sin-info">No hay servicios registrados aún.</p>
+          </div>
         </div>
       </div>
 
+      <!-- Reseñas -->
       <div class="seccion-resenas">
         <h3>Reseñas y Calificaciones</h3>
+
         <div class="form-resena">
           <select v-model="nuevaCalificacion" class="select-calificacion">
             <option v-for="n in 5" :key="n" :value="n">{{ n }} ⭐</option>
@@ -67,11 +94,15 @@
         </div>
 
         <div class="lista-resenas">
+          <div v-if="resenas.length === 0" class="sin-info">
+            Aún no hay reseñas. ¡Sé el primero en opinar!
+          </div>
+
           <div v-for="r in resenas" :key="r.id_resena" class="resena-item">
             <div v-if="editingId === r.id_resena" class="edit-mode">
               <textarea v-model="editTexto"></textarea>
               <select v-model="editCalificacion">
-                <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
+                <option v-for="n in 5" :key="n" :value="n">{{ n }} ⭐</option>
               </select>
               <button @click="guardarEdicion(r.id_resena)">Guardar</button>
               <button @click="editingId = null">Cancelar</button>
@@ -89,6 +120,11 @@
           </div>
         </div>
       </div>
+    </main>
+
+    <!-- Loading state -->
+    <main class="main-content-detalle loading-state" v-else>
+      <p>Cargando información...</p>
     </main>
   </div>
 </template>
@@ -111,33 +147,54 @@ const editCalificacion = ref(5);
 const menuAbierto = ref(false);
 const currentUser = JSON.parse(sessionStorage.getItem('migo_user'));
 
+// ✅ Formatea "HH:MM:SS" a "HH:MM"
+const formatHora = (hora) => {
+  if (!hora) return '—';
+  return hora.substring(0, 5);
+};
+
 const cargarDatosCompletos = async () => {
   const idVet = route.query.id_vet;
   if (!idVet) return;
   try {
-    const resVet = await fetch(`${API_BASE_URL}/api/veterinaria/${idVet}/detallado`);
-    vet.value = await resVet.json();
-    const resResenas = await fetch(`${API_BASE_URL}/api/resenas/${idVet}`);
-    resenas.value = await resResenas.json();
-  } catch (err) { console.error(err); }
+    const [resVet, resResenas] = await Promise.all([
+      fetch(`${API_BASE_URL}/api/veterinaria/${idVet}/detallado`),
+      fetch(`${API_BASE_URL}/api/resenas/${idVet}`)
+    ]);
+
+    const vetData = await resVet.json();
+    const resenasData = await resResenas.json();
+
+    // ✅ imagen_logo ya viene como URL completa de Cloudinary, no concatenar
+    vet.value = vetData;
+    resenas.value = Array.isArray(resenasData) ? resenasData : [];
+  } catch (err) {
+    console.error('Error al cargar datos:', err);
+  }
 };
 
-const getImageUrl = (ruta) => ruta ? `${API_BASE_URL}${ruta}` : '';
-
 const enviarResena = async () => {
-  if (!currentUser) return alert("Inicia sesión");
-  await fetch(`${API_BASE_URL}/api/resenas`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-        id_vet: route.query.id_vet, 
-        id_usuario: currentUser.id_usuario, 
-        comentario: nuevaResena.value, 
-        calificacion: nuevaCalificacion.value 
-    })
-  });
-  nuevaResena.value = '';
-  cargarDatosCompletos();
+  if (!currentUser) return alert("Inicia sesión para publicar una reseña");
+  if (!nuevaResena.value.trim()) return alert("Escribe un comentario");
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/resenas`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id_vet: route.query.id_vet,
+        id_usuario: currentUser.id_usuario,
+        comentario: nuevaResena.value,
+        calificacion: nuevaCalificacion.value
+      })
+    });
+    if (!res.ok) throw new Error('Error al publicar reseña');
+    nuevaResena.value = '';
+    nuevaCalificacion.value = 5;
+    await cargarDatosCompletos();
+  } catch (err) {
+    alert('Error: ' + err.message);
+  }
 };
 
 const iniciarEdicion = (r) => {
@@ -147,22 +204,33 @@ const iniciarEdicion = (r) => {
 };
 
 const guardarEdicion = async (id) => {
-  await fetch(`${API_BASE_URL}/api/resenas/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ comentario: editTexto.value, calificacion: editCalificacion.value })
-  });
-  editingId.value = null;
-  cargarDatosCompletos();
+  try {
+    await fetch(`${API_BASE_URL}/api/resenas/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ comentario: editTexto.value, calificacion: editCalificacion.value })
+    });
+    editingId.value = null;
+    await cargarDatosCompletos();
+  } catch (err) {
+    alert('Error al guardar: ' + err.message);
+  }
 };
 
 const eliminarResena = async (id) => {
   if (!confirm('¿Borrar reseña?')) return;
-  await fetch(`${API_BASE_URL}/api/resenas/${id}`, { method: 'DELETE' });
-  cargarDatosCompletos();
+  try {
+    await fetch(`${API_BASE_URL}/api/resenas/${id}`, { method: 'DELETE' });
+    await cargarDatosCompletos();
+  } catch (err) {
+    alert('Error al eliminar: ' + err.message);
+  }
 };
 
-const handleLogout = () => { sessionStorage.removeItem('migo_user'); router.push('/'); };
+const handleLogout = () => {
+  sessionStorage.removeItem('migo_user');
+  router.push('/');
+};
 
 onMounted(cargarDatosCompletos);
 </script>
