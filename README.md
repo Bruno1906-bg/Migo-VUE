@@ -46,11 +46,16 @@
 
 [Plantilla de reuniones SCRUM](https://universi799-my.sharepoint.com/:w:/g/personal/2402044_)
 
+[Reunion_Scrum-5.pdf](https://github.com/user-attachments/files/29484659/Reunion_Scrum-5.pdf)
+
+[Reunion_Scrum-4.pdf](https://github.com/user-attachments/files/29484645/Reunion_Scrum-4.pdf)
+
 [Reunion_Scrum-3.pdf](https://github.com/user-attachments/files/28603801/Reunion_Scrum-3.pdf)
 
 [Reunion_Scrum-2.pdf](https://github.com/user-attachments/files/28603800/Reunion_Scrum-2.pdf)
 
 [Reunion_Scrum-1.pdf](https://github.com/user-attachments/files/28603799/Reunion_Scrum-1.pdf)
+
 
 --DOCUMENTACION DEL DESPLEGADO--
 
