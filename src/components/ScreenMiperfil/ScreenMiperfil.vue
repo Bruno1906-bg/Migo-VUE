@@ -60,7 +60,6 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Avatar from "vue3-avatar";
 
-const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const router = useRouter();
 const menuAbierto = ref(false);
 const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
