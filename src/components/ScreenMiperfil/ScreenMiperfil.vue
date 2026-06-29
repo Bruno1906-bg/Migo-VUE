@@ -45,7 +45,7 @@
             
             <div class="perfil-field">
               <label>Registro:</label>
-              <p>{{ new Date(usuario.fecha_registro).toLocaleDateString() }}</p>
+              <p>{{ usuario.fecha_registro ? new Date(usuario.fecha_registro).toLocaleDateString() : 'N/A' }}</p>
             </div>
           </div>
           <button class="btn-save" @click="guardarPerfil">Guardar cambios</button>
@@ -62,6 +62,7 @@ import Avatar from "vue3-avatar";
 
 const router = useRouter();
 const menuAbierto = ref(false);
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 
 const usuario = ref({
   nombre: '',
@@ -105,14 +106,16 @@ const toggleEdit = (field) => {
 
 const guardarPerfil = async () => {
   try {
-    await fetch(`http://localhost:4000/api/usuarios/${idUsuario}`, {
+    const res = await fetch(`${API_BASE_URL}/api/usuarios/${idUsuario}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(usuario.value)
     });
+    if (!res.ok) throw new Error('Error al actualizar');
     alert("Perfil actualizado correctamente");
   } catch (error) {
     console.error("Error al guardar perfil:", error);
+    alert("Error al guardar: " + error.message);
   }
 };
 
@@ -123,19 +126,22 @@ const handleLogout = () => {
 };
 
 onMounted(async () => {
+  if (!idUsuario) return;
   try {
-    const response = await fetch(`http://localhost:4000/api/usuarios/${idUsuario}`);
-    usuario.value = await response.json();
-
-    const resColonias = await fetch("http://localhost:4000/api/colonias");
-    colonias.value = await resColonias.json();
+    const [resUser, resCol] = await Promise.all([
+      fetch(`${API_BASE_URL}/api/usuarios/${idUsuario}`),
+      fetch(`${API_BASE_URL}/api/colonias`)
+    ]);
+    
+    usuario.value = await resUser.json();
+    colonias.value = await resCol.json();
 
     const baseColors = ['#14a098', '#0f7d77', '#1abc9c', '#16a085'];
     const index = idUsuario % baseColors.length;
-    const tone = (idUsuario % 3 - 1) * 0.2; // -0.2, 0, +0.2
+    const tone = (idUsuario % 3 - 1) * 0.2;
     avatarColor.value = shadeColor(baseColors[index], tone);
-
-     } catch (error) {
+  } catch (error) {
+    console.error("Error al cargar datos:", error);
   }
 });
 </script>

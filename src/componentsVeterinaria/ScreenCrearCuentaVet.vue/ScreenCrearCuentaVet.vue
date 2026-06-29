@@ -38,6 +38,7 @@
             </ul>
           </div>
 
+          <!-- Campo de Teléfono recuperado de la versión local -->
           <div class="input-group full-width">
             <label for="telefono">Teléfono de contacto</label>
             <input v-model="form.telefono" type="text" id="telefono" placeholder="Ej. 109 876 5432" required>
@@ -70,10 +71,19 @@
 import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
+// URL base de producción en Railway
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const router = useRouter();
+
 const form = reactive({
-  nombre: '', apellido: '', correo: '', contrasena: '', 
-  telefono: '', direccion: '', id_colonia: '', nombre_establecimiento: ''
+  nombre: '', 
+  apellido: '', 
+  correo: '', 
+  contrasena: '', 
+  telefono: '', 
+  direccion: '', 
+  id_colonia: '', 
+  nombre_establecimiento: ''
 });
 
 const colonias = ref([]);
@@ -83,8 +93,13 @@ const message = ref('');
 const messageType = ref('');
 
 onMounted(async () => {
-  const res = await fetch('http://localhost:4000/api/colonias');
-  colonias.value = await res.json();
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/colonias`);
+    if (!res.ok) throw new Error('Error al cargar las colonias');
+    colonias.value = await res.json();
+  } catch (err) {
+    console.error("Error al cargar colonias:", err);
+  }
 });
 
 const filtrarColonias = () => {
@@ -100,7 +115,7 @@ const seleccionarColonia = (colonia) => {
 
 const handleRegister = async () => {
   try {
-    const response = await fetch('http://localhost:4000/api/registro-vet', {
+    const response = await fetch(`${API_BASE_URL}/api/registro-vet`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)

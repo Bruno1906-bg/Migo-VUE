@@ -87,6 +87,9 @@ import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+// URL de producción para Railway
+const API_URL = 'https://migobackenddeploy-production.up.railway.app/api';
+
 const fotoInput = ref(null);
 const fileName = ref('');
 const previewUrl = ref(null);
@@ -121,9 +124,9 @@ const handleFileChange = (e) => {
 onMounted(async () => {
   try {
     const [resC, resE, resT] = await Promise.all([
-      fetch('http://localhost:4000/api/colonias'),
-      fetch('http://localhost:4000/api/especies'),
-      fetch('http://localhost:4000/api/tipos_publi')
+      fetch(`${API_URL}/colonias`),
+      fetch(`${API_URL}/especies`),
+      fetch(`${API_URL}/tipos_publi`)
     ]);
 
     colonias.value = await resC.json();
@@ -162,7 +165,7 @@ const handleClickOutside = (event) => {
 };
 
 const handlePublicar = async () => {
-  if (cargando.value) return; // Guard anti-doble-submit
+  if (cargando.value) return; 
   cargando.value = true;
 
   if (!form.id_usuario) {
@@ -173,7 +176,7 @@ const handlePublicar = async () => {
   }
 
   try {
-    const response = await fetch('http://localhost:4000/api/publicaciones', {
+    const response = await fetch(`${API_URL}/publicaciones`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -194,7 +197,7 @@ const handlePublicar = async () => {
       const formData = new FormData();
       formData.append('foto', form.foto);
 
-      const fotoResponse = await fetch(`http://localhost:4000/api/fotos/${data.id_publi}`, {
+      const fotoResponse = await fetch(`${API_URL}/fotos/${data.id_publi}`, {
         method: 'POST',
         body: formData
       });

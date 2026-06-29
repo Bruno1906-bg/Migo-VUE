@@ -1,10 +1,7 @@
 <template>
-    <!-- Contenido principal -->
     <div class="main-content">
         <h2>Ajustes</h2>
-        <!-- Card de datos -->
         <div v-if="usuario" class="perfil-container">
-            <!-- Información editable -->
             <div class="perfil-info">
                 <div class="perfil-field">
                     <label>Nombre:</label>
@@ -48,11 +45,10 @@
 
                 <div class="perfil-field">
                     <label>Fecha de registro:</label>
-                    <p>{{ new Date(usuario.fecha_registro).toLocaleDateString() }}</p>
+                    <p>{{ usuario.fecha_registro ? new Date(usuario.fecha_registro).toLocaleDateString() : 'N/A' }}</p>
                 </div>
             </div>
 
-            <!-- Botón guardar -->
             <button class="btn-save" @click="guardarPerfil">Guardar cambios</button>
         </div>
 
@@ -65,8 +61,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import Avatar from "vue3-avatar";
 
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const router = useRouter();
 
 const usuario = ref({
@@ -80,7 +76,6 @@ const usuario = ref({
 });
 
 const colonias = ref([]);
-const avatarColor = ref('#14a098');
 const editableFields = ref({
     nombre: false,
     apellido: false,
@@ -92,41 +87,37 @@ const editableFields = ref({
 
 const idUsuario = sessionStorage.getItem('id_usuario');
 
-
 const toggleEdit = (field) => {
     editableFields.value[field] = !editableFields.value[field];
 };
 
 const guardarPerfil = async () => {
     try {
-        await fetch(`http://localhost:4000/api/usuarios/${idUsuario}`, {
+        const response = await fetch(`${API_BASE_URL}/api/usuarios/${idUsuario}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(usuario.value)
         });
+        
+        if (!response.ok) throw new Error("Error al actualizar perfil");
         alert("Perfil actualizado correctamente");
     } catch (error) {
         console.error("Error al guardar perfil:", error);
+        alert("Hubo un error al guardar los cambios.");
     }
 };
 
-const handleLogout = () => {
-    sessionStorage.removeItem('migo_user');
-    sessionStorage.removeItem('id_usuario');
-    router.push('/');
-};
-
 onMounted(async () => {
+    if (!idUsuario) return;
+    
     try {
-        const response = await fetch(`http://localhost:4000/api/usuarios/${idUsuario}`);
-        usuario.value = await response.json();
+        const response = await fetch(`${API_BASE_URL}/api/usuarios/${idUsuario}`);
+        if (response.ok) usuario.value = await response.json();
 
-        const resColonias = await fetch("http://localhost:4000/api/colonias");
-        colonias.value = await resColonias.json();
-
-
-
+        const resColonias = await fetch(`${API_BASE_URL}/api/colonias`);
+        if (resColonias.ok) colonias.value = await resColonias.json();
     } catch (error) {
+        console.error("Error al cargar datos del perfil:", error);
     }
 });
 </script>

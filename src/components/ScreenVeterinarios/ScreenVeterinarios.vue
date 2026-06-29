@@ -61,6 +61,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const router = useRouter();
 const searchQuery = ref('');
 const veterinarios = ref([]);
@@ -69,10 +70,12 @@ const diaActual = new Date().getDay();
 
 const cargarVeterinarios = async () => {
   try {
-    const res = await fetch('http://localhost:4000/api/veterinarias/detallado');
+    const res = await fetch(`${API_BASE_URL}/api/veterinarias/detallado`);
     if (!res.ok) throw new Error('Error al cargar veterinarias');
     veterinarios.value = await res.json();
-  } catch (err) { console.error("Error al obtener veterinarios:", err); }
+  } catch (err) { 
+    console.error("Error al obtener veterinarios:", err); 
+  }
 };
 
 onMounted(cargarVeterinarios);
@@ -92,8 +95,15 @@ const obtenerHorarioHoy = (horarios) => {
 };
 
 const obtenerServicios = (servicios) => (!servicios || servicios.length === 0) ? "No registrados" : servicios.map(s => s.nombre).join(", ");
-const getImageUrl = (ruta) => ruta ? `http://localhost:4000${ruta}` : '';
-const handleLogout = () => { sessionStorage.removeItem('migo_user'); router.push('/'); };
+
+// Ajuste para obtener la imagen desde la URL de producción
+const getImageUrl = (ruta) => ruta ? `${API_BASE_URL}${ruta}` : '';
+
+const handleLogout = () => { 
+  sessionStorage.removeItem('migo_user'); 
+  router.push('/'); 
+};
+
 const irCita = (idVet) => router.push({path:'/masinfo', query: { id_vet: idVet }});
 </script>
 

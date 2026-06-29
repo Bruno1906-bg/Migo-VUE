@@ -50,8 +50,8 @@
 
         <div class="grid-publicaciones">
           <div v-for="pub in filteredPublicaciones" :key="pub.id_publi" class="pub-card">
-            <img v-if="pub.ruta_imagen" :src="'http://localhost:4000' + pub.ruta_imagen" :alt="pub.nombre_pet"
-              class="pub-image" @click="abrirImagen('http://localhost:4000' + pub.ruta_imagen)">
+            <img v-if="pub.ruta_imagen" :src="API_BASE_URL + pub.ruta_imagen" :alt="pub.nombre_pet"
+              class="pub-image" @click="abrirImagen(API_BASE_URL + pub.ruta_imagen)">
 
             <div class="pub-info">
               <h3>{{ pub.nombre_pet }}</h3>
@@ -72,6 +72,7 @@
       </main>
     </div>
 
+    <!-- Modales -->
     <div v-if="imagenAmpliada" class="modal-overlay" @click="cerrarImagen">
       <div class="modal-content-img">
         <img :src="imagenAmpliada" alt="Imagen ampliada">
@@ -132,7 +133,6 @@
         </footer>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -141,6 +141,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 
 const idUsuarioActual = sessionStorage.getItem('id_usuario')
   ? parseInt(sessionStorage.getItem('id_usuario'))
@@ -160,7 +161,6 @@ const especies_cat = ref([]);
 const tipos_cat = ref([]);
 
 const menuAbierto = ref(false);
-
 const imagenAmpliada = ref(null);
 const abrirImagen = (src) => { imagenAmpliada.value = src; };
 const cerrarImagen = () => { imagenAmpliada.value = null; };
@@ -219,14 +219,13 @@ const cerrarModalEdicion = () => {
   guardando.value = false;
 };
 
-// Función de eliminar correctamente ubicada
 const eliminarPublicacion = async (idPubli) => {
   if (!confirm('¿Estás seguro de que deseas eliminar esta publicación?')) {
     return;
   }
 
   try {
-    const res = await fetch(`http://localhost:4000/api/publicaciones/${idPubli}`, {
+    const res = await fetch(`${API_BASE_URL}/api/publicaciones/${idPubli}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id_usuario: idUsuarioActual })
@@ -248,7 +247,7 @@ const guardarEdicion = async () => {
   guardando.value = true;
 
   try {
-    const res = await fetch(`http://localhost:4000/api/publicaciones/${formEdicion.value.id_publi}`, {
+    const res = await fetch(`${API_BASE_URL}/api/publicaciones/${formEdicion.value.id_publi}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -277,7 +276,7 @@ const guardarEdicion = async () => {
 
 const cargarPublicaciones = async () => {
   try {
-    const res = await fetch('http://localhost:4000/api/publicaciones');
+    const res = await fetch(`${API_BASE_URL}/api/publicaciones`);
     if (!res.ok) throw new Error('Error al cargar publicaciones');
     publicaciones.value = await res.json();
 
@@ -292,9 +291,9 @@ const cargarPublicaciones = async () => {
 const cargarCatalogos = async () => {
   try {
     const [resC, resE, resT] = await Promise.all([
-      fetch('http://localhost:4000/api/colonias'),
-      fetch('http://localhost:4000/api/especies'),
-      fetch('http://localhost:4000/api/tipos_publi')
+      fetch(`${API_BASE_URL}/api/colonias`),
+      fetch(`${API_BASE_URL}/api/especies`),
+      fetch(`${API_BASE_URL}/api/tipos_publi`)
     ]);
     colonias_cat.value = await resC.json();
     especies_cat.value = await resE.json();
