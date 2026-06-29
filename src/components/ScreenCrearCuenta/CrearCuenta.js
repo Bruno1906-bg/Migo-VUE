@@ -1,9 +1,9 @@
 const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app/api';
 
 /**
- * Función para obtener colonias desde la BD real
+ * Función para obtener colonias
  */
-export const obtenerColonias = async () => {
+const obtenerColonias = async () => {
     try {
         const response = await fetch(`${API_BASE_URL}/colonias`);
         if (!response.ok) throw new Error('Error al cargar colonias');
@@ -15,9 +15,9 @@ export const obtenerColonias = async () => {
 };
 
 /**
- * Función para registrar un usuario en la BD real
+ * Función para registrar un usuario
  */
-export const registrarUsuario = async (datos) => {
+const registrarUsuario = async (datos) => {
     const response = await fetch(`${API_BASE_URL}/usuarios`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -36,15 +36,15 @@ export const registrarUsuario = async (datos) => {
     const result = await response.json();
 
     if (!response.ok) {
-        throw new Error(result.message || 'Error al registrar usuario');
+        throw new Error(result.error || result.message || 'Error al registrar usuario');
     }
     return result;
 };
 
 /**
- * Función para autenticar al usuario contra la BD real
+ * Función para autenticar al usuario
  */
-export const loginUsuario = async (correo, contrasena) => {
+const loginUsuario = async (correo, contrasena) => {
     const response = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,4 +57,10 @@ export const loginUsuario = async (correo, contrasena) => {
         throw new Error(result.message || 'Error en las credenciales');
     }
     return result; 
+};
+
+module.exports = {
+    obtenerColonias,
+    registrarUsuario,
+    loginUsuario
 };

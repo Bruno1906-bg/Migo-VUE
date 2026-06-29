@@ -38,6 +38,12 @@
             </ul>
           </div>
 
+          <!-- Campo de Teléfono recuperado de la versión local -->
+          <div class="input-group full-width">
+            <label for="telefono">Teléfono de contacto</label>
+            <input v-model="form.telefono" type="text" id="telefono" placeholder="Ej. 109 876 5432" required>
+          </div>
+
           <div class="input-group">
             <label for="correo">Correo Electrónico</label>
             <input v-model="form.correo" type="email" id="correo" required>
@@ -65,12 +71,19 @@
 import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-// URL base de producción
+// URL base de producción en Railway
 const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const router = useRouter();
+
 const form = reactive({
-  nombre: '', apellido: '', correo: '', contrasena: '', 
-  telefono: '', direccion: '', id_colonia: '', nombre_establecimiento: ''
+  nombre: '', 
+  apellido: '', 
+  correo: '', 
+  contrasena: '', 
+  telefono: '', 
+  direccion: '', 
+  id_colonia: '', 
+  nombre_establecimiento: ''
 });
 
 const colonias = ref([]);
@@ -82,6 +95,7 @@ const messageType = ref('');
 onMounted(async () => {
   try {
     const res = await fetch(`${API_BASE_URL}/api/colonias`);
+    if (!res.ok) throw new Error('Error al cargar las colonias');
     colonias.value = await res.json();
   } catch (err) {
     console.error("Error al cargar colonias:", err);

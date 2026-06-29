@@ -1,6 +1,8 @@
 <template>
   <div class="dashboard-layout">
-    <aside class="sidebar">
+    <div class="sidebar-overlay" :class="{ active: menuAbierto }" @click="menuAbierto = false"></div>
+
+    <aside class="sidebar" :class="{ open: menuAbierto }">
       <div class="sidebar-logo">
         <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
       </div>
@@ -17,72 +19,36 @@
     </aside>
 
     <div class="main-content">
+      <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
+        <span></span><span></span><span></span>
+      </button>
+
       <main class="feed-section">
         <h2 class="feed-title">Mi Perfil</h2>
 
         <div class="perfil-avatar-left">
-          <Avatar 
-            :name="usuario?.nombre || 'U'" 
-            :size="150" 
-            :color="avatarColor" 
-            :rounded="true" 
-            :fontSize="60" 
-          />
+           <Avatar :name="usuario?.nombre || 'U'" :size="150" :color="avatarColor" :rounded="true" :fontSize="60" />
         </div>
 
         <div v-if="usuario" class="perfil-container">
           <div class="perfil-info">
-            <div class="perfil-field">
-              <label>Nombre:</label>
-              <input v-model="usuario.nombre" type="text" :disabled="!editableFields.nombre" />
-              <span class="edit-icon" @click="toggleEdit('nombre')">⇲</span>
-            </div>
-
-            <div class="perfil-field">
-              <label>Apellido:</label>
-              <input v-model="usuario.apellido" type="text" :disabled="!editableFields.apellido" />
-              <span class="edit-icon" @click="toggleEdit('apellido')">⇲</span>
-            </div>
-
-            <div class="perfil-field">
-              <label>Correo:</label>
-              <input v-model="usuario.correo" type="email" :disabled="!editableFields.correo" />
-              <span class="edit-icon" @click="toggleEdit('correo')">⇲</span>
-            </div>
-
-            <div class="perfil-field">
-              <label>Teléfono:</label>
-              <input v-model="usuario.telefono" type="text" :disabled="!editableFields.telefono" />
-              <span class="edit-icon" @click="toggleEdit('telefono')">⇲</span>
-            </div>
-
-            <div class="perfil-field">
-              <label>Dirección:</label>
-              <input v-model="usuario.direccion" type="text" :disabled="!editableFields.direccion" />
-              <span class="edit-icon" @click="toggleEdit('direccion')">⇲</span>
-            </div>
-
-            <div class="perfil-field">
-              <label>Colonia:</label>
-              <select v-model="usuario.id_colonia" :disabled="!editableFields.colonia">
-                <option v-for="col in colonias" :key="col.id_colonia" :value="col.id_colonia">
-                  {{ col.nombre }}
-                </option>
+            <div class="perfil-field" v-for="(val, key) in editableFields" :key="key">
+              <label>{{ key.charAt(0).toUpperCase() + key.slice(1) }}:</label>
+              <template v-if="key !== 'colonia'">
+                <input v-model="usuario[key]" type="text" :disabled="!editableFields[key]" />
+              </template>
+              <select v-else v-model="usuario.id_colonia" :disabled="!editableFields.colonia">
+                <option v-for="col in colonias" :key="col.id_colonia" :value="col.id_colonia">{{ col.nombre }}</option>
               </select>
-              <span class="edit-icon" @click="toggleEdit('colonia')">⇲</span>
+              <span class="edit-icon" @click="toggleEdit(key)">✎</span>
             </div>
-
+            
             <div class="perfil-field">
-              <label>Fecha de registro:</label>
+              <label>Registro:</label>
               <p>{{ usuario.fecha_registro ? new Date(usuario.fecha_registro).toLocaleDateString() : 'N/A' }}</p>
             </div>
           </div>
-
           <button class="btn-save" @click="guardarPerfil">Guardar cambios</button>
-        </div>
-
-        <div v-else class="no-data">
-          <p>Cargando perfil...</p>
         </div>
       </main>
     </div>
@@ -96,6 +62,8 @@ import Avatar from "vue3-avatar";
 
 const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const router = useRouter();
+const menuAbierto = ref(false);
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 
 const usuario = ref({
   nombre: '',
@@ -135,14 +103,16 @@ const toggleEdit = (field) => {
 
 const guardarPerfil = async () => {
   try {
-    await fetch(`${API_BASE_URL}/api/usuarios/${idUsuario}`, {
+    const res = await fetch(`${API_BASE_URL}/api/usuarios/${idUsuario}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(usuario.value)
     });
+    if (!res.ok) throw new Error('Error al actualizar');
     alert("Perfil actualizado correctamente");
   } catch (error) {
     console.error("Error al guardar perfil:", error);
+    alert("Error al guardar: " + error.message);
   }
 };
 
@@ -155,11 +125,13 @@ const handleLogout = () => {
 onMounted(async () => {
   if (!idUsuario) return;
   try {
-    const response = await fetch(`${API_BASE_URL}/api/usuarios/${idUsuario}`);
-    usuario.value = await response.json();
-
-    const resColonias = await fetch(`${API_BASE_URL}/api/colonias`);
-    colonias.value = await resColonias.json();
+    const [resUser, resCol] = await Promise.all([
+      fetch(`${API_BASE_URL}/api/usuarios/${idUsuario}`),
+      fetch(`${API_BASE_URL}/api/colonias`)
+    ]);
+    
+    usuario.value = await resUser.json();
+    colonias.value = await resCol.json();
 
     const baseColors = ['#14a098', '#0f7d77', '#1abc9c', '#16a085'];
     const index = idUsuario % baseColors.length;

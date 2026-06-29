@@ -1,6 +1,11 @@
 const API_URL = 'https://migobackenddeploy-production.up.railway.app/api';
 
+let publicando = false; // Guard global anti-doble-submit
+
 export const registrarPublicacion = async (datos) => {
+    if (publicando) return; // Evita llamadas duplicadas
+    publicando = true;
+
     try {
         const response = await fetch(`${API_URL}/publicaciones`, {
             method: 'POST',
@@ -42,6 +47,8 @@ export const registrarPublicacion = async (datos) => {
     } catch (error) {
         console.error("Error en registrarPublicacion:", error);
         throw error;
+    } finally {
+        publicando = false; // Siempre se libera el guard
     }
 };
 
@@ -50,12 +57,10 @@ export const obtenerColonias = async () => {
     return await res.json();
 };
 
-
 export const obtenerEspecies = async () => {
     const res = await fetch(`${API_URL}/especies`);
     return await res.json();
 };
-
 
 export const obtenerTipopubli = async () => {
     const res = await fetch(`${API_URL}/tipos_publi`);

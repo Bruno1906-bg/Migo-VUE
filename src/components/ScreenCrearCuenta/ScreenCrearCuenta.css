@@ -165,3 +165,40 @@
 .suggestions li:hover {
   background: #f0f0f0;
 }
+
+/* --- ADAPTACIONES RESPONSIVAS PARA REGISTRO --- */
+
+@media (max-width: 600px) {
+  .register-container {
+    padding: 25px 20px;
+    border-radius: 15px;
+  }
+
+  /* Convertimos el grid en una sola columna en móvil */
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .register-logo {
+    height: 50px;
+  }
+
+  /* Ajustes de inputs para evitar zoom en móviles */
+  .input-group input, 
+  .input-group select {
+    padding: 12px;
+    font-size: 16px; /* Vital para evitar zoom en iOS */
+  }
+
+  .btn-register {
+    padding: 12px;
+    margin-top: 15px;
+  }
+
+  /* Ajuste del Autocomplete en móvil */
+  .suggestions {
+    max-height: 150px; /* Un poco más alto para facilitar el dedo */
+    font-size: 16px;
+  }
+}

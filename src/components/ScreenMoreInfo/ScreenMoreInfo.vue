@@ -1,6 +1,9 @@
 <template>
   <div class="detalle-vet-container-layout">
-    <aside class="sidebar">
+    <div class="sidebar-overlay" :class="{ active: menuAbierto }" @click="menuAbierto = false"></div>
+
+    <aside class="sidebar" :class="{ open: menuAbierto }">
+      <button class="close-sidebar" @click="menuAbierto = false">✕</button>
       <div class="sidebar-logo">
         <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
       </div>
@@ -15,7 +18,12 @@
     </aside>
 
     <main class="main-content-detalle" v-if="vet">
-      <button @click="$router.back()" class="btn-volver">← Volver</button>
+      <div class="top-bar-mobile">
+        <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
+          <span></span><span></span><span></span>
+        </button>
+        <button @click="$router.back()" class="btn-volver">← Volver</button>
+      </div>
 
       <div class="card-detalles">
         <img :src="getImageUrl(vet.imagen_logo)" class="logo-grande" alt="Logo">
@@ -28,11 +36,28 @@
           <p><strong>Teléfono:</strong> {{ vet.telefono_local }}</p>
           <p><strong>Sitio Web:</strong> <a :href="vet.sitio_web" target="_blank">{{ vet.sitio_web }}</a></p>
         </div>
+
+        <div class="cards-info">
+          <div class="card-info" v-if="vet.horarios?.length">
+            <h3>Horarios de Atención</h3>
+            <ul>
+              <li v-for="h in vet.horarios" :key="h.id_dia">
+                {{ h.dia }}: <span>{{ h.cerrado ? 'Cerrado' : `${h.hora_apertura} - ${h.hora_cierre}` }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-info" v-if="vet.servicios?.length">
+            <h3>Servicios ofrecidos</h3>
+            <ul>
+              <li v-for="s in vet.servicios" :key="s.id_servicio">{{ s.nombre }}</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div class="seccion-resenas">
         <h3>Reseñas y Calificaciones</h3>
-        
         <div class="form-resena">
           <select v-model="nuevaCalificacion" class="select-calificacion">
             <option v-for="n in 5" :key="n" :value="n">{{ n }} ⭐</option>
@@ -56,7 +81,6 @@
               <p>Usuario: <strong>{{ r.nombre_completo }}</strong></p>
               <p>{{ r.comentario }}</p>
               <small>Calificación: {{ r.calificacion }} ⭐</small>
-              
               <div v-if="currentUser && currentUser.id_usuario === r.id_usuario" class="actions">
                 <button @click="iniciarEdicion(r)" class="btn-edit">Editar</button>
                 <button @click="eliminarResena(r.id_resena)" class="btn-delete">Eliminar</button>
@@ -68,8 +92,6 @@
     </main>
   </div>
 </template>
-
-<style scoped src="./ScreenMoreInfo.css"></style>
 
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -86,23 +108,21 @@ const nuevaCalificacion = ref(5);
 const editingId = ref(null);
 const editTexto = ref('');
 const editCalificacion = ref(5);
+const menuAbierto = ref(false);
 const currentUser = JSON.parse(sessionStorage.getItem('migo_user'));
 
 const cargarDatosCompletos = async () => {
   const idVet = route.query.id_vet;
   if (!idVet) return;
   try {
-    const resVet = await fetch(`${API_BASE_URL}/api/veterinaria/${idVet}`);
+    const resVet = await fetch(`${API_BASE_URL}/api/veterinaria/${idVet}/detallado`);
     vet.value = await resVet.json();
     const resResenas = await fetch(`${API_BASE_URL}/api/resenas/${idVet}`);
     resenas.value = await resResenas.json();
   } catch (err) { console.error(err); }
 };
 
-const getImageUrl = (nombreImagen) => {
-  if (!nombreImagen) return '';
-  return new URL(`../../assets/imgvet/${nombreImagen}`, import.meta.url).href;
-};
+const getImageUrl = (ruta) => ruta ? `${API_BASE_URL}${ruta}` : '';
 
 const enviarResena = async () => {
   if (!currentUser) return alert("Inicia sesión");
@@ -110,10 +130,10 @@ const enviarResena = async () => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 
-      id_vet: route.query.id_vet, 
-      id_usuario: currentUser.id_usuario, 
-      comentario: nuevaResena.value, 
-      calificacion: nuevaCalificacion.value 
+        id_vet: route.query.id_vet, 
+        id_usuario: currentUser.id_usuario, 
+        comentario: nuevaResena.value, 
+        calificacion: nuevaCalificacion.value 
     })
   });
   nuevaResena.value = '';
@@ -146,3 +166,5 @@ const handleLogout = () => { sessionStorage.removeItem('migo_user'); router.push
 
 onMounted(cargarDatosCompletos);
 </script>
+
+<style scoped src="./ScreenMoreInfo.css"></style>

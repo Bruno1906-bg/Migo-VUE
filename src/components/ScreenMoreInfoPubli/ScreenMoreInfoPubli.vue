@@ -1,7 +1,14 @@
 <template>
   <div class="detalle-publi-container-layout">
-    <aside class="sidebar">
-      <div class="sidebar-logo"><img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo"></div>
+    <!-- Overlay para cerrar el menú al hacer clic fuera -->
+    <div class="sidebar-overlay" :class="{ active: menuAbierto }" @click="menuAbierto = false"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" :class="{ open: menuAbierto }">
+      <button class="close-sidebar" @click="menuAbierto = false">✕</button>
+      <div class="sidebar-logo">
+        <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
+      </div>
       <nav class="sidebar-menu">
         <router-link to="/dashboard" class="menu-item active">° Publicaciones</router-link>
         <router-link to="/perfil" class="menu-item">° Mi Perfil</router-link>
@@ -12,7 +19,13 @@
       </div>
     </aside>
 
+    <!-- Contenido principal -->
     <main class="main-content" v-if="pub">
+      <!-- Botón Hamburguesa -->
+      <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
+        <span></span><span></span><span></span>
+      </button>
+
       <button @click="$router.back()" class="btn-volver">← Volver</button>
 
       <div class="card-detalles">
@@ -34,12 +47,7 @@
 
         <div v-if="mostrarContacto && usuarioPub" class="contact-card">
           <div class="contact-avatar">
-            <Avatar 
-              :name="usuarioPub.nombre || 'U'" 
-              :size="80" 
-              :color="avatarColor" 
-              :rounded="true" 
-            />
+            <Avatar :name="usuarioPub.nombre || 'U'" :size="80" :color="avatarColor" :rounded="true" />
           </div>
           <div class="contact-info">
             <p><strong>{{ usuarioPub.nombre }} {{ usuarioPub.apellido }}</strong></p>
@@ -51,7 +59,6 @@
 
       <div class="seccion-resenas">
         <h3>Comentarios</h3>
-        
         <div class="form-resena">
           <textarea v-model="nuevoComentario" placeholder="Escribe un comentario..."></textarea>
           <button @click="enviarComentario" class="btn-comentar">Publicar Comentario</button>
@@ -88,7 +95,6 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Avatar from "vue3-avatar";
 
-// URL base de producción
 const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const route = useRoute();
 const router = useRouter();
@@ -100,10 +106,10 @@ const currentUser = JSON.parse(sessionStorage.getItem('migo_user'));
 
 const comentarioEnEdicion = ref(null); 
 const textoEdicion = ref('');
-
 const mostrarContacto = ref(false);
 const usuarioPub = ref(null);
 const avatarColor = ref('#14a098');
+const menuAbierto = ref(false);
 
 const cargarDatos = async () => {
   const idBuscado = route.query.id_publi;
@@ -117,7 +123,6 @@ const cargarDatos = async () => {
       const resUser = await fetch(`${API_BASE_URL}/api/usuarios/${pub.value.id_usuario}`);
       if (resUser.ok) usuarioPub.value = await resUser.json();
     }
-
     await cargarComentarios(idLimpio);
   } catch (err) { console.error("Error al cargar:", err); }
 };

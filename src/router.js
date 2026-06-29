@@ -18,7 +18,7 @@ import ScreenDashboardVet from './componentsVeterinaria/ScreenDashboardVeterinar
 import ScreenCrearCuentaVet from './componentsVeterinaria/ScreenCrearCuentaVet.vue/ScreenCrearCuentaVet.vue'
 import ScreenResenasVet from './componentsVeterinaria/ScreenResenasVeterinaria/ScreenResenasVet.vue'
 import ScreenMiNegocio from './componentsVeterinaria/ScreenMiNegocio/ScreenMiNegocio.vue'
-
+import ScreenAjustesVet from './componentsVeterinaria/ScreenAjustesVet/ScreenAjustesVet.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -27,7 +27,9 @@ const router = createRouter({
       children: [
         { path: '', component: ScreenMiNegocio },
         { path: 'resenas', component: ScreenResenasVet },
-        { path: 'minegocio', component: ScreenMiNegocio }
+        { path: 'minegocio', component: ScreenMiNegocio },
+        { path: 'ajustes-vet', component: ScreenAjustesVet }
+
       ]
     },
     { path: '/', component: ScreenLandingPage },

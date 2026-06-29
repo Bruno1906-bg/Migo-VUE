@@ -32,18 +32,18 @@
 
             <div class="field autocomplete">
               <label for="colonia">Colonia</label>
-              <input 
+              <input
                 id="colonia"
-                type="text" 
-                v-model="coloniaInput" 
+                type="text"
+                v-model="coloniaInput"
                 placeholder="Escribe tu colonia..."
                 @input="filtrarColonias"
                 required
               />
               <ul v-if="showSuggestions" class="suggestions">
-                <li 
-                  v-for="c in filteredColonias" 
-                  :key="c.id_colonia" 
+                <li
+                  v-for="c in filteredColonias"
+                  :key="c.id_colonia"
                   @click="seleccionarColonia(c)"
                 >
                   {{ c.nombre }}
@@ -59,11 +59,11 @@
 
           <div class="col-photo">
             <div class="upload-area" @click="$refs.fotoInput.click()">
-              <input 
-                type="file" 
-                ref="fotoInput" 
-                @change="handleFileChange" 
-                hidden 
+              <input
+                type="file"
+                ref="fotoInput"
+                @change="handleFileChange"
+                hidden
                 accept="image/*"
               >
               <div v-if="previewUrl" class="preview-container">
@@ -73,8 +73,10 @@
             </div>
           </div>
         </div>
-        
-        <button type="submit" class="btn-primary">Publicar Reporte</button>
+
+        <button type="submit" class="btn-primary" :disabled="cargando">
+          {{ cargando ? 'Publicando...' : 'Publicar Reporte' }}
+        </button>
       </form>
     </div>
   </div>
@@ -85,7 +87,7 @@ import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
+// URL de producción para Railway
 const API_URL = 'https://migobackenddeploy-production.up.railway.app/api';
 
 const fotoInput = ref(null);
@@ -97,6 +99,7 @@ const coloniaInput = ref('');
 const showSuggestions = ref(false);
 const especies = ref([]);
 const tipos = ref([]);
+const cargando = ref(false);
 
 const form = reactive({
   id_usuario: sessionStorage.getItem('id_usuario') ? parseInt(sessionStorage.getItem('id_usuario')) : null,
@@ -125,6 +128,7 @@ onMounted(async () => {
       fetch(`${API_URL}/especies`),
       fetch(`${API_URL}/tipos_publi`)
     ]);
+
     colonias.value = await resC.json();
     especies.value = await resE.json();
     tipos.value = await resT.json();
@@ -160,14 +164,17 @@ const handleClickOutside = (event) => {
 };
 
 const handlePublicar = async () => {
+  if (cargando.value) return; 
+  cargando.value = true;
+
   if (!form.id_usuario) {
     alert("Sesión no detectada.");
     router.push('/login');
+    cargando.value = false;
     return;
   }
 
   try {
-    // 1. Crear la publicación
     const response = await fetch(`${API_URL}/publicaciones`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -191,7 +198,7 @@ const handlePublicar = async () => {
       formData.append('imagen', form.foto);
       formData.append('id_publi', data.id_publi);
 
-      const fotoResponse = await fetch(`${API_URL}/fotos`, {
+      const fotoResponse = await fetch(`${API_URL}/fotos/${data.id_publi}`, {
         method: 'POST',
         body: formData
       });
@@ -204,6 +211,8 @@ const handlePublicar = async () => {
   } catch (err) {
     console.error(err);
     alert("Error: " + err.message);
+  } finally {
+    cargando.value = false;
   }
 };
 </script>

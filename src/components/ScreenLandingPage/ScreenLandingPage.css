@@ -298,3 +298,47 @@ body {
     background-color: #0b1d28;
     color: white;
 }
+
+/* --- ADAPTACIONES RESPONSIVAS PARA LANDING PAGE --- */
+
+@media (max-width: 900px) {
+  .anuncios-grid {
+    flex-direction: column; /* Apila las secciones en móvil */
+  }
+
+  .Anuncio3, .Anuncio4, .Anuncio5 {
+    height: 50vh; /* Reduce altura para móviles */
+    margin-top: 0 !important; /* Elimina los márgenes que empujaban el diseño */
+    padding: 20px;
+  }
+
+  .Anuncio1-content h1, .Anuncio2-content h1 {
+    font-size: 2rem !important; /* Ajusta tamaño de fuente */
+  }
+}
+
+@media (max-width: 600px) {
+  .features {
+    padding: 40px 5%;
+  }
+  
+  .Anuncio1, .Anuncio2, .Anuncio3, .Anuncio4, .Anuncio5 {
+    height: 60vh;
+  }
+
+  .cta-container {
+    flex-direction: column; /* Apila botones en pantallas muy pequeñas */
+    gap: 10px;
+  }
+  
+  .cta-button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Mejora general de espaciado */
+.anuncios-grid {
+    display: flex;
+    flex-wrap: wrap; /* Asegura que no se desborde */
+}
