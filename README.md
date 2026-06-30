@@ -24,6 +24,10 @@
 
 [Encuensta realizada a usuarios](https://docs.google.com/forms/d/1JoFm_RPcyFNfSV1AhxnY7maLdQTIsZ3CIXxzOGSpB0M/edit#responses)
 
+--CASOS DE USO--
+
+[CASOS DE USO](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQAYK1qP5BfDRaYmDTAHdt5DAUySigI7EDpi1Yb7bx3TE34?e=xrGMDP)
+
 --DOCUMENTACION Y PLANEACION INICIAL DEL PROYECTO--
 
 [PLANTEAMIENTO DEL PROYECTO](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQBNZzLIKhqiQZ1sR-ltua0sAWDpUETfXxBo7WUevUZhuNU?e=VkyJgz)
