@@ -58,8 +58,7 @@
 
 [Reunion_Scrum-2.pdf](https://github.com/user-attachments/files/28603800/Reunion_Scrum-2.pdf)
 
-[Reunion_Scrum-1.pdf](https://github.com/user-attachments/files/28603799/Reunion_Scrum-1.pdf)
-
+[Reunion_Scrum-1 (2).pdf](https://github.com/user-attachments/files/29489016/Reunion_Scrum-1.2.pdf)
 
 --DOCUMENTACION DEL DESPLEGADO--
 
