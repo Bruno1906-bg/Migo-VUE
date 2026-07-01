@@ -22,7 +22,7 @@
 
 -ENCUESTA REALIZADA A USUARIOS-
 
-[Encuensta realizada a usuarios](https://docs.google.com/forms/d/1JoFm_RPcyFNfSV1AhxnY7maLdQTIsZ3CIXxzOGSpB0M/edit#responses)
+[Encuesta realizada a usuarios](https://docs.google.com/forms/d/1JoFm_RPcyFNfSV1AhxnY7maLdQTIsZ3CIXxzOGSpB0M/edit#responses)
 
 --CASOS DE USO--
 
