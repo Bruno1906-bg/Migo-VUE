@@ -1,8 +1,10 @@
 --PROYECTO MIGO--
 
---LINK DEL SITIO DESPLEGADO (FRONTEND)--
+--LINK DEL SITIO DESPLEGADO (FRONTEND/FALLO)--
 
 [PAGINA MIGO](https://comforting-capybara-8c1237.netlify.app/)
+
+[PAGINA MIGO](https://migo-vue.vercel.app/)
 
 --METRICAS Y PARAMETROS EN EXCEL--
 
