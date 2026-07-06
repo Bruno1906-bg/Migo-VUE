@@ -1,0 +1,159 @@
+/* 1. Reset Global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.register-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f2f5;
+    padding: 20px;
+}
+
+/* 2. Contenedor Principal (Estilo MIGO) */
+.register-container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+/* 3. Cabecera */
+.register-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.register-logo {
+    height: 70px;
+    margin-bottom: 15px;
+}
+
+.register-header h2 {
+    color: #011627;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.register-header p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* 4. Grid del Formulario */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas para nombre/apellido */
+    gap: 15px;
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #011627;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1.5px solid #e1e1e1;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #2EC4B6;
+    outline: none;
+}
+
+/* 5. Autocomplete (Colonia) */
+.autocomplete {
+    position: relative;
+}
+
+.suggestions {
+    position: absolute;
+    width: 100%;
+    background: white;
+    border: 1px solid #e1e1e1;
+    border-radius: 0 0 12px 12px;
+    list-style: none;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+}
+
+.suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.suggestions li:hover {
+    background-color: #f0fcfb;
+    color: #2EC4B6;
+}
+
+/* 6. Botón Principal */
+.btn-register {
+    width: 100%;
+    background-color: #2EC4B6;
+    color: #ffffff;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.btn-register:hover {
+    background-color: #26a89c;
+}
+
+/* 7. Mensajes y Footer */
+.form-message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.success { color: #2EC4B6; }
+.error { color: #e74c3c; }
+
+.register-footer {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.register-footer a {
+    color: #2EC4B6;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-back {
+    display: block;
+    margin-top: 15px;
+    color: #999;
+}

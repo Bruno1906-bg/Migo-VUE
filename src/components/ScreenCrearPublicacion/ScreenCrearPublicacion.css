@@ -1,0 +1,148 @@
+/* Contenedor del Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: white;
+  width: 90%;
+  max-width: 600px;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Encabezado */
+.modal-card header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.close-btn {
+  text-decoration: none;
+  color: #888;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Grid del formulario */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.col-inputs { display: flex; flex-direction: column; gap: 15px; }
+
+/* Campos */
+.field { display: flex; flex-direction: column; gap: 5px; }
+
+label { font-weight: 600; color: #555; font-size: 0.9rem; }
+
+input, select, textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+textarea { height: 80px; resize: none; }
+
+/* Área de subida de foto */
+.col-photo {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: #fdfdfd;
+  transition: 0.3s;
+}
+
+.col-photo:hover { border-color: #14a098; }
+
+.upload-content { text-align: center; color: #888; }
+
+/* Botón principal */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background: #14a098;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.btn-primary:hover { background: #0f7d77; }
+
+.form-message {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+/* Autocomplete */
+.autocomplete {
+  position: relative;
+  width: 100%;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  max-height: 120px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0 0;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.suggestions li {
+  padding: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.suggestions li:hover {
+  background: #f0f0f0;
+}
+
+.preview-container {
+  width: 100%;
+  height: 200px;       
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   
+  border-radius: 8px;
+}

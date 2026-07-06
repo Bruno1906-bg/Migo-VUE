@@ -1,0 +1,157 @@
+/* CONTENEDOR PRINCIPAL */
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f7f6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  background-color: white;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  z-index: 1000;
+  transition: 0.3s;
+}
+
+.sidebar-logo {
+  padding: 30px;
+  text-align: center;
+}
+
+.sidebar-logo img {
+  width: 120px;
+  border-radius: 10px;
+}
+
+.sidebar-menu {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #555;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+
+.menu-item:hover {
+  background-color: #e0f2f1;
+  color: #14a098;
+}
+
+/* CORRECCIÓN: Solo iluminar el enlace exacto */
+.menu-item.router-link-exact-active {
+  background-color: #14a098 !important;
+  color: white !important;
+}
+
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid #eee;
+}
+
+.btn-logout {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: 1px solid #ff5e5e;
+  color: #ff5e5e;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-logout:hover {
+  background: #ff5e5e;
+  color: white;
+}
+
+/* CONTENIDO PRINCIPAL */
+.main-content {
+  flex-grow: 1;
+  margin-left: 260px;
+  padding: 30px;
+  transition: 0.3s;
+}
+
+/* BARRA SUPERIOR */
+.top-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.btn-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.btn-hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #14a098;
+  margin: 5px 0;
+}
+
+.close-sidebar {
+  display: none;
+}
+
+/* RESPONSIVIDAD */
+@media (max-width: 768px) {
+  .btn-hamburger {
+    display: block;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .close-sidebar {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #555;
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 900;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+}

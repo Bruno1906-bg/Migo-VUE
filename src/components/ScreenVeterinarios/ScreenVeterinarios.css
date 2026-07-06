@@ -1,0 +1,86 @@
+/* --- Estilos base --- */
+.veterinarios-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f7f6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden; /* Evita desbordamiento horizontal */
+}
+
+/* --- SIDEBAR (Modo Desktop) --- */
+.sidebar {
+  width: 260px;
+  background-color: white;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-logo { padding: 30px; text-align: center; }
+.sidebar-logo img { width: 120px; border-radius: 10px; }
+.sidebar-menu { flex-grow: 1; padding: 20px; }
+.menu-item { display: flex; align-items: center; padding: 12px 15px; text-decoration: none; color: #555; border-radius: 8px; margin-bottom: 10px; transition: 0.3s; }
+.menu-item.active { background-color: #14a098; color: white; }
+.sidebar-footer { padding: 20px; border-top: 1px solid #eee; }
+.btn-logout { width: 100%; padding: 10px; background: none; border: 1px solid #ff5e5e; color: #ff5e5e; border-radius: 5px; cursor: pointer; }
+
+/* --- CONTENIDO PRINCIPAL --- */
+.main-content {
+  flex-grow: 1;
+  margin-left: 260px; /* Espacio para el sidebar fijo */
+  padding: 30px;
+  transition: margin-left 0.3s ease;
+}
+
+/* --- BARRA SUPERIOR Y BUSCADOR --- */
+.top-bar {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 15px 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+  gap: 15px;
+}
+
+.search-container { flex-grow: 1; min-width: 0; }
+.search-input { width: 100%; padding: 12px 20px; border: 1px solid #ddd; border-radius: 25px; outline: none; box-sizing: border-box; }
+
+/* --- BOTÓN HAMBURGUESA (Oculto en desktop) --- */
+.btn-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 5px; }
+.btn-hamburger span { display: block; width: 25px; height: 3px; background: #14a098; margin: 5px 0; }
+
+/* --- RESPONSIVIDAD (MÓVIL) --- */
+@media (max-width: 768px) {
+  .btn-hamburger { display: block; } /* Mostrar en móvil */
+  
+  .sidebar { 
+    transform: translateX(-100%); /* Ocultar sidebar a la izquierda */
+  }
+  
+  .sidebar.open { 
+    transform: translateX(0); /* Mostrar sidebar al abrir */
+  }
+
+  .sidebar-overlay { 
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 900; 
+  }
+  .sidebar-overlay.active { display: block; }
+
+  .main-content { 
+    margin-left: 0; /* Ocupar todo el ancho */
+    padding: 15px; 
+  }
+}
+
+/* --- GRID DE VETERINARIOS --- */
+.grid-veterinarios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+.vet-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.vet-image { width: 100%; height: 200px; object-fit: cover; }
+.vet-info { padding: 15px; }
+.btn-cita { background-color: #14a098; color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; cursor: pointer; }

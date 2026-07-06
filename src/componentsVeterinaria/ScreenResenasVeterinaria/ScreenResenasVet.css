@@ -1,0 +1,21 @@
+.resenas-container {
+  padding: 20px;
+  background: #f9f9f9;
+}
+
+.resena-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+.resena-card p {
+  margin: 5px 0;
+}
+
+.no-resenas {
+  color: #777;
+  font-style: italic;
+}

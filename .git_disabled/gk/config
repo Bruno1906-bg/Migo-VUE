@@ -1,0 +1,12 @@
+[branch "main"]
+	gk-last-accessed = 2026-07-03T00:05:59.677Z
+	gk-last-modified = 2026-06-29T12:39:31.628Z
+[branch "Pruebas"]
+	gk-last-accessed = 2026-06-26T00:08:58.496Z
+	gk-last-modified = 2026-06-26T00:11:56.928Z
+[branch "Pruebas-local"]
+	gk-last-accessed = 2026-07-03T01:21:11.803Z
+	gk-last-modified = 2026-07-03T00:11:34.695Z
+[branch "Deploy-pruebas"]
+	gk-last-accessed = 2026-06-29T00:55:47.670Z
+	gk-last-modified = 2026-06-28T23:40:30.994Z
