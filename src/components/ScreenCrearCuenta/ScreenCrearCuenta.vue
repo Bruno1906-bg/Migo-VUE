@@ -29,7 +29,7 @@
             <input v-model="form.direccion" type="text" id="direccion" placeholder="Ingrese su dirección">
           </div>
 
-          <!-- Autocomplete de colonias -->
+          <!-- 🔹 Autocomplete de colonias -->
           <div class="input-group full-width autocomplete">
             <label for="colonia">Colonia</label>
             <input 
@@ -75,9 +75,9 @@
     </div>
   </div>
 </template>
-
+ 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { registrarUsuario, obtenerColonias } from './CrearCuenta';
 
@@ -89,34 +89,26 @@ const form = reactive({
 const colonias = ref([]);
 const filteredColonias = ref([]);
 const coloniaInput = ref('');
+
 const message = ref('');
 const messageType = ref('');
 
-// Unificación de la lógica de carga y eventos
 onMounted(async () => {
   try {
     const data = await obtenerColonias();
-    
-    if (Array.isArray(data)) {
-        const unique = [];
-        const seen = new Set();
-        for (const c of data) {
-            if (!seen.has(c.nombre.toLowerCase())) {
-                seen.add(c.nombre.toLowerCase());
-                unique.push(c);
-            }
-        }
-        colonias.value = unique;
+
+    const unique = [];
+    const seen = new Set();
+    for (const c of data) {
+      if (!seen.has(c.nombre.toLowerCase())) {
+        seen.add(c.nombre.toLowerCase());
+        unique.push(c);
+      }
     }
+    colonias.value = unique;
   } catch (e) {
     console.error("Error al cargar colonias", e);
   }
-
-  document.addEventListener('click', cerrarSugerencias);
-});
-
-onUnmounted(() => {
-  document.removeEventListener('click', cerrarSugerencias);
 });
 
 const filtrarColonias = () => {
@@ -135,12 +127,12 @@ const seleccionarColonia = (colonia) => {
 const handleRegister = async () => {
   try {
     if (!form.id_colonia) {
-      throw new Error("Por favor, selecciona una colonia de la lista desplegable.");
+      throw new Error("Por favor, selecciona una colonia.");
     }
 
     await registrarUsuario(form);
 
-    message.value = "¡Registro exitoso! Redirigiendo...";
+    message.value = "¡Registro exitoso! Redirigiendo al inicio de sesión...";
     messageType.value = "success";
 
     setTimeout(() => {
@@ -158,6 +150,18 @@ const cerrarSugerencias = (event) => {
     filteredColonias.value = [];
   }
 };
+
+onMounted(async () => {
+  // ... tu código actual de carga de colonias ...
+  document.addEventListener('click', cerrarSugerencias);
+});
+
+// Importante: Limpiar el evento al destruir el componente
+import { onUnmounted } from 'vue';
+onUnmounted(() => {
+  document.removeEventListener('click', cerrarSugerencias);
+});
 </script>
+
 
 <style scoped src="./ScreenCrearCuenta.css"></style>
