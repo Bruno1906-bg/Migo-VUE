@@ -114,18 +114,18 @@ const cargarDatosCompletos = async () => {
   const idVet = route.query.id_vet;
   if (!idVet) return;
   try {
-    const resVet = await fetch(`http://localhost:4000/api/veterinaria/${idVet}/detallado`);
+const resVet = await fetch(`https://migobackenddeploy-production.up.railway.app/api/veterinaria/${idVet}/detallado`);
     vet.value = await resVet.json();
-    const resResenas = await fetch(`http://localhost:4000/api/resenas/${idVet}`);
+const resResenas = await fetch(`https://migobackenddeploy-production.up.railway.app/api/resenas/${idVet}`);
     resenas.value = await resResenas.json();
   } catch (err) { console.error(err); }
 };
 
-const getImageUrl = (ruta) => ruta ? `http://localhost:4000${ruta}` : '';
+const getImageUrl = (ruta) => ruta ? `https://migobackenddeploy-production.up.railway.app${ruta}` : '';
 
 const enviarResena = async () => {
   if (!currentUser) return alert("Inicia sesión");
-  await fetch('http://localhost:4000/api/resenas', {
+  await fetch('https://migobackenddeploy-production.up.railway.app/api/resenas', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id_vet: route.query.id_vet, id_usuario: currentUser.id_usuario, comentario: nuevaResena.value, calificacion: nuevaCalificacion.value })
@@ -141,7 +141,7 @@ const iniciarEdicion = (r) => {
 };
 
 const guardarEdicion = async (id) => {
-  await fetch(`http://localhost:4000/api/resenas/${id}`, {
+  await fetch(`https://migobackenddeploy-production.up.railway.app/api/resenas/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ comentario: editTexto.value, calificacion: editCalificacion.value })
@@ -152,7 +152,7 @@ const guardarEdicion = async (id) => {
 
 const eliminarResena = async (id) => {
   if (!confirm('¿Borrar reseña?')) return;
-  await fetch(`http://localhost:4000/api/resenas/${id}`, { method: 'DELETE' });
+  await fetch(`https://migobackenddeploy-production.up.railway.app/api/resenas/${id}`, { method: 'DELETE' });
   cargarDatosCompletos();
 };
 

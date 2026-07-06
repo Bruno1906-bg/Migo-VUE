@@ -83,7 +83,7 @@ const message = ref('');
 const messageType = ref('');
 
 onMounted(async () => {
-  const res = await fetch('http://localhost:4000/api/colonias');
+const res = await fetch('https://migobackenddeploy-production.up.railway.app/api/colonias');
   colonias.value = await res.json();
 });
 
@@ -100,7 +100,7 @@ const seleccionarColonia = (colonia) => {
 
 const handleRegister = async () => {
   try {
-    const response = await fetch('http://localhost:4000/api/registro-vet', {
+const response = await fetch('https://migobackenddeploy-production.up.railway.app/api/registro-vet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)

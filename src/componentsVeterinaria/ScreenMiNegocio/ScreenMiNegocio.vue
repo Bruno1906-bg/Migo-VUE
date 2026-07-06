@@ -135,10 +135,10 @@ const idVet = sessionStorage.getItem('id_vet');
 
 const cargarNegocio = async () => {
   try {
-    const res = await fetch(`http://localhost:4000/api/veterinaria/${idVet}`);
+const res = await fetch(`https://migobackenddeploy-production.up.railway.app/api/veterinaria/${idVet}`);
     if (res.ok) negocio.value = await res.json();
 
-    const resColonias = await fetch("http://localhost:4000/api/colonias");
+const resColonias = await fetch("https://migobackenddeploy-production.up.railway.app/api/colonias");
     colonias.value = await resColonias.json();
 
     if (negocio.value.id_colonia) {
@@ -146,7 +146,7 @@ const cargarNegocio = async () => {
       if (colonia) coloniaInput.value = colonia.nombre
     }
 
-    const resDias = await fetch("http://localhost:4000/api/dias-semana");
+const resDias = await fetch("https://migobackenddeploy-production.up.railway.app/api/dias-semana");
     if (resDias.ok) {
       diasSemana.value = await resDias.json();
       diasSemana.value.forEach(d => {
@@ -154,7 +154,7 @@ const cargarNegocio = async () => {
       });
     }
 
-    const resHorarios = await fetch(`http://localhost:4000/api/horarios/${idVet}`);
+const resHorarios = await fetch(`https://migobackenddeploy-production.up.railway.app/api/horarios/${idVet}`);
     if (resHorarios.ok) {
       const data = await resHorarios.json();
       data.forEach(h => {
@@ -166,10 +166,10 @@ const cargarNegocio = async () => {
       });
     }
 
-    const resServicios = await fetch("http://localhost:4000/api/servicios");
+const resServicios = await fetch("https://migobackenddeploy-production.up.railway.app/api/servicios");
     if (resServicios.ok) servicios.value = await resServicios.json();
 
-    const resVetServicios = await fetch(`http://localhost:4000/api/vet-servicios/${idVet}`);
+const resVetServicios = await fetch(`https://migobackenddeploy-production.up.railway.app/api/vet-servicios/${idVet}`);
     if (resVetServicios.ok) {
       const data = await resVetServicios.json();
       serviciosSeleccionados.value = data.map(s => s.id_servicio);
@@ -186,7 +186,7 @@ const guardarNegocio = async () => {
       return
     }
 
-    await fetch(`http://localhost:4000/api/veterinarias/${idVet}`, {
+    await fetch(`https://migobackenddeploy-production.up.railway.app/api/veterinarias/${idVet}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(negocio.value)
@@ -199,7 +199,7 @@ const guardarNegocio = async () => {
 
 const guardarHorarios = async () => {
   try {
-    await fetch(`http://localhost:4000/api/horarios/${idVet}`, {
+    await fetch(`https://migobackenddeploy-production.up.railway.app/api/horarios/${idVet}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(horarios.value)
@@ -214,7 +214,7 @@ const agregarServicio = async () => {
   if (!nuevoServicio.value.trim()) return alert("Escribe un nombre para el servicio");
 
   try {
-    const res = await fetch("http://localhost:4000/api/servicios", {
+    const res = await fetch("https://migobackenddeploy-production.up.railway.app/api/servicios", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nombre: nuevoServicio.value })
@@ -230,7 +230,7 @@ const agregarServicio = async () => {
 
 const guardarServicios = async () => {
   try {
-    await fetch(`http://localhost:4000/api/vet-servicios/${idVet}`, {
+    await fetch(`https://migobackenddeploy-production.up.railway.app/api/vet-servicios/${idVet}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(serviciosSeleccionados.value)
@@ -249,7 +249,7 @@ const subirLogo = async (event) => {
   formData.append('logo', file);
 
   try {
-    const res = await fetch(`http://localhost:4000/api/veterinarias/${idVet}/logo`, {
+    const res = await fetch(`https://migobackenddeploy-production.up.railway.app/api/veterinarias/${idVet}/logo`, {
       method: 'POST',
       body: formData
     });
@@ -262,7 +262,7 @@ const subirLogo = async (event) => {
 
 const getImageUrl = (ruta) => {
   if (!ruta) return '';
-  return `http://localhost:4000${ruta}`;
+  return `https://migobackenddeploy-production.up.railway.app${ruta}`;
 };
 
 onMounted(cargarNegocio);

@@ -99,7 +99,7 @@ const toggleEdit = (field) => {
 
 const guardarPerfil = async () => {
     try {
-        await fetch(`http://localhost:4000/api/usuarios/${idUsuario}`, {
+await fetch(`https://migobackenddeploy-production.up.railway.app/api/usuarios/${idUsuario}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(usuario.value)
@@ -118,10 +118,10 @@ const handleLogout = () => {
 
 onMounted(async () => {
     try {
-        const response = await fetch(`http://localhost:4000/api/usuarios/${idUsuario}`);
+const response = await fetch(`https://migobackenddeploy-production.up.railway.app/api/usuarios/${idUsuario}`);
         usuario.value = await response.json();
 
-        const resColonias = await fetch("http://localhost:4000/api/colonias");
+const resColonias = await fetch("https://migobackenddeploy-production.up.railway.app/api/colonias");
         colonias.value = await resColonias.json();
 
 

@@ -22,8 +22,8 @@
 
     <div class="grid-publicaciones">
       <div v-for="pub in filteredPublicaciones" :key="pub.id_publi" class="pub-card">
-        <img v-if="pub.ruta_imagen" :src="'http://localhost:4000' + pub.ruta_imagen" :alt="pub.nombre_pet"
-          class="pub-image" @click="abrirImagen('http://localhost:4000' + pub.ruta_imagen)">
+<img v-if="pub.ruta_imagen" :src="'https://migobackenddeploy-production.up.railway.app' + pub.ruta_imagen" :alt="pub.nombre_pet"
+           class="pub-image" @click="abrirImagen('https://migobackenddeploy-production.up.railway.app' + pub.ruta_imagen)">
 
         <div class="pub-info">
           <span class="badge-tipo" :class="pub.tipo === 'En Adopción' ? 'badge-adopcion' : 'badge-busqueda'">
