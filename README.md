@@ -1,5 +1,9 @@
 --PROYECTO MIGO--
 
+--PLANTILLA MEMORIA NUEVO FORMATO--
+
+[MEMORIA NUEVO FORMATO](https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_mx/IQBZApK3P1rPR6dEa9ByeQ29AdLTNM-AnTBsWfMg2s9RRLQ?e=3V0sDI)
+
 --METRICAS Y PARAMETROS EN EXCEL--
 
 [Dashboard Excel](https://1drv.ms/x/c/7078d49fa903b00e/IQBND_KabafgQpRuX9lLeykcAQzeAtub6MM-wi5jBTxeT4E?e=YGpSaX)
