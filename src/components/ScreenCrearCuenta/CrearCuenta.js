@@ -36,7 +36,7 @@ export const registrarUsuario = async (datos) => {
     const result = await response.json();
 
     if (!response.ok) {
-        throw new Error(result.message || 'Error al registrar usuario');
+        throw new Error(result.details || result.error || result.message || 'Error al registrar usuario');
     }
     return result;
 };
@@ -54,7 +54,7 @@ export const loginUsuario = async (correo, contrasena) => {
     const result = await response.json();
 
     if (!response.ok) {
-        throw new Error(result.message || 'Error en las credenciales');
+        throw new Error(result.details || result.error || result.message || 'Error en las credenciales');
     }
     return result; 
 };
