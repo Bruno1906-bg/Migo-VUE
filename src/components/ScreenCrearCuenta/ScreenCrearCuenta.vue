@@ -130,9 +130,11 @@ const handleRegister = async () => {
       throw new Error("Por favor, selecciona una colonia.");
     }
 
-    await registrarUsuario(form);
+    const result = await registrarUsuario(form);
 
-    message.value = "¡Registro exitoso! Redirigiendo al inicio de sesión...";
+    message.value = result.warning
+      ? `${result.message} ${result.warning}`
+      : "¡Registro exitoso! Redirigiendo al inicio de sesión...";
     messageType.value = "success";
 
     setTimeout(() => {
