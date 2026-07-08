@@ -57,6 +57,227 @@
   outline: none;
 }
 
+.btn-secondary {
+  border: none;
+  background: #14a098;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: #0f7d77;
+  transform: translateY(-1px);
+}
+
+.btn-secondary--light {
+  background: #ffffff;
+  color: #5a6670;
+  border: 1px solid #d8dee3;
+}
+
+.btn-secondary--light:hover {
+  background: #f6f8f9;
+  color: #2f3a41;
+}
+
+.ubicacion-card-wrapper {
+  margin-top: 6px;
+}
+
+.ubicacion-card-wrapper > label {
+  font-size: 0.82rem;
+  color: #6b7280;
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+
+.ubicacion-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1.5px solid #d8e1e4;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbfb 100%);
+  border-radius: 18px;
+  padding: 14px 16px;
+  box-shadow: 0 8px 24px rgba(10, 43, 46, 0.06);
+}
+
+.ubicacion-card--saved {
+  border-color: #16b4a8;
+  background: linear-gradient(180deg, #f4fffd 0%, #ecfffb 100%);
+}
+
+.ubicacion-card__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: #ebf8f7;
+  color: #14a098;
+  font-size: 1.2rem;
+  flex: 0 0 auto;
+}
+
+.ubicacion-card__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ubicacion-card__info strong {
+  color: #234047;
+  font-size: 0.98rem;
+}
+
+.ubicacion-card__info span {
+  color: #7a858b;
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.ubicacion-estado {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #14a098;
+  margin: 8px 0 0;
+  font-size: 0.92rem;
+}
+
+.ubicacion-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 25, 31, 0.42);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 2000;
+}
+
+.ubicacion-modal {
+  width: min(100%, 980px);
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 28px 70px rgba(12, 25, 31, 0.22);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ubicacion-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px 14px;
+  border-bottom: 1px solid #edf1f2;
+}
+
+.ubicacion-modal__header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #223338;
+}
+
+.ubicacion-modal__header p {
+  margin: 6px 0 0;
+  color: #7b8790;
+}
+
+.ubicacion-modal__close {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid #dbe2e5;
+  background: #fff;
+  color: #5e6970;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ubicacion-buscador {
+  display: flex;
+  gap: 10px;
+  padding: 18px 24px 12px;
+  flex-wrap: wrap;
+}
+
+.ubicacion-map-wrapper {
+  position: relative;
+  min-height: 430px;
+}
+
+.ubicacion-map {
+  height: 430px;
+  width: 100%;
+}
+
+.ubicacion-map__loading,
+.ubicacion-map__error {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  font-weight: 600;
+  z-index: 2;
+}
+
+.ubicacion-map__loading {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(247, 251, 251, 0.92) 100%);
+  color: #4d6168;
+}
+
+.ubicacion-map__error {
+  background: rgba(255, 255, 255, 0.98);
+  color: #a94442;
+}
+
+.ubicacion-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px 22px;
+  border-top: 1px solid #edf1f2;
+}
+
+.ubicacion-modal__coords {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #5f6c73;
+}
+
+.ubicacion-modal__coords strong {
+  color: #223338;
+}
+
+.ubicacion-modal__actions {
+  display: flex;
+  gap: 12px;
+}
+
+.ubicacion-centrar-btn {
+  white-space: nowrap;
+}
+
+.ubicacion-centrar-btn:hover {
+  background: #edf9f8;
+}
+
 /* --- Autocomplete colonias --- */
 .autocomplete {
   position: relative;
@@ -233,5 +454,33 @@
     height: 100px;
     margin: 0 auto;
     display: block;
+  }
+
+  .ubicacion-card,
+  .ubicacion-modal__footer,
+  .ubicacion-buscador {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ubicacion-modal {
+    max-height: calc(100vh - 32px);
+  }
+
+  .ubicacion-map {
+    height: 320px;
+  }
+
+  .ubicacion-map-wrapper {
+    min-height: 320px;
+  }
+
+  .ubicacion-modal__actions {
+    width: 100%;
+  }
+
+  .ubicacion-modal__actions .btn-secondary,
+  .ubicacion-modal__actions .btn-save {
+    width: 100%;
   }
 }

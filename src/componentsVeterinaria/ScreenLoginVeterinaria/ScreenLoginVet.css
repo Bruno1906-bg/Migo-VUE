@@ -79,15 +79,27 @@
     align-items: center;
 }
 
+.password-field input {
+    padding-right: 48px;
+}
+
 .password-toggle {
     position: absolute;
     right: 12px;
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 0.8rem;
     color: #2EC4B6;
     padding: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
 }
 
 /* 6. Botón */
