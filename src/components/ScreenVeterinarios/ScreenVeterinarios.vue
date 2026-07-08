@@ -68,7 +68,7 @@
               <p>{{ vet.descripcion }}</p>
               <p><strong>Ubicación:</strong> {{ vet.nombre_colonia }}</p>
               <p v-if="vet.distanciaKm !== null" class="vet-distance"><strong>Distancia:</strong> {{ vet.distanciaKm.toFixed(1) }} km</p>
-              <p><strong>Horario hoy:</strong> {{ obtenerHorarioHoy(vet.horarios) }}</p>
+              <p>{{ obtenerHorarioHoy(vet.horarios) }}</p>
               <p><strong>Servicios:</strong> {{ obtenerServicios(vet.servicios) }}</p>
               <button class="btn-cita" @click="irCita(vet.id_vet)">Ver detalles</button>
             </div>
@@ -522,10 +522,23 @@ const ubicacionActualTexto = computed(() => {
   return 'No se pudo obtener la ubicación actual';
 });
 
+const obtenerIdDiaHoy = () => (diaActual === 0 ? 7 : diaActual);
+
 const obtenerHorarioHoy = (horarios) => {
-  if (!horarios || !horarios[diaActual]) return "No disponible";
-  const hoy = horarios[diaActual];
-  return hoy.cerrado ? "Cerrado" : `${hoy.hora_apertura} - ${hoy.hora_cierre}`;
+  if (!horarios) return 'No disponible';
+
+  const idDiaHoy = obtenerIdDiaHoy();
+  const hoy = Array.isArray(horarios)
+    ? horarios.find(horario => Number(horario.id_dia) === idDiaHoy)
+    : horarios[idDiaHoy] || horarios[diaActual];
+
+  if (!hoy) return 'No disponible';
+
+  if (hoy.cerrado || !hoy.hora_apertura || !hoy.hora_cierre) {
+    return 'Cerrado hoy';
+  }
+
+  return `Abierto hoy · ${hoy.hora_apertura} - ${hoy.hora_cierre}`;
 };
 
 const obtenerServicios = (servicios) => (!servicios || servicios.length === 0) ? "No registrados" : servicios.map(s => s.nombre).join(", ");
