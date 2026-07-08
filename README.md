@@ -86,6 +86,8 @@
 
 --CIERRE--
 
+[Reporte final de desplegado](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQB4RXdSrsf-RZR_LdYJkBmaAYaMohHCOqMTHQ-CLQcffQ0?e=iCh194)
+
 --DISEÑO--
 
 [DISEÑOS DE INTERFACES EN FIGMA](https://www.figma.com/design/nCnZo8WIk8Tdqsu60nVrwZ/Wireframes?node-id=0-1&p=f&t=vqyf1YhMBRUs2gK9-0
