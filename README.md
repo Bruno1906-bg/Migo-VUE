@@ -72,6 +72,8 @@
 
 --INFRAESTRUCTURA--
 
+[LINK DE REPORTE DE HARDWARE](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQBYT0PJC4KqQZNcQkY6a7iMAUDRXHYxYcuaVddCKL6c9Zs?e=xbIaz6)
+
 --BASE DE DATOS--
 
 --SEGURIDAD--
