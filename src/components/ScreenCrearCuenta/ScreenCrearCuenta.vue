@@ -134,7 +134,7 @@ const handleRegister = async () => {
 
     message.value = result.warning
       ? `${result.message} ${result.warning}`
-      : "¡Registro exitoso! Redirigiendo al inicio de sesión...";
+      : (result.message || "¡Registro exitoso! Redirigiendo al inicio de sesión...");
     messageType.value = "success";
 
     setTimeout(() => {
