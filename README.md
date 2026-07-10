@@ -2,7 +2,8 @@
 
 --PLANTILLA MEMORIA NUEVO FORMATO--
 
-[MEMORIA NUEVO FORMATO](https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_mx/IQBZApK3P1rPR6dEa9ByeQ29AdLTNM-AnTBsWfMg2s9RRLQ?e=3V0sDI)
+[MEMORIA NUEVO FORMATO](
+https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_mx/IQBZApK3P1rPR6dEa9ByeQ29AdLTNM-AnTBsWfMg2s9RRLQ?e=3V0sDI)
 
 --METRICAS Y PARAMETROS EN EXCEL--
 
