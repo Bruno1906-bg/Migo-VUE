@@ -92,7 +92,10 @@ const obtenerHorarioHoy = (horarios) => {
 };
 
 const obtenerServicios = (servicios) => (!servicios || servicios.length === 0) ? "No registrados" : servicios.map(s => s.nombre).join(", ");
-const getImageUrl = (ruta) => ruta ? `https://migobackenddeploy-production.up.railway.app${ruta}` : '';
+const getImageUrl = (ruta) => {
+  if (!ruta) return '';
+  return /^https?:\/\//i.test(ruta) ? ruta : `https://migobackenddeploy-production.up.railway.app${ruta}`;
+};
 const handleLogout = () => { sessionStorage.removeItem('migo_user'); router.push('/'); };
 const irCita = (idVet) => router.push({path:'/masinfo', query: { id_vet: idVet }});
 </script>
