@@ -33,6 +33,6 @@ export const reportarUsuario = async (idUsuarioReportado, idAdmin, motivo) => {
         })
     });
     const data = await response.json();
-    if (!response.ok) throw new Error(data.message || 'Error al reportar usuario');
+    if (!response.ok) throw new Error(data.message || data.error || 'Error al reportar usuario');
     return data;
 };
