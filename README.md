@@ -33,6 +33,8 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_m
 
 --ACTIVIDADES REALIZADAS CON EL PROFESOR GEOVANNY--
 
+[Actividad de plan final y automatizacion de tareas](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQB42ulQVAZTT5bZEzIfDkGwAfZ2sDzAy-xvB8D8E59LCdY?e=MluVcd)
+
 [ACT6-EVIDENCIAS_MIGO.pdf](https://github.com/user-attachments/files/28622734/ACT6-EVIDENCIAS_MIGO.pdf)
 
 [ACT6-Plan de metricas y requerimientos.pdf](https://github.com/user-attachments/files/28622733/ACT6-Plan.de.metricas.y.requerimientos.pdf)
