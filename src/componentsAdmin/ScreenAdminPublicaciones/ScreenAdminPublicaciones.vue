@@ -86,7 +86,24 @@
 import { ref, computed, onMounted } from 'vue';
 import { obtenerPublicaciones, eliminarPublicacionAdmin, reportarUsuario } from './Publicacionesadmin';
 
-const idAdminActual = sessionStorage.getItem('id_admin') ? parseInt(sessionStorage.getItem('id_admin')) : null;
+const obtenerIdAdminSesion = () => {
+  const idAdminGuardado = sessionStorage.getItem('id_admin');
+  if (idAdminGuardado) return parseInt(idAdminGuardado, 10);
+
+  try {
+    const usuario = JSON.parse(sessionStorage.getItem('migo_user') || 'null');
+    if (usuario && usuario.rol === 'administrador' && usuario.id_usuario) {
+      sessionStorage.setItem('id_admin', String(usuario.id_usuario));
+      return parseInt(usuario.id_usuario, 10);
+    }
+  } catch (error) {
+    console.error('No se pudo reconstruir la sesión de admin:', error);
+  }
+
+  return null;
+};
+
+const idAdminActual = obtenerIdAdminSesion();
 
 const publicaciones = ref([]);
 const cargando = ref(true);
@@ -158,6 +175,7 @@ const cerrarModalReporte = () => {
 
 const enviarReporte = async () => {
   if (!motivoReporte.value.trim()) return alert('Escribe un motivo');
+  if (!idAdminActual) return alert('No se detectó sesión de administrador. Vuelve a iniciar sesión.');
   enviandoReporte.value = true;
   try {
     await reportarUsuario(publicacionSeleccionada.value.id_usuario, idAdminActual, motivoReporte.value);
