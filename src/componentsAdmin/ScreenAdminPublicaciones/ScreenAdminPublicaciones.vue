@@ -178,7 +178,12 @@ const enviarReporte = async () => {
   if (!idAdminActual) return alert('No se detectó sesión de administrador. Vuelve a iniciar sesión.');
   enviandoReporte.value = true;
   try {
-    await reportarUsuario(publicacionSeleccionada.value.id_usuario, idAdminActual, motivoReporte.value);
+    await reportarUsuario(
+      publicacionSeleccionada.value.id_usuario,
+      idAdminActual,
+      motivoReporte.value,
+      publicacionSeleccionada.value.nombre_pet
+    );
     alert('Usuario reportado correctamente');
     cerrarModalReporte();
   } catch (err) {

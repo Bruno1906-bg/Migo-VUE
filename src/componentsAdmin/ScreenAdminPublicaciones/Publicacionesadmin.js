@@ -22,14 +22,15 @@ export const eliminarPublicacionAdmin = async (idPubli, idAdmin) => {
     return data;
 };
 
-export const reportarUsuario = async (idUsuarioReportado, idAdmin, motivo) => {
+export const reportarUsuario = async (idUsuarioReportado, idAdmin, motivo, nombrePublicacion) => {
     const response = await fetch(`${API_BASE_URL}/admin/reportar-usuario`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             id_usuario_reportado: idUsuarioReportado,
             id_admin: idAdmin,
-            motivo
+            motivo,
+            nombre_publicacion: nombrePublicacion
         })
     });
     const data = await response.json();
