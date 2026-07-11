@@ -25,12 +25,32 @@ import ScreenDashboardAdmin from './componentsAdmin/ScreenDashboardAdmin/ScreenD
 import ScreenAdminPublicaciones from './componentsAdmin/ScreenAdminPublicaciones/ScreenAdminPublicaciones.vue'
 import ScreenAdminUsuarios from './componentsAdmin/ScreenAdminUsuarios/ScreenAdminUsuarios.vue'
 
+const roleHomeRoutes = {
+  usuario: '/dashboard',
+  veterinario: '/dashboardvet',
+  administrador: '/dashboardadmin'
+};
+
+const loginRoutesByRole = {
+  usuario: '/login',
+  veterinario: '/loginvet',
+  administrador: '/login'
+};
+
+const getSessionUser = () => {
+  try {
+    return JSON.parse(sessionStorage.getItem('migo_user') || 'null');
+  } catch (error) {
+    return null;
+  }
+};
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: '/dashboardvet', component: ScreenDashboardVet,
+      meta: { roles: ['veterinario'] },
       children: [
         { path: '', component: ScreenMiNegocio },
         { path: 'resenas', component: ScreenResenasVet },
@@ -38,7 +58,8 @@ const router = createRouter({
         { path: 'ajustes-vet', component: ScreenAjustesVet }
 
       ]
-    },
+      path:'/dashboardadmin', component: ScreenDashboardAdmin,
+      meta: { roles: ['administrador'] },
     {
       path:'/dashboardadmin', component: ScreenDashboardAdmin,
       children: [
@@ -51,16 +72,41 @@ const router = createRouter({
     { path: '/', component: ScreenLandingPage },
     { path: '/login', component: ScreenLogin },
     { path: '/crearcuenta', component: ScreenCrearCuenta },
-    { path: '/dashboard', component: ScreenDashboard },
-    { path: '/masinfopubli', component: ScreenMoreInfoPubli },
-    { path: '/crearpublicacion', component: ScreenCrearPublicacion },
-    { path: '/veterinarios', component: ScreenVeterinarios },
-    { path: '/perfil', component: ScreenMiperfil },
-    { path: '/ajustes', component: ScreenAjustes },
+    { path: '/dashboard', component: ScreenDashboard, meta: { roles: ['usuario'] } },
+    { path: '/masinfopubli', component: ScreenMoreInfoPubli, meta: { roles: ['usuario'] } },
+    { path: '/crearpublicacion', component: ScreenCrearPublicacion, meta: { roles: ['usuario'] } },
+    { path: '/veterinarios', component: ScreenVeterinarios, meta: { roles: ['usuario'] } },
+    { path: '/perfil', component: ScreenMiperfil, meta: { roles: ['usuario'] } },
+    { path: '/ajustes', component: ScreenAjustes, meta: { roles: ['usuario'] } },
     { path: '/loginvet', component: ScreenLoginVet },
     { path: '/crearcuentavet', component: ScreenCrearCuentaVet },
-    { path: '/masinfo', component: ScreenMoreInfo }
+    { path: '/masinfo', component: ScreenMoreInfo, meta: { roles: ['usuario'] } }
   ]
+});
+
+router.beforeEach((to) => {
+  const requiredRoles = to.matched.reduce((roles, record) => {
+    if (Array.isArray(record.meta?.roles)) {
+      roles.push(...record.meta.roles);
+    }
+    return roles;
+  }, []);
+
+  if (requiredRoles.length === 0) {
+    return true;
+  }
+
+  const currentUser = getSessionUser();
+
+  if (!currentUser?.rol) {
+    return loginRoutesByRole[requiredRoles[0]] || '/login';
+  }
+
+  if (!requiredRoles.includes(currentUser.rol)) {
+    return roleHomeRoutes[currentUser.rol] || '/';
+  }
+
+  return true;
 });
 
 export default router;

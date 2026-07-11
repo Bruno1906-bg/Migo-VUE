@@ -262,7 +262,10 @@ const subirLogo = async (event) => {
 
 const getImageUrl = (ruta) => {
   if (!ruta) return '';
-  return `https://migobackenddeploy-production.up.railway.app${ruta}`;
+  if (/^https?:\/\//i.test(ruta)) return ruta;
+  return ruta.startsWith('/')
+    ? `https://migobackenddeploy-production.up.railway.app${ruta}`
+    : `https://migobackenddeploy-production.up.railway.app/${ruta}`;
 };
 
 onMounted(cargarNegocio);
