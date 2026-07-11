@@ -56,12 +56,11 @@ const router = createRouter({
         { path: 'resenas', component: ScreenResenasVet },
         { path: 'minegocio', component: ScreenMiNegocio },
         { path: 'ajustes-vet', component: ScreenAjustesVet }
-
       ]
-      path:'/dashboardadmin', component: ScreenDashboardAdmin,
-      meta: { roles: ['administrador'] },
+    },
     {
       path:'/dashboardadmin', component: ScreenDashboardAdmin,
+      meta: { roles: ['administrador'] },
       children: [
         { path: '', component: ScreenAdminPublicaciones },
         { path: 'administracionpublicaciones', component: ScreenAdminPublicaciones},
