@@ -317,6 +317,11 @@ function limpiarMapa() {
   }
 }
 
+function destruirMapa() {
+  limpiarMapa();
+  mapa.value = null;
+}
+
 function establecerUbicacion(latitud, longitud) {
   ubicacionTemporal.value = { latitud, longitud };
 
@@ -370,10 +375,13 @@ async function cargarMapa() {
     await cargarGoogleMapsApi();
 
     const ubicacionUsuario = await obtenerUbicacionActual();
-    const centro = ubicacionUsuario
-      ? { latitud: ubicacionUsuario.latitud, longitud: ubicacionUsuario.longitud, zoom: 16 }
-      : negocio.value.latitud !== null && negocio.value.longitud !== null
-        ? { latitud: Number(negocio.value.latitud), longitud: Number(negocio.value.longitud), zoom: 16 }
+    const ubicacionGuardada = negocio.value.latitud !== null && negocio.value.longitud !== null
+      ? { latitud: Number(negocio.value.latitud), longitud: Number(negocio.value.longitud) }
+      : null;
+    const centro = ubicacionGuardada
+      ? { ...ubicacionGuardada, zoom: 16 }
+      : ubicacionUsuario
+        ? { latitud: ubicacionUsuario.latitud, longitud: ubicacionUsuario.longitud, zoom: 16 }
         : { latitud: 19.4326, longitud: -99.1332, zoom: 12 };
 
     if (!mapa.value) {
@@ -403,22 +411,21 @@ async function cargarMapa() {
       zIndex: 900
     });
 
-    if (ubicacionUsuario) {
-      ubicacionTemporal.value = { latitud: ubicacionUsuario.latitud, longitud: ubicacionUsuario.longitud };
-    } else if (negocio.value.latitud !== null && negocio.value.longitud !== null) {
-      establecerUbicacion(Number(negocio.value.latitud), Number(negocio.value.longitud));
-    } else {
-      ubicacionTemporal.value = { latitud: centro.latitud, longitud: centro.longitud };
-    }
+    const ubicacionInicialSeleccionada = ubicacionGuardada || ubicacionUsuario || { latitud: centro.latitud, longitud: centro.longitud };
+    establecerUbicacion(ubicacionInicialSeleccionada.latitud, ubicacionInicialSeleccionada.longitud);
 
-    if (!marcadorSeleccionado.value && ubicacionTemporal.value.latitud !== null && ubicacionTemporal.value.longitud !== null) {
-      marcadorSeleccionado.value = new google.maps.Marker({
-        map: mapa.value,
-        position: { lat: ubicacionTemporal.value.latitud, lng: ubicacionTemporal.value.longitud },
-        icon: crearIconoSeleccionado(),
-        title: 'Ubicación seleccionada',
-        zIndex: 1000
-      });
+    if (ubicacionUsuario) {
+      if (!marcadorActual.value) {
+        marcadorActual.value = new google.maps.Marker({
+          map: mapa.value,
+          position: { lat: ubicacionUsuario.latitud, lng: ubicacionUsuario.longitud },
+          title: 'Ubicación actual',
+          icon: crearIconoUbicacionActual(),
+          zIndex: 900
+        });
+      } else {
+        marcadorActual.value.setPosition({ lat: ubicacionUsuario.latitud, lng: ubicacionUsuario.longitud });
+      }
     }
 
     mapClickListener = mapa.value.addListener('click', event => {
@@ -442,6 +449,7 @@ function abrirModalUbicacion() {
 
 function cerrarModalUbicacion() {
   mostrarModalUbicacion.value = false;
+  destruirMapa();
 }
 
 async function centrarMiUbicacionActual() {
@@ -635,7 +643,7 @@ watch(mostrarModalUbicacion, async abierto => {
   if (abierto) {
     await cargarMapa();
   } else {
-    limpiarMapa();
+    destruirMapa();
   }
 });
 
