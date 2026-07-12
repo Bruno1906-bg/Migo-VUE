@@ -112,7 +112,7 @@
     </div>
 
     <Teleport to="body">
-      <div v-if="mostrarModalUbicacion" class="ubicacion-modal-backdrop" @click.self="cerrarModalUbicacion">
+      <div v-show="mostrarModalUbicacion" class="ubicacion-modal-backdrop" @click.self="cerrarModalUbicacion">
         <div class="ubicacion-modal">
           <div class="ubicacion-modal__header">
             <div>
@@ -339,6 +339,23 @@ function destruirMapa() {
   mapa.value = null;
 }
 
+function reajustarMapaVisible(centro) {
+  if (!mapa.value) return;
+
+  const aplicarAjuste = () => {
+    if (!mapa.value) return;
+    google.maps.event.trigger(mapa.value, 'resize');
+    mapa.value.setCenter({ lat: centro.latitud, lng: centro.longitud });
+  };
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      aplicarAjuste();
+      window.setTimeout(aplicarAjuste, 120);
+    });
+  });
+}
+
 function establecerUbicacion(latitud, longitud) {
   ubicacionTemporal.value = { latitud, longitud };
 
@@ -422,8 +439,7 @@ async function cargarMapa() {
 
     await nextTick();
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-    google.maps.event.trigger(mapa.value, 'resize');
-    mapa.value.setCenter({ lat: centro.latitud, lng: centro.longitud });
+    reajustarMapaVisible(centro);
 
     limpiarMapa();
 
@@ -472,7 +488,6 @@ function abrirModalUbicacion() {
 
 function cerrarModalUbicacion() {
   mostrarModalUbicacion.value = false;
-  destruirMapa();
   mapaIntentoInicial.value = false;
 }
 
@@ -483,7 +498,7 @@ async function centrarMiUbicacionActual() {
   }
 
   actualizarUbicacionActualEnMapa(ubicacion.latitud, ubicacion.longitud);
-  mapa.value?.setCenter({ lat: ubicacion.latitud, lng: ubicacion.longitud });
+  mapa.value?.panTo({ lat: ubicacion.latitud, lng: ubicacion.longitud });
   mapa.value?.setZoom(16);
 }
 
@@ -659,8 +674,6 @@ function getImageUrl(ruta) {
 watch(mostrarModalUbicacion, async abierto => {
   if (abierto) {
     await cargarMapa();
-  } else {
-    destruirMapa();
   }
 });
 
