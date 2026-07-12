@@ -125,6 +125,7 @@
 
           <p v-if="cargandoMapa" class="map-status">Cargando mapa...</p>
           <p v-if="errorMapa" class="map-status map-status--error">{{ errorMapa }}</p>
+          <p v-if="errorMapaDetalle" class="map-status map-status--error map-status--detail">{{ errorMapaDetalle }}</p>
         </div>
       </div>
     </Teleport>
@@ -132,7 +133,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 
 const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
@@ -153,9 +154,18 @@ const currentLocationMarker = ref(null);
 const currentRadiusCircle = ref(null);
 const cargandoMapa = ref(false);
 const errorMapa = ref('');
+const errorMapaDetalle = ref('');
 
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
 let googleMapsLoaderPromise = null;
+let previousGmAuthFailure = null;
+
+function mostrarErrorMapa(contexto, error) {
+  const detalle = error instanceof Error ? error.message : String(error ?? 'Error desconocido');
+  errorMapa.value = contexto;
+  errorMapaDetalle.value = detalle;
+  console.error(contexto, error);
+}
 
 function cargarGoogleMapsApi() {
   if (window.google?.maps) {
@@ -169,13 +179,33 @@ function cargarGoogleMapsApi() {
         return;
       }
 
+      const timeoutId = window.setTimeout(() => {
+        reject(new Error('Google Maps tardó demasiado en responder'));
+      }, 15000);
+
+      previousGmAuthFailure = window.gm_authFailure;
+      window.gm_authFailure = () => {
+        window.clearTimeout(timeoutId);
+        reject(new Error('Google Maps rechazó la clave. Revisa la API habilitada, las restricciones de referrer y la facturación.'));
+      };
+
       const script = document.createElement('script');
       const params = new URLSearchParams({ key: googleMapsApiKey, v: 'weekly', loading: 'async' });
       script.src = `https://maps.googleapis.com/maps/api/js?${params.toString()}`;
       script.async = true;
       script.defer = true;
-      script.onload = () => resolve(window.google.maps);
-      script.onerror = () => reject(new Error('No se pudo cargar Google Maps'));
+      script.onload = () => {
+        window.clearTimeout(timeoutId);
+        if (window.google?.maps) {
+          resolve(window.google.maps);
+        } else {
+          reject(new Error('Google Maps cargó el script pero no expuso window.google.maps'));
+        }
+      };
+      script.onerror = () => {
+        window.clearTimeout(timeoutId);
+        reject(new Error('No se pudo cargar el script de Google Maps'));
+      };
       document.head.appendChild(script);
     });
   }
@@ -477,8 +507,7 @@ async function cargarMapa() {
     limpiarMapa();
     actualizarMarcadoresMapa();
   } catch (err) {
-    console.error('Error cargando Google Maps:', err);
-    errorMapa.value = 'No se pudo cargar el mapa. Verifica la API key.';
+    mostrarErrorMapa('No se pudo cargar el mapa de veterinarias.', err);
   } finally {
     cargandoMapa.value = false;
   }
@@ -517,6 +546,13 @@ const irCita = (idVet) => router.push({ path: '/masinfo', query: { id_vet: idVet
 
 onMounted(async () => {
   await Promise.all([cargarVeterinarios(), cargarUbicacionActual()]);
+});
+
+onUnmounted(() => {
+  if (previousGmAuthFailure !== null) {
+    window.gm_authFailure = previousGmAuthFailure;
+    previousGmAuthFailure = null;
+  }
 });
 
 watch(mostrarMapa, async abierto => {
