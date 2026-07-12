@@ -22,8 +22,8 @@
 
     <div class="grid-publicaciones">
       <div v-for="pub in filteredPublicaciones" :key="pub.id_publi" class="pub-card">
-<img v-if="pub.ruta_imagen" :src="'https://migobackenddeploy-production.up.railway.app' + pub.ruta_imagen" :alt="pub.nombre_pet"
-           class="pub-image" @click="abrirImagen('https://migobackenddeploy-production.up.railway.app' + pub.ruta_imagen)">
+<img v-if="pub.ruta_imagen" :src="getImageUrl(pub.ruta_imagen)" :alt="pub.nombre_pet"
+           class="pub-image" @click="abrirImagen(getImageUrl(pub.ruta_imagen))">
 
         <div class="pub-info">
           <span class="badge-tipo" :class="pub.tipo === 'En Adopción' ? 'badge-adopcion' : 'badge-busqueda'">
@@ -118,6 +118,11 @@ const tipos = ref([]);
 const imagenAmpliada = ref(null);
 const abrirImagen = (src) => { imagenAmpliada.value = src; };
 const cerrarImagen = () => { imagenAmpliada.value = null; };
+
+const getImageUrl = (ruta) => {
+  if (!ruta) return '';
+  return /^https?:\/\//i.test(ruta) ? ruta : `https://migobackenddeploy-production.up.railway.app${ruta}`;
+};
 
 const modalReporte = ref(false);
 const enviandoReporte = ref(false);

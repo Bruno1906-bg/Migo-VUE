@@ -29,7 +29,7 @@
       <button @click="$router.back()" class="btn-volver">← Volver</button>
 
       <div class="card-detalles">
-<img :src="'https://migobackenddeploy-production.up.railway.app' + pub.ruta_imagen" class="publi-grande" alt="Mascota">
+<img :src="getImageUrl(pub.ruta_imagen)" class="publi-grande" alt="Mascota">
         <h1>{{ pub.nombre_pet }}</h1>
         <p class="desc">{{ pub.descripcion }}</p>
         
@@ -108,6 +108,11 @@ const mostrarContacto = ref(false);
 const usuarioPub = ref(null);
 const avatarColor = ref('#14a098');
 const menuAbierto = ref(false); // Estado para menú móvil
+
+const getImageUrl = (ruta) => {
+  if (!ruta) return '';
+  return /^https?:\/\//i.test(ruta) ? ruta : `https://migobackenddeploy-production.up.railway.app${ruta}`;
+};
 
 const cargarDatos = async () => {
   const idBuscado = route.query.id_publi;

@@ -96,6 +96,7 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'https://migobackenddeploy-production.up.railway.app/api';
 const form = reactive({
   nombre: '', apellido: '', correo: '', contrasena: '', 
   telefono: '', direccion: '', id_colonia: '', nombre_establecimiento: ''
@@ -119,7 +120,7 @@ const cerrarSugerencias = (event) => {
 };
 
 onMounted(async () => {
-const res = await fetch('https://migobackenddeploy-production.up.railway.app/api/colonias');
+const res = await fetch(`${API_BASE_URL}/colonias`);
   colonias.value = await res.json();
 
   document.addEventListener('click', cerrarSugerencias);
@@ -138,15 +139,17 @@ const seleccionarColonia = (colonia) => {
 
 const handleRegister = async () => {
   try {
-const response = await fetch('https://migobackenddeploy-production.up.railway.app/api/registro-vet', {
+const response = await fetch(`${API_BASE_URL}/registro-vet`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)
     });
 
-    if (!response.ok) throw new Error("Error al registrar el negocio");
+    const result = await response.json();
 
-    message.value = "¡Registro exitoso! Ahora inicia sesión.";
+    if (!response.ok) throw new Error(result.details || result.error || result.message || "Error al registrar el negocio");
+
+    message.value = result.message || "¡Registro exitoso! Ahora inicia sesión.";
     messageType.value = "success";
     setTimeout(() => router.push('/loginvet'), 2000);
   } catch (err) {
