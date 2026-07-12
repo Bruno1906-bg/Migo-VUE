@@ -471,6 +471,11 @@ async function cargarMapa() {
       googleMapsMap.value.setZoom(centroInicial.zoom);
     }
 
+    await nextTick();
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    google.maps.event.trigger(googleMapsMap.value, 'resize');
+    googleMapsMap.value.setCenter({ lat: centroInicial.latitud, lng: centroInicial.longitud });
+
     limpiarMapa();
     actualizarMarcadoresMapa();
   } catch (err) {
