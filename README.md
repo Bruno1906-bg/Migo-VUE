@@ -1,5 +1,10 @@
 --PROYECTO MIGO--
 
+--PLANTILLA MEMORIA NUEVO FORMATO--
+
+[MEMORIA NUEVO FORMATO](
+https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_mx/IQBZApK3P1rPR6dEa9ByeQ29AdLTNM-AnTBsWfMg2s9RRLQ?e=3V0sDI)
+
 --METRICAS Y PARAMETROS EN EXCEL--
 
 [Dashboard Excel](https://1drv.ms/x/c/7078d49fa903b00e/IQBND_KabafgQpRuX9lLeykcAQzeAtub6MM-wi5jBTxeT4E?e=YGpSaX)
@@ -27,6 +32,8 @@
 [PLANEACION INICIAL DE UN PROYECTO](https://universi799-my.sharepoint.com/:w:/r/personal/2402137_utrivieramaya_edu_mx/_layouts/15/Doc.aspx?sourcedoc=%7B3110ac6b-3036-4e02-a97f-cf4a4beeb90d%7D&action=default)
 
 --ACTIVIDADES REALIZADAS CON EL PROFESOR GEOVANNY--
+
+[Actividad de plan final y automatizacion de tareas](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQB42ulQVAZTT5bZEzIfDkGwAfZ2sDzAy-xvB8D8E59LCdY?e=MluVcd)
 
 [ACT6-EVIDENCIAS_MIGO.pdf](https://github.com/user-attachments/files/28622734/ACT6-EVIDENCIAS_MIGO.pdf)
 
@@ -68,6 +75,8 @@
 
 --INFRAESTRUCTURA--
 
+[LINK DE REPORTE DE HARDWARE](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQBYT0PJC4KqQZNcQkY6a7iMAUDRXHYxYcuaVddCKL6c9Zs?e=xbIaz6)
+
 --BASE DE DATOS--
 
 --SEGURIDAD--
@@ -79,6 +88,8 @@
 --OPERACION--
 
 --CIERRE--
+
+[Reporte final de desplegado](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQB4RXdSrsf-RZR_LdYJkBmaAYaMohHCOqMTHQ-CLQcffQ0?e=iCh194)
 
 --DISEÑO--
 

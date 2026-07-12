@@ -121,7 +121,10 @@ const resResenas = await fetch(`https://migobackenddeploy-production.up.railway.
   } catch (err) { console.error(err); }
 };
 
-const getImageUrl = (ruta) => ruta ? `https://migobackenddeploy-production.up.railway.app${ruta}` : '';
+const getImageUrl = (ruta) => {
+  if (!ruta) return '';
+  return /^https?:\/\//i.test(ruta) ? ruta : `https://migobackenddeploy-production.up.railway.app${ruta}`;
+};
 
 const enviarResena = async () => {
   if (!currentUser) return alert("Inicia sesión");
