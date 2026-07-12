@@ -74,6 +74,23 @@
   color: white;
 }
 
+.dashboard-vet-layout {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.main-content {
+  min-width: 0;
+}
+
+.btn-hamburger {
+  align-self: flex-start;
+}
+
+.main-content > :not(.btn-hamburger) {
+  width: 100%;
+}
+
 /* CONTENIDO PRINCIPAL */
 .main-content {
   flex-grow: 1;
@@ -259,6 +276,33 @@
   .main-content {
     margin-left: 0;
     padding: 15px;
+  }
+
+  .top-bar-vet {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .grid-servicios {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .service-actions {
+    flex-wrap: wrap;
+  }
+
+  .service-actions .btn-edit,
+  .service-actions .btn-delete {
+    flex: 1 1 120px;
   }
 }
 

@@ -302,19 +302,42 @@ body {
 /* --- ADAPTACIONES RESPONSIVAS PARA LANDING PAGE --- */
 
 @media (max-width: 900px) {
+    .header {
+        padding: 0.9rem 4%;
+    }
+
+    .logo img {
+        height: 64px;
+    }
+
   .anuncios-grid {
     flex-direction: column; /* Apila las secciones en móvil */
   }
 
   .Anuncio3, .Anuncio4, .Anuncio5 {
-    height: 50vh; /* Reduce altura para móviles */
+        min-height: 42vh;
+        height: auto;
     margin-top: 0 !important; /* Elimina los márgenes que empujaban el diseño */
     padding: 20px;
   }
 
+    .Anuncio1, .Anuncio2 {
+        min-height: 50vh;
+        height: auto;
+    }
+
   .Anuncio1-content h1, .Anuncio2-content h1 {
     font-size: 2rem !important; /* Ajusta tamaño de fuente */
   }
+
+    .menu {
+        gap: 18px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 420px;
+    }
 }
 
 @media (max-width: 600px) {
@@ -323,8 +346,12 @@ body {
   }
   
   .Anuncio1, .Anuncio2, .Anuncio3, .Anuncio4, .Anuncio5 {
-    height: 60vh;
+        min-height: 38vh;
   }
+
+    .Anuncio1-content h1, .Anuncio2-content h1 {
+        font-size: 1.65rem !important;
+    }
 
   .cta-container {
     flex-direction: column; /* Apila botones en pantallas muy pequeñas */
@@ -341,4 +368,8 @@ body {
 .anuncios-grid {
     display: flex;
     flex-wrap: wrap; /* Asegura que no se desborde */
+}
+
+.menu {
+    padding: 0 5%;
 }

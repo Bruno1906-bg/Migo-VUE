@@ -12,6 +12,7 @@
             <th>Nombre</th>
             <th>Correo</th>
             <th>Telefono</th>
+            <th>Rol</th>
             <th>Acciones</th>
           </tr>
         </thead>

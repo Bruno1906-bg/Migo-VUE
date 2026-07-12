@@ -57,6 +57,7 @@
   margin-left: 260px;
   padding: 40px;
   max-width: 900px;
+  min-width: 0;
 }
 
 .btn-volver {
@@ -237,8 +238,18 @@
     gap: 10px; 
   }
 
+  .card-detalles,
+  .seccion-resenas {
+    padding: 20px;
+  }
+
   .publi-grande { 
     max-height: 250px; /* Imagen más pequeña en móvil */
+  }
+
+  .contact-card {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .close-sidebar {
