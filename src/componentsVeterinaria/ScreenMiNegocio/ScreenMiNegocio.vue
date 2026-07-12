@@ -399,6 +399,11 @@ async function cargarMapa() {
       mapa.value.setZoom(centro.zoom);
     }
 
+    await nextTick();
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    google.maps.event.trigger(mapa.value, 'resize');
+    mapa.value.setCenter({ lat: centro.latitud, lng: centro.longitud });
+
     limpiarMapa();
 
     const initialPosition = { lat: centro.latitud, lng: centro.longitud };
