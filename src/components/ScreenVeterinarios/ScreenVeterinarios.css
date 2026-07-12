@@ -303,12 +303,14 @@
 .legend-dot--outside { background: #d05b5b; }
 
 .map-status {
-  margin: 12px 0 0;
-  color: #526260;
+  margin: 10px 0 0;
+  color: #6f7f7d;
+  font-size: 0.9rem;
 }
 
 .map-status--error {
   color: #b13d3d;
+  font-size: 0.86rem;
 }
 
 /* --- RESPONSIVIDAD (MÓVIL) --- */
