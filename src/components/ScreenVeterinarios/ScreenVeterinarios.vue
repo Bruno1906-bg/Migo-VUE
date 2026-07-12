@@ -488,11 +488,12 @@ async function cargarMapa() {
 
   try {
     await cargarGoogleMapsApi();
+    const { Map } = await window.google.maps.importLibrary('maps');
 
     const centroInicial = obtenerCentroInicialMapa();
 
     if (!googleMapsMap.value) {
-      googleMapsMap.value = new google.maps.Map(mapContainer.value, {
+      googleMapsMap.value = new Map(mapContainer.value, {
         center: { lat: centroInicial.latitud, lng: centroInicial.longitud },
         zoom: centroInicial.zoom,
         zoomControl: true,
