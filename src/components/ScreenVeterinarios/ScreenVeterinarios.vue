@@ -367,6 +367,11 @@ function limpiarMapa() {
   }
 }
 
+function destruirMapa() {
+  limpiarMapa();
+  googleMapsMap.value = null;
+}
+
 function obtenerCentroInicialMapa() {
   if (ubicacionActual.value.latitud !== null && ubicacionActual.value.longitud !== null) {
     return { latitud: ubicacionActual.value.latitud, longitud: ubicacionActual.value.longitud, zoom: 13 };
@@ -482,6 +487,7 @@ function abrirMapa() {
 
 function cerrarMapa() {
   mostrarMapa.value = false;
+  destruirMapa();
 }
 
 function centrarMapaUsuario() {
@@ -514,7 +520,7 @@ watch(mostrarMapa, async abierto => {
   if (abierto) {
     await cargarMapa();
   } else {
-    limpiarMapa();
+    destruirMapa();
   }
 });
 
