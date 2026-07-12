@@ -171,7 +171,7 @@ function cargarGoogleMapsApi() {
       }
 
       const script = document.createElement('script');
-      const params = new URLSearchParams({ key: googleMapsApiKey, v: 'weekly' });
+      const params = new URLSearchParams({ key: googleMapsApiKey, v: 'weekly', loading: 'async' });
       script.src = `https://maps.googleapis.com/maps/api/js?${params.toString()}`;
       script.async = true;
       script.defer = true;
