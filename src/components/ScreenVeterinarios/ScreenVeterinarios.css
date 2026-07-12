@@ -60,12 +60,28 @@
   cursor: pointer;
   font-weight: 700;
   box-shadow: 0 10px 18px rgba(20, 160, 152, 0.18);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-map:hover {
+  background: linear-gradient(135deg, #169892 0%, #0d6f68 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 20px rgba(20, 160, 152, 0.22);
+}
+
+.btn-map:active {
+  transform: translateY(0);
 }
 
 .btn-map--secondary {
   background: #ffffff;
   color: #14a098;
   border: 1px solid rgba(20, 160, 152, 0.25);
+  box-shadow: none;
+}
+
+.btn-map--secondary:hover {
+  background: #eff9f8;
   box-shadow: none;
 }
 
@@ -159,7 +175,40 @@
 .vet-image { width: 100%; height: 200px; object-fit: cover; }
 .vet-info { padding: 15px; }
 .vet-distance { color: #14a098; }
-.btn-cita { background-color: #14a098; color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; cursor: pointer; }
+.btn-cita {
+  background-color: #14a098;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-cita:hover {
+  background-color: #0f7d77;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 16px rgba(20, 160, 152, 0.18);
+}
+
+.btn-cita:active {
+  transform: translateY(0);
+}
+.btn-save,
+.btn-secondary {
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-save:hover,
+.btn-secondary:hover {
+  background-color: #0f7d77;
+  box-shadow: 0 10px 18px rgba(20, 160, 152, 0.16);
+}
+
+.btn-secondary:hover {
+  background: #eff9f8;
+}
 .sin-resultados { color: #5d6b6a; }
 
 /* --- MODAL MAPA --- */
