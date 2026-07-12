@@ -169,6 +169,7 @@ const marcadorSeleccionado = ref(null);
 const ubicacionTemporal = ref({ latitud: null, longitud: null });
 const cargandoMapa = ref(false);
 const errorMapa = ref('');
+const mapaIntentoInicial = ref(false);
 
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
 let googleMapsLoaderPromise = null;
@@ -382,7 +383,15 @@ async function cargarMapa() {
   await nextTick();
   await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
-  if (!mapContainer.value) return;
+  if (!mapContainer.value) {
+    if (!mapaIntentoInicial.value) {
+      mapaIntentoInicial.value = true;
+      await nextTick();
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    }
+
+    if (!mapContainer.value) return;
+  }
 
   cargandoMapa.value = true;
   errorMapa.value = '';
@@ -440,6 +449,13 @@ async function cargarMapa() {
       establecerUbicacion(event.latLng.lat(), event.latLng.lng());
     });
   } catch (err) {
+    if (!mapaIntentoInicial.value) {
+      mapaIntentoInicial.value = true;
+      cargandoMapa.value = false;
+      await new Promise(resolve => setTimeout(resolve, 0));
+      return cargarMapa();
+    }
+
     errorMapa.value = 'No se pudo cargar el mapa. Verifica la API key y que Maps JavaScript API esté habilitada.';
   } finally {
     cargandoMapa.value = false;
@@ -457,6 +473,7 @@ function abrirModalUbicacion() {
 function cerrarModalUbicacion() {
   mostrarModalUbicacion.value = false;
   destruirMapa();
+  mapaIntentoInicial.value = false;
 }
 
 async function centrarMiUbicacionActual() {
