@@ -42,7 +42,7 @@ const handleLoginVet = async () => {
       <form @submit.prevent="handleLoginVet" class="login-form" novalidate>
         <div class="input-group">
           <label for="email">Correo del Negocio</label>
-          <input v-model="email" type="email" id="email" placeholder="correo@veterinaria.com" required>
+          <input v-model="email" type="email" id="email" placeholder="correo@veterinaria.com" autocomplete="username" required>
         </div>
 
         <div class="input-group">
