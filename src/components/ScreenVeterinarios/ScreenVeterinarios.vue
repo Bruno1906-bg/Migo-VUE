@@ -125,7 +125,7 @@
 
           <p v-if="cargandoMapa" class="map-status">Cargando mapa...</p>
           <p v-if="errorMapa" class="map-status map-status--error">{{ errorMapa }}</p>
-          <p v-if="errorMapaDetalle" class="map-status map-status--error map-status--detail">{{ errorMapaDetalle }}</p>
+7          <p v-if="errorMapaDetalle" class="map-status map-status--error map-status--detail">{{ errorMapaDetalle }}</p>
         </div>
       </div>
     </Teleport>
@@ -189,22 +189,31 @@ function cargarGoogleMapsApi() {
         reject(new Error('Google Maps rechazó la clave. Revisa la API habilitada, las restricciones de referrer y la facturación.'));
       };
 
+      const callbackName = '__migoGoogleMapsInit';
+      window[callbackName] = () => {
+        window.clearTimeout(timeoutId);
+        resolve(window.google?.maps ?? null);
+        delete window[callbackName];
+      };
+
       const script = document.createElement('script');
-      const params = new URLSearchParams({ key: googleMapsApiKey, v: 'weekly', loading: 'async' });
+      const params = new URLSearchParams({
+        key: googleMapsApiKey,
+        v: 'weekly',
+        callback: callbackName
+      });
       script.src = `https://maps.googleapis.com/maps/api/js?${params.toString()}`;
       script.async = true;
       script.defer = true;
       script.onload = () => {
-        window.clearTimeout(timeoutId);
-        if (window.google?.maps) {
-          resolve(window.google.maps);
-        } else {
+        if (!window.google?.maps) {
           reject(new Error('Google Maps cargó el script pero no expuso window.google.maps'));
         }
       };
       script.onerror = () => {
         window.clearTimeout(timeoutId);
         reject(new Error('No se pudo cargar el script de Google Maps'));
+        delete window[callbackName];
       };
       document.head.appendChild(script);
     });
@@ -488,12 +497,11 @@ async function cargarMapa() {
 
   try {
     await cargarGoogleMapsApi();
-    const { Map } = await window.google.maps.importLibrary('maps');
 
     const centroInicial = obtenerCentroInicialMapa();
 
     if (!googleMapsMap.value) {
-      googleMapsMap.value = new Map(mapContainer.value, {
+      googleMapsMap.value = new window.google.maps.Map(mapContainer.value, {
         center: { lat: centroInicial.latitud, lng: centroInicial.longitud },
         zoom: centroInicial.zoom,
         zoomControl: true,
