@@ -43,7 +43,7 @@ const handleLogin = async () => {
       <form @submit.prevent="handleLogin" class="login-form" novalidate>
         <div class="input-group">
           <label for="email">Correo Electrónico</label>
-          <input v-model="email" type="email" id="email" placeholder="Ingrese su correo electrónico." autocomplete="username" required>
+          <input v-model="email" type="email" id="email" name="username" placeholder="Ingrese su correo electrónico." autocomplete="username" required>
         </div>
 
         <div class="input-group">
