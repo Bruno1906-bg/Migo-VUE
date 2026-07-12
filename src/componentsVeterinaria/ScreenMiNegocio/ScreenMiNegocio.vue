@@ -130,7 +130,6 @@
 
           <div class="ubicacion-map-wrapper">
             <div ref="mapContainer" class="ubicacion-map"></div>
-            <div v-if="cargandoMapa" class="ubicacion-map__loading">Cargando mapa...</div>
             <div v-if="errorMapa" class="ubicacion-map__error">{{ errorMapa }}</div>
           </div>
 
@@ -172,7 +171,6 @@ const cargandoMapa = ref(false);
 const errorMapa = ref('');
 
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
-const googleMapsMapId = import.meta.env.VITE_GOOGLE_MAPS_ID ?? '';
 let googleMapsLoaderPromise = null;
 let mapClickListener = null;
 
@@ -317,6 +315,24 @@ function limpiarMapa() {
   }
 }
 
+function actualizarUbicacionActualEnMapa(latitud, longitud) {
+  if (!mapa.value) return;
+
+  const posicion = { lat: latitud, lng: longitud };
+
+  if (!marcadorActual.value) {
+    marcadorActual.value = new google.maps.Marker({
+      map: mapa.value,
+      position: posicion,
+      title: 'Ubicación actual',
+      icon: crearIconoUbicacionActual(),
+      zIndex: 900
+    });
+  } else {
+    marcadorActual.value.setPosition(posicion);
+  }
+}
+
 function destruirMapa() {
   limpiarMapa();
   mapa.value = null;
@@ -374,21 +390,17 @@ async function cargarMapa() {
   try {
     await cargarGoogleMapsApi();
 
-    const ubicacionUsuario = await obtenerUbicacionActual();
     const ubicacionGuardada = negocio.value.latitud !== null && negocio.value.longitud !== null
       ? { latitud: Number(negocio.value.latitud), longitud: Number(negocio.value.longitud) }
       : null;
     const centro = ubicacionGuardada
       ? { ...ubicacionGuardada, zoom: 16 }
-      : ubicacionUsuario
-        ? { latitud: ubicacionUsuario.latitud, longitud: ubicacionUsuario.longitud, zoom: 16 }
-        : { latitud: 19.4326, longitud: -99.1332, zoom: 12 };
+      : { latitud: 19.4326, longitud: -99.1332, zoom: 12 };
 
     if (!mapa.value) {
       mapa.value = new google.maps.Map(mapContainer.value, {
         center: { lat: centro.latitud, lng: centro.longitud },
         zoom: centro.zoom,
-        mapId: googleMapsMapId || undefined,
         zoomControl: true,
         streetViewControl: false,
         mapTypeControl: false,
@@ -416,28 +428,18 @@ async function cargarMapa() {
       zIndex: 900
     });
 
-    const ubicacionInicialSeleccionada = ubicacionGuardada || ubicacionUsuario || { latitud: centro.latitud, longitud: centro.longitud };
+    const ubicacionInicialSeleccionada = ubicacionGuardada || { latitud: centro.latitud, longitud: centro.longitud };
     establecerUbicacion(ubicacionInicialSeleccionada.latitud, ubicacionInicialSeleccionada.longitud);
 
-    if (ubicacionUsuario) {
-      if (!marcadorActual.value) {
-        marcadorActual.value = new google.maps.Marker({
-          map: mapa.value,
-          position: { lat: ubicacionUsuario.latitud, lng: ubicacionUsuario.longitud },
-          title: 'Ubicación actual',
-          icon: crearIconoUbicacionActual(),
-          zIndex: 900
-        });
-      } else {
-        marcadorActual.value.setPosition({ lat: ubicacionUsuario.latitud, lng: ubicacionUsuario.longitud });
-      }
-    }
+    obtenerUbicacionActual().then(ubicacionUsuario => {
+      if (!ubicacionUsuario || !mapa.value) return;
+      actualizarUbicacionActualEnMapa(ubicacionUsuario.latitud, ubicacionUsuario.longitud);
+    });
 
     mapClickListener = mapa.value.addListener('click', event => {
       establecerUbicacion(event.latLng.lat(), event.latLng.lng());
     });
   } catch (err) {
-    console.error('Error cargando Google Maps:', err);
     errorMapa.value = 'No se pudo cargar el mapa. Verifica la API key y que Maps JavaScript API esté habilitada.';
   } finally {
     cargandoMapa.value = false;
@@ -460,11 +462,11 @@ function cerrarModalUbicacion() {
 async function centrarMiUbicacionActual() {
   const ubicacion = await obtenerUbicacionActual();
   if (!ubicacion) {
-    alert('No se pudo obtener tu ubicación actual');
     return;
   }
 
-  establecerUbicacion(ubicacion.latitud, ubicacion.longitud);
+  actualizarUbicacionActualEnMapa(ubicacion.latitud, ubicacion.longitud);
+  mapa.value?.setCenter({ lat: ubicacion.latitud, lng: ubicacion.longitud });
   mapa.value?.setZoom(16);
 }
 
@@ -484,7 +486,6 @@ async function confirmarUbicacion() {
       cerrarModalUbicacion();
     }
   } catch (err) {
-    console.error('No se pudo guardar la ubicación', err);
     alert('No se pudo guardar la ubicación seleccionada');
   }
 }
@@ -544,7 +545,6 @@ async function cargarNegocio() {
       serviciosSeleccionados.value = data.map(s => s.id_servicio);
     }
   } catch (err) {
-    console.error('Error cargando negocio:', err);
   }
 }
 
@@ -567,7 +567,6 @@ async function guardarNegocio(mostrarAlerta = true) {
 
     return true;
   } catch (err) {
-    console.error('Error al guardar negocio:', err);
     if (mostrarAlerta) {
       alert('No se pudo guardar el negocio');
     }
@@ -584,7 +583,6 @@ async function guardarHorarios() {
     });
     alert('Horarios actualizados correctamente');
   } catch (err) {
-    console.error('Error al guardar horarios:', err);
   }
 }
 
@@ -602,7 +600,6 @@ async function agregarServicio() {
     servicios.value.push({ id_servicio: data.id_servicio, nombre: nuevoServicio.value });
     nuevoServicio.value = '';
   } catch (err) {
-    console.error('Error al agregar servicio:', err);
   }
 }
 
@@ -615,7 +612,6 @@ async function guardarServicios() {
     });
     alert('Servicios actualizados correctamente');
   } catch (err) {
-    console.error('Error al guardar servicios:', err);
   }
 }
 
@@ -634,7 +630,6 @@ async function subirLogo(event) {
     const data = await res.json();
     negocio.value.imagen_logo = data.imagen_logo;
   } catch (err) {
-    console.error('Error al subir logo:', err);
   }
 }
 

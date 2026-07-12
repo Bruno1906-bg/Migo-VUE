@@ -123,9 +123,7 @@
             <span><i class="legend-dot legend-dot--outside"></i> Fuera del radio</span>
           </div>
 
-          <p v-if="cargandoMapa" class="map-status">Cargando mapa...</p>
           <p v-if="errorMapa" class="map-status map-status--error">{{ errorMapa }}</p>
-7          <p v-if="errorMapaDetalle" class="map-status map-status--error map-status--detail">{{ errorMapaDetalle }}</p>
         </div>
       </div>
     </Teleport>

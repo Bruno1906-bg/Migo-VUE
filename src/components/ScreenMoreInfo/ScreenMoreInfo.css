@@ -82,6 +82,7 @@
   flex-grow: 1;
   margin-left: 260px;
   padding: 40px;
+  min-width: 0;
 }
 
 .btn-volver {
@@ -109,14 +110,10 @@
 }
 
 .logo-grande {
-  width: 120%;
-  /* ocupa todo el ancho */
+  width: 100%;
   max-width: 400px;
-  /* límite para que no se vea demasiado grande */
   height: auto;
-  /* mantiene proporción */
   object-fit: contain;
-  /* muestra la imagen completa */
   border-radius: 10px;
   border: 3px solid #14a098;
   margin-bottom: 20px;
@@ -161,8 +158,8 @@
 
 /* Card base */
 .card-info {
- flex: 0 0 280px;
-   min-width: 300px;
+  flex: 1 1 280px;
+  min-width: 280px;
   background: white;
   padding: 18px;
   border-radius: 15px;
@@ -339,6 +336,10 @@ textarea {
   .cards-info { flex-direction: column; }
   .card-info { min-width: 100%; flex: 1; }
   .top-bar-mobile { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+
+  .logo-grande {
+    max-width: 280px;
+  }
 }
 
 /* Ajustes de imagen para que no desborde */

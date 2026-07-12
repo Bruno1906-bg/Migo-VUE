@@ -353,13 +353,14 @@
 .ubicacion-map__loading,
 .ubicacion-map__error {
   position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
-  border-radius: 14px;
-  padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  border-radius: 12px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+  font-size: 0.86rem;
 }
 
 .ubicacion-map__error {

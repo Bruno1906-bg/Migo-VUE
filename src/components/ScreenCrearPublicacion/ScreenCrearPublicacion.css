@@ -146,3 +146,39 @@ textarea { height: 80px; resize: none; }
   object-fit: cover;   
   border-radius: 8px;
 }
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    align-items: flex-start;
+    padding: 16px;
+    overflow-y: auto;
+  }
+
+  .modal-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .modal-card header {
+    margin-bottom: 18px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .col-photo {
+    min-height: 220px;
+    padding: 16px;
+  }
+
+  .preview-container {
+    height: 180px;
+  }
+
+  .btn-primary {
+    margin-top: 16px;
+  }
+}
