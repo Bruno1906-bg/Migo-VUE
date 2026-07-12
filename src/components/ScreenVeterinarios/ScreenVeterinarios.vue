@@ -155,7 +155,6 @@ const cargandoMapa = ref(false);
 const errorMapa = ref('');
 
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
-const googleMapsMapId = import.meta.env.VITE_GOOGLE_MAPS_ID ?? '';
 let googleMapsLoaderPromise = null;
 
 function cargarGoogleMapsApi() {
@@ -460,7 +459,6 @@ async function cargarMapa() {
       googleMapsMap.value = new google.maps.Map(mapContainer.value, {
         center: { lat: centroInicial.latitud, lng: centroInicial.longitud },
         zoom: centroInicial.zoom,
-        mapId: googleMapsMapId || undefined,
         zoomControl: true,
         streetViewControl: false,
         mapTypeControl: false,
