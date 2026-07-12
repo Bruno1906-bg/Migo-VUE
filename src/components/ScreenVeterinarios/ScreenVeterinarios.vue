@@ -474,14 +474,20 @@ function actualizarMarcadoresMapa() {
 }
 
 async function cargarMapa() {
-  if (!mapContainer.value) return;
+  await nextTick();
+  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+  if (!mapContainer.value) {
+    mostrarErrorMapa('No se pudo montar el contenedor del mapa.', new Error('mapContainer no está disponible'));
+    return;
+  }
 
   cargandoMapa.value = true;
   errorMapa.value = '';
+  errorMapaDetalle.value = '';
 
   try {
     await cargarGoogleMapsApi();
-    await nextTick();
 
     const centroInicial = obtenerCentroInicialMapa();
 
