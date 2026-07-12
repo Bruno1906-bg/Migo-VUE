@@ -1,6 +1,6 @@
 .mi-negocio-container {
   padding: 30px;
-  background-color: #f9f9f9;
+  background: linear-gradient(180deg, #f9fdfc 0%, #eef5f2 100%);
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -23,10 +23,10 @@
 .negocio-form {
   background: #fff;
   border: 1px solid #e0e0e0;
-  border-radius: 15px;
+  border-radius: 18px;
   padding: 25px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-  max-width: 700px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.08);
+  max-width: 720px;
   flex: 2;
 }
 
@@ -44,7 +44,7 @@
 
 .form-field input,
 .form-field textarea {
-  padding: 10px;
+  padding: 10px 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 0.95rem;
@@ -64,7 +64,7 @@
 
 .suggestions {
   position: absolute;
-  top: 100%; /* justo debajo del input */
+  top: 100%;
   left: 0;
   right: 0;
   background: #fff;
@@ -90,21 +90,33 @@
   background-color: #f0f0f0;
 }
 
-/* --- Botón Guardar --- */
-.btn-save {
+/* --- Botones --- */
+.btn-save,
+.btn-secondary {
   background-color: #14a098;
   color: white;
   border: none;
   padding: 12px 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.btn-save:hover {
+.btn-save:hover,
+.btn-secondary:hover {
   background-color: #0f7d77;
   transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: #eff9f8;
+  color: #0f7d77;
+  border: 1px solid rgba(20, 160, 152, 0.15);
+}
+
+.btn-secondary--light {
+  background: #ffffff;
 }
 
 /* --- Logo Preview --- */
@@ -117,14 +129,68 @@
   border: 2px solid #14a098;
 }
 
+/* --- Ubicación --- */
+.ubicacion-card-wrapper {
+  gap: 10px;
+}
+
+.ubicacion-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f7fbfa;
+  border: 1px solid #dbeae8;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.ubicacion-card--saved {
+  background: linear-gradient(180deg, #f4fffd 0%, #edf9f7 100%);
+  border-color: rgba(20, 160, 152, 0.25);
+}
+
+.ubicacion-card__icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: white;
+  color: #14a098;
+  display: grid;
+  place-items: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  box-shadow: 0 8px 18px rgba(20, 160, 152, 0.12);
+}
+
+.ubicacion-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.ubicacion-card__info strong {
+  color: #0f2d2b;
+}
+
+.ubicacion-card__info span,
+.ubicacion-estado {
+  color: #607270;
+  font-size: 0.92rem;
+}
+
+.ubicacion-estado {
+  margin: 6px 0 0;
+}
+
 /* --- Card de horarios --- */
 .horarios-card {
   flex: 1;
   background: #fff;
   border: 1px solid #e0e0e0;
-  border-radius: 15px;
+  border-radius: 18px;
   padding: 20px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.08);
 }
 
 .horarios-card h3 {
@@ -164,9 +230,9 @@
   flex: 1;
   background: #fff;
   border: 1px solid #e0e0e0;
-  border-radius: 15px;
+  border-radius: 18px;
   padding: 20px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.08);
   margin-top: 20px;
 }
 
@@ -212,6 +278,113 @@
   accent-color: #14a098;
 }
 
+/* --- MODAL UBICACIÓN --- */
+.ubicacion-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 18, 17, 0.64);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 2000;
+}
+
+.ubicacion-modal {
+  width: min(1100px, 100%);
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+}
+
+.ubicacion-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.ubicacion-modal__header h3 {
+  margin: 0;
+  color: #0f2d2b;
+}
+
+.ubicacion-modal__header p {
+  margin: 6px 0 0;
+  color: #5d6b6a;
+}
+
+.ubicacion-modal__close {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid #dbe5e3;
+  background: white;
+  cursor: pointer;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.ubicacion-buscador {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 14px;
+}
+
+.ubicacion-map-wrapper {
+  position: relative;
+}
+
+.ubicacion-map {
+  width: 100%;
+  height: min(68vh, 620px);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #eaf1ef;
+}
+
+.ubicacion-map__loading,
+.ubicacion-map__error {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+.ubicacion-map__error {
+  color: #b13d3d;
+}
+
+.ubicacion-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.ubicacion-modal__coords {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #526260;
+}
+
+.ubicacion-modal__coords strong {
+  color: #0f2d2b;
+}
+
+.ubicacion-modal__actions {
+  display: flex;
+  gap: 12px;
+}
+
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .negocio-layout {
@@ -233,5 +406,26 @@
     height: 100px;
     margin: 0 auto;
     display: block;
+  }
+
+  .ubicacion-card,
+  .ubicacion-modal__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ubicacion-modal__actions {
+    width: 100%;
+    justify-content: stretch;
+    flex-direction: column;
+  }
+
+  .ubicacion-modal__actions .btn-save,
+  .ubicacion-modal__actions .btn-secondary {
+    width: 100%;
+  }
+
+  .ubicacion-map {
+    height: 52vh;
   }
 }

@@ -3,8 +3,7 @@
     <h2>Mi Negocio</h2>
 
     <div class="negocio-layout">
-      <!-- Formulario principal -->
-      <form @submit.prevent="guardarNegocio" class="negocio-form">
+      <form @submit.prevent="guardarNegocio()" class="negocio-form">
         <div class="form-field">
           <label>Nombre del establecimiento:</label>
           <input v-model="negocio.nombre_establecimiento" type="text" required />
@@ -15,18 +14,21 @@
           <textarea v-model="negocio.descripcion" required></textarea>
         </div>
 
-        <!-- Autocomplete de colonias -->
         <div class="form-field autocomplete">
           <label>Colonia:</label>
-          <input type="text" v-model="coloniaInput" placeholder="Escribe tu colonia..." @input="filtrarColonias"
-            required />
+          <input
+            type="text"
+            v-model="coloniaInput"
+            placeholder="Escribe tu colonia..."
+            @input="filtrarColonias"
+            required
+          />
           <ul v-if="filteredColonias.length" class="suggestions">
             <li v-for="c in filteredColonias" :key="c.id_colonia" @click="seleccionarColonia(c)">
               {{ c.nombre }}
             </li>
           </ul>
         </div>
-
 
         <div class="form-field">
           <label>Correo de contacto:</label>
@@ -49,11 +51,28 @@
           <img v-if="negocio.imagen_logo" :src="getImageUrl(negocio.imagen_logo)" class="preview-logo" />
         </div>
 
+        <div class="form-field ubicacion-card-wrapper">
+          <label>UBICACIÓN EXACTA</label>
+          <div class="ubicacion-card" :class="{ 'ubicacion-card--saved': tieneUbicacionGuardada }">
+            <div class="ubicacion-card__icon">
+              <span v-if="tieneUbicacionGuardada">⌖</span>
+              <span v-else>◎</span>
+            </div>
+            <div class="ubicacion-card__info">
+              <strong>{{ tieneUbicacionGuardada ? 'Ubicación guardada' : 'Sin ubicación configurada' }}</strong>
+              <span>{{ tieneUbicacionGuardada ? coordenadasTexto : 'Haz clic para seleccionar en el mapa' }}</span>
+            </div>
+            <button type="button" class="btn-secondary" @click="abrirModalUbicacion">
+              {{ tieneUbicacionGuardada ? 'Cambiar' : 'Seleccionar' }}
+            </button>
+          </div>
+          <p v-if="tieneUbicacionGuardada" class="ubicacion-estado">Tu ubicación es visible para los usuarios</p>
+        </div>
+
         <button type="submit" class="btn-save">Guardar cambios</button>
       </form>
 
       <div class="cards-right">
-        <!-- Card de horarios -->
         <div class="horarios-card">
           <h3>Horarios de Atención</h3>
           <form @submit.prevent="guardarHorarios">
@@ -73,14 +92,12 @@
         <div class="servicios-card">
           <h3>Servicios ofrecidos</h3>
 
-          <!-- Input para agregar servicio nuevo -->
           <div class="form-field">
             <label>Agregar nuevo servicio:</label>
             <input v-model="nuevoServicio" type="text" placeholder="Ej. Consulta general" />
             <button @click.prevent="agregarServicio" class="btn-save">Agregar</button>
           </div>
 
-          <!-- Lista de servicios -->
           <form @submit.prevent="guardarServicios">
             <div v-for="servicio in servicios" :key="servicio.id_servicio" class="servicio-row">
               <label>
@@ -93,26 +110,107 @@
         </div>
       </div>
     </div>
+
+    <Teleport to="body">
+      <div v-if="mostrarModalUbicacion" class="ubicacion-modal-backdrop" @click.self="cerrarModalUbicacion">
+        <div class="ubicacion-modal">
+          <div class="ubicacion-modal__header">
+            <div>
+              <h3>Ubicación de tu veterinaria</h3>
+              <p>Haz clic directamente en el mapa o usa tu ubicación actual</p>
+            </div>
+            <button type="button" class="ubicacion-modal__close" @click="cerrarModalUbicacion">×</button>
+          </div>
+
+          <div class="ubicacion-buscador">
+            <button type="button" class="btn-secondary btn-secondary--light ubicacion-centrar-btn" @click="centrarMiUbicacionActual">
+              Mi ubicación actual
+            </button>
+          </div>
+
+          <div class="ubicacion-map-wrapper">
+            <div ref="mapContainer" class="ubicacion-map"></div>
+            <div v-if="cargandoMapa" class="ubicacion-map__loading">Cargando mapa...</div>
+            <div v-if="errorMapa" class="ubicacion-map__error">{{ errorMapa }}</div>
+          </div>
+
+          <div class="ubicacion-modal__footer">
+            <div class="ubicacion-modal__coords">
+              <span>Ubicación seleccionada:</span>
+              <strong>{{ coordenadasTextoTemporal }}</strong>
+            </div>
+            <div class="ubicacion-modal__actions">
+              <button type="button" class="btn-secondary btn-secondary--light" @click="cerrarModalUbicacion">
+                Cancelar
+              </button>
+              <button type="button" class="btn-save" @click="confirmarUbicacion">
+                Confirmar ubicación
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch, nextTick, computed } from 'vue';
 
-const coloniaInput = ref('')
-const filteredColonias = ref([])
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
+const API_URL = `${API_BASE_URL}/api`;
 
-const filtrarColonias = () => {
-  const query = coloniaInput.value.toLowerCase()
-  filteredColonias.value = colonias.value.filter(c =>
-    c.nombre.toLowerCase().includes(query)
-  )
+const coloniaInput = ref('');
+const filteredColonias = ref([]);
+const mostrarModalUbicacion = ref(false);
+const mapContainer = ref(null);
+const mapa = ref(null);
+const marcadorActual = ref(null);
+const marcadorSeleccionado = ref(null);
+const ubicacionTemporal = ref({ latitud: null, longitud: null });
+const cargandoMapa = ref(false);
+const errorMapa = ref('');
+
+const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
+const googleMapsMapId = import.meta.env.VITE_GOOGLE_MAPS_ID ?? '';
+let googleMapsLoaderPromise = null;
+let mapClickListener = null;
+
+function cargarGoogleMapsApi() {
+  if (window.google?.maps) {
+    return Promise.resolve(window.google.maps);
+  }
+
+  if (!googleMapsLoaderPromise) {
+    googleMapsLoaderPromise = new Promise((resolve, reject) => {
+      if (!googleMapsApiKey) {
+        reject(new Error('Falta configurar VITE_GOOGLE_MAPS_API_KEY'));
+        return;
+      }
+
+      const script = document.createElement('script');
+      const params = new URLSearchParams({ key: googleMapsApiKey, v: 'weekly' });
+      script.src = `https://maps.googleapis.com/maps/api/js?${params.toString()}`;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => resolve(window.google.maps);
+      script.onerror = () => reject(new Error('No se pudo cargar Google Maps'));
+      document.head.appendChild(script);
+    });
+  }
+
+  return googleMapsLoaderPromise;
 }
 
-const seleccionarColonia = (colonia) => {
-  negocio.value.id_colonia = colonia.id_colonia
-  coloniaInput.value = colonia.nombre
-  filteredColonias.value = []
+function filtrarColonias() {
+  const query = coloniaInput.value.toLowerCase();
+  filteredColonias.value = colonias.value.filter(c => c.nombre.toLowerCase().includes(query));
+}
+
+function seleccionarColonia(colonia) {
+  negocio.value.id_colonia = colonia.id_colonia;
+  coloniaInput.value = colonia.nombre;
+  filteredColonias.value = [];
 }
 
 const negocio = ref({
@@ -122,6 +220,8 @@ const negocio = ref({
   correo_negocio: '',
   telefono_local: '',
   sitio_web: '',
+  latitud: null,
+  longitud: null,
   imagen_logo: ''
 });
 
@@ -132,21 +232,277 @@ const servicios = ref([]);
 const serviciosSeleccionados = ref([]);
 const nuevoServicio = ref('');
 const idVet = sessionStorage.getItem('id_vet');
+const coordenadasTexto = ref('');
 
-const cargarNegocio = async () => {
+const tieneUbicacionGuardada = computed(() => negocio.value.latitud !== null && negocio.value.longitud !== null);
+const coordenadasTextoTemporal = computed(() => {
+  if (ubicacionTemporal.value.latitud === null || ubicacionTemporal.value.longitud === null) {
+    return 'Aún no seleccionada';
+  }
+
+  return `${ubicacionTemporal.value.latitud.toFixed(5)}, ${ubicacionTemporal.value.longitud.toFixed(5)}`;
+});
+
+function actualizarTextoCoordenadas() {
+  if (negocio.value.latitud !== null && negocio.value.longitud !== null) {
+    coordenadasTexto.value = `${Number(negocio.value.latitud).toFixed(5)}, ${Number(negocio.value.longitud).toFixed(5)}`;
+  } else {
+    coordenadasTexto.value = '';
+  }
+}
+
+function crearIconoUbicacionActual() {
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46">
+      <defs>
+        <filter id="u-shadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="6" stdDeviation="4" flood-color="#1f7ae0" flood-opacity="0.35"/>
+        </filter>
+      </defs>
+      <g filter="url(#u-shadow)">
+        <circle cx="23" cy="23" r="10" fill="#ffffff"/>
+        <circle cx="23" cy="23" r="7" fill="#1f7ae0"/>
+        <circle cx="23" cy="23" r="16" fill="none" stroke="#1f7ae0" stroke-width="4" opacity="0.35"/>
+      </g>
+    </svg>
+  `;
+
+  return {
+    url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`,
+    scaledSize: new google.maps.Size(46, 46),
+    anchor: new google.maps.Point(23, 23)
+  };
+}
+
+function crearIconoSeleccionado() {
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54">
+      <defs>
+        <filter id="s-shadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="6" stdDeviation="4" flood-color="#13a57d" flood-opacity="0.35"/>
+        </filter>
+      </defs>
+      <g filter="url(#s-shadow)">
+        <path d="M27 5c8.8 0 16 7.2 16 16 0 11.5-13.3 25.2-15.7 27.6a.4.4 0 0 1-.6 0C24.3 46.2 11 32.5 11 21c0-8.8 7.2-16 16-16Z" fill="#13a57d"/>
+        <circle cx="27" cy="21" r="5.5" fill="#fff"/>
+      </g>
+    </svg>
+  `;
+
+  return {
+    url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`,
+    scaledSize: new google.maps.Size(54, 54),
+    anchor: new google.maps.Point(27, 54)
+  };
+}
+
+function limpiarMapa() {
+  if (mapClickListener) {
+    google.maps.event.removeListener(mapClickListener);
+    mapClickListener = null;
+  }
+
+  if (marcadorActual.value) {
+    marcadorActual.value.setMap(null);
+    marcadorActual.value = null;
+  }
+
+  if (marcadorSeleccionado.value) {
+    marcadorSeleccionado.value.setMap(null);
+    marcadorSeleccionado.value = null;
+  }
+
+  if (mapa.value) {
+    google.maps.event.clearInstanceListeners(mapa.value);
+  }
+}
+
+function establecerUbicacion(latitud, longitud) {
+  ubicacionTemporal.value = { latitud, longitud };
+
+  if (mapa.value) {
+    const posicion = { lat: latitud, lng: longitud };
+
+    if (!marcadorSeleccionado.value) {
+      marcadorSeleccionado.value = new google.maps.Marker({
+        map: mapa.value,
+        position: posicion,
+        icon: crearIconoSeleccionado(),
+        title: 'Ubicación seleccionada',
+        zIndex: 1000
+      });
+    } else {
+      marcadorSeleccionado.value.setPosition(posicion);
+    }
+
+    mapa.value.setCenter(posicion);
+    mapa.value.setZoom(Math.max(mapa.value.getZoom(), 16));
+  }
+}
+
+async function obtenerUbicacionActual() {
+  return new Promise(resolve => {
+    if (!navigator.geolocation) {
+      resolve(null);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      posicion => {
+        resolve({ latitud: posicion.coords.latitude, longitud: posicion.coords.longitude });
+      },
+      () => resolve(null),
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  });
+}
+
+async function cargarMapa() {
+  await nextTick();
+  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+  if (!mapContainer.value) return;
+
+  cargandoMapa.value = true;
+  errorMapa.value = '';
+
   try {
-const res = await fetch(`https://migobackenddeploy-production.up.railway.app/api/veterinaria/${idVet}`);
-    if (res.ok) negocio.value = await res.json();
+    await cargarGoogleMapsApi();
 
-const resColonias = await fetch("https://migobackenddeploy-production.up.railway.app/api/colonias");
+    const ubicacionUsuario = await obtenerUbicacionActual();
+    const centro = ubicacionUsuario
+      ? { latitud: ubicacionUsuario.latitud, longitud: ubicacionUsuario.longitud, zoom: 16 }
+      : negocio.value.latitud !== null && negocio.value.longitud !== null
+        ? { latitud: Number(negocio.value.latitud), longitud: Number(negocio.value.longitud), zoom: 16 }
+        : { latitud: 19.4326, longitud: -99.1332, zoom: 12 };
+
+    if (!mapa.value) {
+      mapa.value = new google.maps.Map(mapContainer.value, {
+        center: { lat: centro.latitud, lng: centro.longitud },
+        zoom: centro.zoom,
+        mapId: googleMapsMapId || undefined,
+        zoomControl: true,
+        streetViewControl: false,
+        mapTypeControl: false,
+        fullscreenControl: false
+      });
+    } else {
+      mapa.value.setCenter({ lat: centro.latitud, lng: centro.longitud });
+      mapa.value.setZoom(centro.zoom);
+    }
+
+    limpiarMapa();
+
+    const initialPosition = { lat: centro.latitud, lng: centro.longitud };
+
+    marcadorActual.value = new google.maps.Marker({
+      map: mapa.value,
+      position: initialPosition,
+      title: 'Ubicación base',
+      icon: crearIconoUbicacionActual(),
+      zIndex: 900
+    });
+
+    if (ubicacionUsuario) {
+      ubicacionTemporal.value = { latitud: ubicacionUsuario.latitud, longitud: ubicacionUsuario.longitud };
+    } else if (negocio.value.latitud !== null && negocio.value.longitud !== null) {
+      establecerUbicacion(Number(negocio.value.latitud), Number(negocio.value.longitud));
+    } else {
+      ubicacionTemporal.value = { latitud: centro.latitud, longitud: centro.longitud };
+    }
+
+    if (!marcadorSeleccionado.value && ubicacionTemporal.value.latitud !== null && ubicacionTemporal.value.longitud !== null) {
+      marcadorSeleccionado.value = new google.maps.Marker({
+        map: mapa.value,
+        position: { lat: ubicacionTemporal.value.latitud, lng: ubicacionTemporal.value.longitud },
+        icon: crearIconoSeleccionado(),
+        title: 'Ubicación seleccionada',
+        zIndex: 1000
+      });
+    }
+
+    mapClickListener = mapa.value.addListener('click', event => {
+      establecerUbicacion(event.latLng.lat(), event.latLng.lng());
+    });
+  } catch (err) {
+    console.error('Error cargando Google Maps:', err);
+    errorMapa.value = 'No se pudo cargar el mapa. Verifica la API key y que Maps JavaScript API esté habilitada.';
+  } finally {
+    cargandoMapa.value = false;
+  }
+}
+
+function abrirModalUbicacion() {
+  ubicacionTemporal.value = {
+    latitud: negocio.value.latitud !== null ? Number(negocio.value.latitud) : null,
+    longitud: negocio.value.longitud !== null ? Number(negocio.value.longitud) : null
+  };
+  mostrarModalUbicacion.value = true;
+}
+
+function cerrarModalUbicacion() {
+  mostrarModalUbicacion.value = false;
+}
+
+async function centrarMiUbicacionActual() {
+  const ubicacion = await obtenerUbicacionActual();
+  if (!ubicacion) {
+    alert('No se pudo obtener tu ubicación actual');
+    return;
+  }
+
+  establecerUbicacion(ubicacion.latitud, ubicacion.longitud);
+  mapa.value?.setZoom(16);
+}
+
+async function confirmarUbicacion() {
+  if (ubicacionTemporal.value.latitud === null || ubicacionTemporal.value.longitud === null) {
+    alert('Selecciona una ubicación en el mapa o usa tu ubicación actual');
+    return;
+  }
+
+  negocio.value.latitud = Number(ubicacionTemporal.value.latitud);
+  negocio.value.longitud = Number(ubicacionTemporal.value.longitud);
+  actualizarTextoCoordenadas();
+
+  try {
+    const guardado = await guardarNegocio(false);
+    if (guardado) {
+      cerrarModalUbicacion();
+    }
+  } catch (err) {
+    console.error('No se pudo guardar la ubicación', err);
+    alert('No se pudo guardar la ubicación seleccionada');
+  }
+}
+
+function normalizarNegocio(data) {
+  return {
+    ...negocio.value,
+    ...data,
+    latitud: data.latitud !== null && data.latitud !== undefined ? Number(data.latitud) : null,
+    longitud: data.longitud !== null && data.longitud !== undefined ? Number(data.longitud) : null
+  };
+}
+
+async function cargarNegocio() {
+  try {
+    const res = await fetch(`${API_URL}/veterinaria/${idVet}`);
+    if (res.ok) {
+      const data = await res.json();
+      negocio.value = normalizarNegocio(data);
+      actualizarTextoCoordenadas();
+    }
+
+    const resColonias = await fetch(`${API_URL}/colonias`);
     colonias.value = await resColonias.json();
 
     if (negocio.value.id_colonia) {
-      const colonia = colonias.value.find(c => c.id_colonia === negocio.value.id_colonia)
-      if (colonia) coloniaInput.value = colonia.nombre
+      const colonia = colonias.value.find(c => c.id_colonia === negocio.value.id_colonia);
+      if (colonia) coloniaInput.value = colonia.nombre;
     }
 
-const resDias = await fetch("https://migobackenddeploy-production.up.railway.app/api/dias-semana");
+    const resDias = await fetch(`${API_URL}/dias-semana`);
     if (resDias.ok) {
       diasSemana.value = await resDias.json();
       diasSemana.value.forEach(d => {
@@ -154,7 +510,7 @@ const resDias = await fetch("https://migobackenddeploy-production.up.railway.app
       });
     }
 
-const resHorarios = await fetch(`https://migobackenddeploy-production.up.railway.app/api/horarios/${idVet}`);
+    const resHorarios = await fetch(`${API_URL}/horarios/${idVet}`);
     if (resHorarios.ok) {
       const data = await resHorarios.json();
       data.forEach(h => {
@@ -166,57 +522,66 @@ const resHorarios = await fetch(`https://migobackenddeploy-production.up.railway
       });
     }
 
-const resServicios = await fetch("https://migobackenddeploy-production.up.railway.app/api/servicios");
+    const resServicios = await fetch(`${API_URL}/servicios`);
     if (resServicios.ok) servicios.value = await resServicios.json();
 
-const resVetServicios = await fetch(`https://migobackenddeploy-production.up.railway.app/api/vet-servicios/${idVet}`);
+    const resVetServicios = await fetch(`${API_URL}/vet-servicios/${idVet}`);
     if (resVetServicios.ok) {
       const data = await resVetServicios.json();
       serviciosSeleccionados.value = data.map(s => s.id_servicio);
     }
   } catch (err) {
-    console.error("Error cargando negocio:", err);
+    console.error('Error cargando negocio:', err);
   }
-};
+}
 
-const guardarNegocio = async () => {
+async function guardarNegocio(mostrarAlerta = true) {
   try {
     if (!negocio.value.id_colonia) {
-      alert("Debes seleccionar una colonia válida de la lista")
-      return
+      alert('Debes seleccionar una colonia válida de la lista');
+      return false;
     }
 
-    await fetch(`https://migobackenddeploy-production.up.railway.app/api/veterinarias/${idVet}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+    await fetch(`${API_URL}/veterinarias/${idVet}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(negocio.value)
     });
-    alert("Negocio actualizado correctamente");
-  } catch (err) {
-    console.error("Error al guardar negocio:", err);
-  }
-};
 
-const guardarHorarios = async () => {
+    if (mostrarAlerta) {
+      alert('Negocio actualizado correctamente');
+    }
+
+    return true;
+  } catch (err) {
+    console.error('Error al guardar negocio:', err);
+    if (mostrarAlerta) {
+      alert('No se pudo guardar el negocio');
+    }
+    throw err;
+  }
+}
+
+async function guardarHorarios() {
   try {
-    await fetch(`https://migobackenddeploy-production.up.railway.app/api/horarios/${idVet}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+    await fetch(`${API_URL}/horarios/${idVet}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(horarios.value)
     });
-    alert("Horarios actualizados correctamente");
+    alert('Horarios actualizados correctamente');
   } catch (err) {
-    console.error("Error al guardar horarios:", err);
+    console.error('Error al guardar horarios:', err);
   }
-};
+}
 
-const agregarServicio = async () => {
-  if (!nuevoServicio.value.trim()) return alert("Escribe un nombre para el servicio");
+async function agregarServicio() {
+  if (!nuevoServicio.value.trim()) return alert('Escribe un nombre para el servicio');
 
   try {
-    const res = await fetch("https://migobackenddeploy-production.up.railway.app/api/servicios", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const res = await fetch(`${API_URL}/servicios`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nombre: nuevoServicio.value })
     });
     const data = await res.json();
@@ -224,24 +589,24 @@ const agregarServicio = async () => {
     servicios.value.push({ id_servicio: data.id_servicio, nombre: nuevoServicio.value });
     nuevoServicio.value = '';
   } catch (err) {
-    console.error("Error al agregar servicio:", err);
+    console.error('Error al agregar servicio:', err);
   }
-};
+}
 
-const guardarServicios = async () => {
+async function guardarServicios() {
   try {
-    await fetch(`https://migobackenddeploy-production.up.railway.app/api/vet-servicios/${idVet}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    await fetch(`${API_URL}/vet-servicios/${idVet}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(serviciosSeleccionados.value)
     });
-    alert("Servicios actualizados correctamente");
+    alert('Servicios actualizados correctamente');
   } catch (err) {
-    console.error("Error al guardar servicios:", err);
+    console.error('Error al guardar servicios:', err);
   }
-};
+}
 
-const subirLogo = async (event) => {
+async function subirLogo(event) {
   const file = event.target.files[0];
   if (!file) return;
 
@@ -249,27 +614,34 @@ const subirLogo = async (event) => {
   formData.append('logo', file);
 
   try {
-    const res = await fetch(`https://migobackenddeploy-production.up.railway.app/api/veterinarias/${idVet}/logo`, {
+    const res = await fetch(`${API_URL}/veterinarias/${idVet}/logo`, {
       method: 'POST',
       body: formData
     });
     const data = await res.json();
     negocio.value.imagen_logo = data.imagen_logo;
   } catch (err) {
-    console.error("Error al subir logo:", err);
+    console.error('Error al subir logo:', err);
   }
-};
+}
 
-const getImageUrl = (ruta) => {
+function getImageUrl(ruta) {
   if (!ruta) return '';
   if (/^https?:\/\//i.test(ruta)) return ruta;
-  return ruta.startsWith('/')
-    ? `https://migobackenddeploy-production.up.railway.app${ruta}`
-    : `https://migobackenddeploy-production.up.railway.app/${ruta}`;
-};
+  return ruta.startsWith('/') ? `${API_BASE_URL}${ruta}` : `${API_BASE_URL}/${ruta}`;
+}
 
-onMounted(cargarNegocio);
+watch(mostrarModalUbicacion, async abierto => {
+  if (abierto) {
+    await cargarMapa();
+  } else {
+    limpiarMapa();
+  }
+});
+
+onMounted(async () => {
+  await cargarNegocio();
+});
 </script>
-
 
 <style scoped src="./ScreenMiNegocio.css"></style>

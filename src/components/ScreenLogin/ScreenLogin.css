@@ -79,11 +79,87 @@
     border-color: #2EC4B6;
 }
 
-/* 6. Campo contraseña con botón ocultar/mostrar */
+/* 1. Reset Global - Aplica solo a este scope si usas scoped */
+.login-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f2f5;
+    padding: 20px;
+}
+
+/* 2. Contenedor principal */
+.login-container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+/* 3. Cabecera */
+.login-header {
+    margin-bottom: 30px;
+}
+
+.login-logo {
+    height: 80px;
+    width: auto;
+    margin-bottom: 15px;
+}
+
+.login-header h2 {
+    font-size: 1.6rem;
+    color: #011627;
+    margin-bottom: 5px;
+}
+
+.login-header p {
+    font-size: 0.9rem;
+    color: rgba(1, 22, 39, 0.6);
+}
+
+/* 4. Formulario */
+.login-form {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #011627;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid #e1e1e1;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #2EC4B6;
+}
+
 .password-field {
     position: relative;
     display: flex;
     align-items: center;
+}
+
+.password-field input {
+    padding-right: 52px;
 }
 
 .password-toggle {
@@ -92,11 +168,20 @@
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 0.8rem;
     color: #2EC4B6;
+    padding: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* 7. Botón Iniciar Sesión */
+.password-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+/* 6. Botón Iniciar Sesión */
 .btn-login {
     width: 100%;
     background-color: #2EC4B6;
@@ -115,12 +200,13 @@
     background-color: #26a89c;
 }
 
-/* 8. Mensajes y Footer */
+/* 7. Mensajes y Footer */
 .form-message {
     margin-top: 15px;
     font-size: 0.85rem;
     font-weight: 600;
     color: #e74c3c;
+    text-align: center;
 }
 
 .login-footer {
@@ -136,50 +222,8 @@
     font-weight: 600;
 }
 
-.footer-2 {
-    margin-top: 15px;
-}
-
 .btn-back {
     display: block;
-    margin-top: 10px;
+    margin-top: 15px;
     color: #999;
-}
-
-@media (max-width: 480px) {
-  /* Hacemos que el wrapper tenga un poco más de aire en móviles */
-  .login-wrapper {
-    padding: 15px;
-    align-items: flex-start; /* Permite scroll si el teclado es grande */
-    overflow-y: auto;
-  }
-
-  .login-container {
-    padding: 25px; /* Reducimos padding para ganar espacio */
-    margin-top: 20px;
-    border-radius: 15px;
-  }
-
-  .login-logo {
-    height: 60px; /* Logo más pequeño en móvil */
-  }
-
-  .login-header h2 {
-    font-size: 1.3rem;
-  }
-
-  .login-header p {
-    font-size: 0.85rem;
-  }
-
-  /* Ajuste de inputs para evitar zoom automático en iOS */
-  .input-group input {
-    font-size: 16px; /* Evita el zoom automático en Safari */
-    padding: 14px 15px;
-  }
-
-  .btn-login {
-    padding: 12px;
-    font-size: 0.95rem;
-  }
 }
