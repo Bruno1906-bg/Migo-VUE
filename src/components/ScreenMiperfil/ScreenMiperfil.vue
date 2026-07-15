@@ -39,9 +39,29 @@
               <template v-if="key !== 'colonia'">
                 <input v-model="usuario[key]" type="text" :disabled="!editableFields[key]" />
               </template>
-              <select v-else v-model="usuario.id_colonia" :disabled="!editableFields.colonia">
-                <option v-for="col in colonias" :key="col.id_colonia" :value="col.id_colonia">{{ col.nombre }}</option>
-              </select>
+              <template v-else>
+                <div class="autocomplete colonia-field">
+                  <input
+                    v-if="editableFields.colonia"
+                    id="colonia-perfil"
+                    type="text"
+                    v-model="coloniaInput"
+                    placeholder="Escribe tu colonia..."
+                    @input="filtrarColonias"
+                    required
+                  />
+                  <input v-else type="text" :value="coloniaInput" disabled />
+                  <ul v-if="editableFields.colonia && showSuggestions" class="suggestions">
+                    <li
+                      v-for="col in filteredColonias"
+                      :key="col.id_colonia"
+                      @click="seleccionarColonia(col)"
+                    >
+                      {{ col.nombre }}
+                    </li>
+                  </ul>
+                </div>
+              </template>
               <span class="edit-icon" @click="toggleEdit(key)">✎</span>
             </div>
             
@@ -58,12 +78,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import Avatar from "vue3-avatar";
 
 const router = useRouter();
 const menuAbierto = ref(false);
+const savedBodyOverflow = ref('');
 
 const usuario = ref({
   nombre: '',
@@ -76,6 +97,9 @@ const usuario = ref({
 });
 
 const colonias = ref([]);
+const filteredColonias = ref([]);
+const coloniaInput = ref('');
+const showSuggestions = ref(false);
 const avatarColor = ref('#14a098');
 const editableFields = ref({
   nombre: false,
@@ -103,7 +127,48 @@ function shadeColor(color, percent) {
 
 const toggleEdit = (field) => {
   editableFields.value[field] = !editableFields.value[field];
+  if (field === 'colonia' && editableFields.value.colonia) {
+    showSuggestions.value = false;
+  }
 };
+
+const filtrarColonias = () => {
+  const query = coloniaInput.value.toLowerCase();
+  filteredColonias.value = colonias.value.filter((colonia) =>
+    colonia.nombre.toLowerCase().includes(query)
+  );
+  showSuggestions.value = filteredColonias.value.length > 0;
+};
+
+const seleccionarColonia = (colonia) => {
+  usuario.value.id_colonia = colonia.id_colonia;
+  coloniaInput.value = colonia.nombre;
+  showSuggestions.value = false;
+};
+
+const handleClickOutside = (event) => {
+  const input = document.getElementById('colonia-perfil');
+  if (input && !input.contains(event.target)) {
+    showSuggestions.value = false;
+  }
+};
+
+watch(menuAbierto, (isOpen) => {
+  if (typeof document === 'undefined') return;
+
+  if (isOpen) {
+    savedBodyOverflow.value = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = savedBodyOverflow.value;
+  }
+});
+
+onBeforeUnmount(() => {
+  if (typeof document === 'undefined') return;
+  document.body.style.overflow = savedBodyOverflow.value;
+  document.removeEventListener('click', handleClickOutside);
+});
 
 const guardarPerfil = async () => {
   try {
@@ -131,6 +196,8 @@ const response = await fetch(`https://migobackenddeploy-production.up.railway.ap
 
 const resColonias = await fetch("https://migobackenddeploy-production.up.railway.app/api/colonias");
     colonias.value = await resColonias.json();
+    const coloniaActual = colonias.value.find((colonia) => colonia.id_colonia === usuario.value.id_colonia);
+    coloniaInput.value = usuario.value.nombre_colonia || usuario.value.colonia || coloniaActual?.nombre || '';
 
     const baseColors = ['#14a098', '#0f7d77', '#1abc9c', '#16a085'];
     const index = idUsuario % baseColors.length;
@@ -139,6 +206,7 @@ const resColonias = await fetch("https://migobackenddeploy-production.up.railway
 
      } catch (error) {
   }
+  document.addEventListener('click', handleClickOutside);
 });
 </script>
 

@@ -15,6 +15,7 @@
   flex-direction: column;
   position: fixed;
   height: 100vh;
+  z-index: 1300;
 }
 
 .sidebar-logo {
@@ -85,6 +86,11 @@
   padding: 30px;
 }
 
+.feed-section {
+  width: min(680px, 100%);
+  margin: 0 auto;
+}
+
 /* TÍTULO DE SECCIÓN */
 .feed-title {
   color: #333;
@@ -129,6 +135,11 @@
   gap: 10px;
 }
 
+.colonia-field {
+  position: relative;
+  flex: 1;
+}
+
 .perfil-field label {
   font-weight: 600;
   color: #14a098;
@@ -158,6 +169,40 @@
   border-color: #14a098;
   box-shadow: 0 0 5px rgba(20,160,152,0.3);
   outline: none;
+}
+
+.colonia-field input {
+  width: 100%;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 100;
+  margin-top: 4px;
+  padding: 4px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  list-style: none;
+}
+
+.suggestions li {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #444;
+  transition: background 0.15s;
+}
+
+.suggestions li:hover {
+  background-color: #e0f2f1;
+  color: #14a098;
 }
 
 /* Ícono de editar */
@@ -201,6 +246,10 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .dashboard-layout {
+    overflow: hidden;
+  }
+
   .mobile-header {
     display: flex;
     align-items: center;
@@ -214,20 +263,49 @@
 
   .btn-hamburger { margin-bottom: 0; }
 
+  .sidebar {
+    transform: translateX(-100%);
+    transition: 0.3s;
+    z-index: 1300;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1200;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+
   .main-content {
     margin-left: 0; /* sidebar se oculta en móviles */
-    padding: 20px;
+    padding: 16px;
+    min-height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
   }
 
   .perfil-container {
-    padding: 20px;
-    margin: 15px;
+    padding: 18px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
   }
 
  .perfil-avatar-left {
-  width: 150px;
-  height: 150px;
-  margin: 0 auto 30px auto; 
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 18px auto; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -235,22 +313,33 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
 }
 
-
-
-  .perfil-field label {
-    width: 100px;
-    font-size: 0.9rem;
+  .feed-section {
+    width: 100%;
+    margin: 0;
+    gap: 12px;
   }
 
-  .perfil-field input,
-  .perfil-field select {
-    font-size: 0.9rem;
-    padding: 8px;
+  .feed-title {
+    margin-bottom: 8px;
+  }
+
+  .perfil-field {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .perfil-field label {
+    width: auto;
+  }
+
+  .edit-icon {
+    align-self: flex-end;
+    margin-top: -2px;
   }
 
   .btn-save {
-    padding: 8px 14px;
-    font-size: 0.9rem;
+    width: 100%;
+    align-self: stretch;
   }
 }
 
@@ -267,31 +356,3 @@
   display: block; width: 25px; height: 3px; background: #14a098; margin: 5px 0;
 }
 
-/* Sidebar en móvil (Drawer) */
-@media (max-width: 768px) {
-  .btn-hamburger { display: block; }
-  
-  .sidebar {
-    transform: translateX(-100%);
-    transition: 0.3s;
-    z-index: 1000;
-  }
-  
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  .sidebar-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 900;
-  }
-  .sidebar-overlay.active { display: block; }
-
-  .main-content {
-    margin-left: 0;
-    padding: 20px;
-  }
-}
