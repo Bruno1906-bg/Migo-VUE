@@ -84,6 +84,11 @@
   color: white;
 }
 
+.app-shell__sidebar-menu,
+.app-shell__sidebar-footer {
+  min-height: 0;
+}
+
 .app-shell__content {
   flex-grow: 1;
   margin-left: 260px;
@@ -138,6 +143,14 @@
     height: 100vh;
     top: 0;
     left: 0;
+    overflow-y: auto;
+  }
+
+  .app-shell__sidebar-footer {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    z-index: 1;
   }
 
   .app-shell__sidebar.open {
@@ -167,6 +180,23 @@
     z-index: 1200;
     box-sizing: border-box;
     padding-top: calc(14px + env(safe-area-inset-top, 0px));
+  }
+
+  .app-shell__topbar.app-shell__topbar--detail {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .app-shell__topbar--detail .app-shell__topbar-slot {
+    order: 0;
+    flex: 0 1 auto;
+    width: auto;
+  }
+
+  .app-shell__topbar--detail .app-shell__hamburger {
+    flex-shrink: 0;
   }
 
   .app-shell__topbar--desktop-hidden {

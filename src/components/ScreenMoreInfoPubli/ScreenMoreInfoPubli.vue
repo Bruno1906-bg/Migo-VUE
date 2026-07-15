@@ -1,5 +1,5 @@
 <template>
-  <AppShell active-menu="dashboard" :show-desktop-top-bar="false" :logout-to="'/'" :main-class="'detalle-publi-main'" @logout="handleLogout">
+  <AppShell active-menu="dashboard" :show-desktop-top-bar="false" :logout-to="'/'" :main-class="'detalle-publi-main'" :top-bar-class="'app-shell__topbar--detail'" @logout="handleLogout">
     <template #header>
       <button @click="$router.back()" class="btn-volver">← Volver</button>
     </template>
