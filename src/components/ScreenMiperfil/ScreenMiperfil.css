@@ -263,12 +263,15 @@
     align-items: center;
     justify-content: flex-start;
     position: fixed;
-    top: 6px;
-    left: 6px;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
     z-index: 2200;
-    background: #f4f7f6;
-    padding: 0;
+    background: transparent;
+    padding: calc(10px + env(safe-area-inset-top, 0px)) 10px 0;
     margin: 0;
+    box-sizing: border-box;
   }
 
   .btn-hamburger {
@@ -280,11 +283,15 @@
     height: 36px;
     background: none;
     border: none;
+    appearance: none;
+    -webkit-appearance: none;
+    box-shadow: none;
     cursor: pointer;
     padding: 4px;
     margin-bottom: 0;
     z-index: 2300;
     position: relative;
+    flex-shrink: 0;
   }
 
   .btn-hamburger span {
@@ -319,7 +326,7 @@
 
   .main-content {
     margin-left: 0; /* sidebar se oculta en móviles */
-    padding: 48px 6px 8px;
+    padding: 52px 6px 8px;
     min-height: 100dvh;
     overflow: hidden;
     display: flex;
@@ -328,16 +335,16 @@
   }
 
   .perfil-container {
-    padding: 8px;
+    padding: 7px;
     margin: 0 auto;
-    width: min(276px, calc(100vw - 14px));
-    max-width: 276px;
+    width: min(270px, calc(100vw - 14px));
+    max-width: 270px;
     border-radius: 12px;
   }
 
  .perfil-avatar-left {
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
   margin: 0 auto 6px auto; 
   display: flex;
   justify-content: center;
@@ -355,8 +362,8 @@
 
   .feed-title {
     margin-bottom: 0;
-    width: min(276px, calc(100vw - 14px));
-    font-size: 1.2rem;
+    width: min(270px, calc(100vw - 14px));
+    font-size: 1.12rem;
   }
 
   .perfil-field {
@@ -375,8 +382,8 @@
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    padding: 7px 8px;
-    font-size: 0.88rem;
+    padding: 6px 8px;
+    font-size: 0.86rem;
   }
 
   .colonia-field {
@@ -393,7 +400,7 @@
     width: 100%;
     align-self: stretch;
     padding: 8px 12px;
-    font-size: 0.86rem;
+    font-size: 0.84rem;
     margin-top: 4px;
   }
 }
