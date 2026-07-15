@@ -146,7 +146,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import { useScrollHeader } from '../../composables/useScrollHeader';
 
@@ -171,6 +171,23 @@ const especies_cat = ref([]);
 const tipos_cat = ref([]);
 
 const menuAbierto = ref(false);
+const savedBodyOverflow = ref('');
+
+watch(menuAbierto, (isOpen) => {
+  if (typeof document === 'undefined') return;
+
+  if (isOpen) {
+    savedBodyOverflow.value = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = savedBodyOverflow.value;
+  }
+});
+
+onBeforeUnmount(() => {
+  if (typeof document === 'undefined') return;
+  document.body.style.overflow = savedBodyOverflow.value;
+});
 
 const imagenAmpliada = ref(null);
 const abrirImagen = (src) => { imagenAmpliada.value = src; };

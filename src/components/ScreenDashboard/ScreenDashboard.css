@@ -87,7 +87,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
-  z-index: 800;
+  z-index: 1300;
 }
 
 .btn-hamburger {
@@ -507,6 +507,7 @@
     height: 100vh;
     top: 0;
     left: 0;
+    z-index: 1400;
   }
 
   .sidebar.open {
@@ -527,14 +528,15 @@
     flex-wrap: wrap;
     padding: 14px;
     gap: 10px;
-    border-radius: 12px;
+    border-radius: 0 0 12px 12px;
     position: fixed;
-    top: 12px;
-    left: 12px;
-    right: 12px;
+    top: 0;
+    left: 0;
+    right: 0;
     margin-bottom: 0;
     z-index: 1200;
     box-sizing: border-box;
+    padding-top: calc(14px + env(safe-area-inset-top, 0px));
   }
 
   .btn-hamburger {

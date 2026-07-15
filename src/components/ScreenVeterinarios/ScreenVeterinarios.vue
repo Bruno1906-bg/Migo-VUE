@@ -131,7 +131,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch, nextTick, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import { useScrollHeader } from '../../composables/useScrollHeader';
 
@@ -142,6 +142,7 @@ const searchQuery = ref('');
 const { isVisible: isTopBarVisible } = useScrollHeader();
 const veterinarios = ref([]);
 const menuAbierto = ref(false);
+const savedBodyOverflow = ref('');
 const diaActual = new Date().getDay();
 const radioBusquedaKm = ref(10);
 const ubicacionActual = ref({ latitud: null, longitud: null, etiqueta: 'Ciudad de México · ubicación actual' });
@@ -155,6 +156,22 @@ const currentRadiusCircle = ref(null);
 const cargandoMapa = ref(false);
 const errorMapa = ref('');
 const errorMapaDetalle = ref('');
+
+watch(menuAbierto, (isOpen) => {
+  if (typeof document === 'undefined') return;
+
+  if (isOpen) {
+    savedBodyOverflow.value = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = savedBodyOverflow.value;
+  }
+});
+
+onBeforeUnmount(() => {
+  if (typeof document === 'undefined') return;
+  document.body.style.overflow = savedBodyOverflow.value;
+});
 
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
 let googleMapsLoaderPromise = null;

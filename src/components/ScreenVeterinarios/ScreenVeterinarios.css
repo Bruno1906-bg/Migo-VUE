@@ -16,7 +16,7 @@
   flex-direction: column;
   position: fixed;
   height: 100vh;
-  z-index: 1000;
+  z-index: 1300;
   transition: transform 0.3s ease;
 }
 
@@ -44,10 +44,14 @@
   padding: 15px 20px;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  margin-bottom: 30px;
-  gap: 15px;
-  transition: transform 0.28s ease, opacity 0.28s ease, box-shadow 0.2s ease;
-  will-change: transform, opacity;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-bottom: 0;
+  z-index: 1200;
+  box-sizing: border-box;
+  border-radius: 0 0 12px 12px;
+  padding-top: calc(14px + env(safe-area-inset-top, 0px));
 }
 
 .top-bar--hidden {
@@ -338,7 +342,7 @@
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.5);
-    z-index: 900;
+    z-index: 1300;
   }
   .sidebar-overlay.active { display: block; }
 
@@ -351,12 +355,14 @@
   .top-bar {
     flex-wrap: wrap;
     position: fixed;
-    top: 12px;
-    left: 12px;
-    right: 12px;
+    top: 0;
+    left: 0;
+    right: 0;
     margin-bottom: 0;
     z-index: 1200;
     box-sizing: border-box;
+    border-radius: 0 0 12px 12px;
+    padding-top: calc(14px + env(safe-area-inset-top, 0px));
   }
 
   .btn-map {
