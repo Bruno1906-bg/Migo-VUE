@@ -1,34 +1,13 @@
 <template>
-  <div class="dashboard-layout">
-
-    <div class="sidebar-overlay" :class="{ active: menuAbierto }" @click="menuAbierto = false"></div>
-
-    <aside class="sidebar" :class="{ open: menuAbierto }">
-      <div class="sidebar-logo">
-        <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
-      </div>
-      <nav class="sidebar-menu">
-        <router-link to="/dashboard" class="menu-item active" @click="menuAbierto = false">° Publicaciones</router-link>
-        <router-link to="/perfil" class="menu-item" @click="menuAbierto = false">° Mi Perfil</router-link>
-        <router-link to="/veterinarios" class="menu-item" @click="menuAbierto = false">° Veterinarios</router-link>
-      </nav>
-      <div class="sidebar-footer">
-        <button @click="handleLogout" class="btn-logout">Cerrar Sesión</button>
-      </div>
-    </aside>
-
-    <div class="main-content">
-      <header class="top-bar" :class="{ 'top-bar--hidden': !isTopBarVisible }">
-        <button class="btn-hamburger" @click="menuAbierto = !menuAbierto" aria-label="Abrir menú">
-          <span></span><span></span><span></span>
-        </button>
+  <AppShell active-menu="dashboard" :hide-top-bar-on-scroll="true" :logout-to="'/'" :main-class="'dashboard-main'" @logout="handleLogout">
+      <template #header>
         <div class="search-container">
           <input type="text" v-model="searchQuery" placeholder="Busca una publicación aquí..." class="search-input">
         </div>
         <router-link to="/crearpublicacion">
           <button class="btn-create">Nueva Publicación</button>
         </router-link>
-      </header>
+      </template>
 
       <main class="feed-section">
         <h2 class="feed-title">Reportes Recientes en la Comunidad</h2>
@@ -79,7 +58,6 @@
           </div>
         </div>
       </main>
-    </div>
 
     <div v-if="imagenAmpliada" class="modal-overlay" @click="cerrarImagen">
       <div class="modal-content-img">
@@ -142,16 +120,15 @@
       </div>
     </div>
 
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useScrollHeader } from '../../composables/useScrollHeader';
+import AppShell from '../AppShell/AppShell.vue';
 
 const router = useRouter();
-const { isVisible: isTopBarVisible } = useScrollHeader();
 
 const idUsuarioActual = sessionStorage.getItem('id_usuario')
   ? parseInt(sessionStorage.getItem('id_usuario'))
@@ -169,25 +146,6 @@ const tipos = ref([]);
 const colonias_cat = ref([]);
 const especies_cat = ref([]);
 const tipos_cat = ref([]);
-
-const menuAbierto = ref(false);
-const savedBodyOverflow = ref('');
-
-watch(menuAbierto, (isOpen) => {
-  if (typeof document === 'undefined') return;
-
-  if (isOpen) {
-    savedBodyOverflow.value = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = savedBodyOverflow.value;
-  }
-});
-
-onBeforeUnmount(() => {
-  if (typeof document === 'undefined') return;
-  document.body.style.overflow = savedBodyOverflow.value;
-});
 
 const imagenAmpliada = ref(null);
 const abrirImagen = (src) => { imagenAmpliada.value = src; };

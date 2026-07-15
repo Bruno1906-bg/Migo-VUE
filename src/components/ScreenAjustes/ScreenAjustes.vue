@@ -1,47 +1,15 @@
 <template>
-    <div>
-        <aside class="sidebar">
-      <div class="sidebar-logo">
-        <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
-      </div>
-      
-      <nav class="sidebar-menu">
-        <router-link to="/dashboard" class="menu-item">
-         ° Publicaciones
-        </router-link>
-        <router-link to="/perfil" class="menu-item">
-         ° Mi Perfil
-        </router-link>
-        <router-link to="/veterinarios" class="menu-item">
-         ° Veterinarios
-        </router-link>
-        <router-link to="/servicios" class="menu-item">
-         ° Otros servicios
-        </router-link>
-        <router-link to="/ajustes" class="menu-item active">
-         ° Ajustes
-        </router-link>
-      </nav>
-
-      <div class="sidebar-footer">
-        <button @click="handleLogout" class="btn-logout">
-          Cerrar Sesión
-        </button>
-      </div>
-    </aside>
-    <div class="main-content">
-        <header class="top-bar">
-        </header>
-        <main class="feed-section">
-            <h2 class="feed-title">Bienvenido a la ventana de ajustes..⚙️🛠️</h2>
-        </main>
-    </div>
-    </div>
+  <AppShell active-menu="ajustes" :show-desktop-top-bar="false" :logout-to="'/'" :main-class="'ajustes-main'" @logout="handleLogout">
+    <main class="feed-section">
+      <h2 class="feed-title">Bienvenido a la ventana de ajustes..⚙️🛠️</h2>
+    </main>
+  </AppShell>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import AppShell from '../AppShell/AppShell.vue';
 
 const veterinarias = ref([]);
 const router = useRouter();
