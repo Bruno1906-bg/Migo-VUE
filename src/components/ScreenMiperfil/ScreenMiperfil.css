@@ -138,6 +138,7 @@
 .colonia-field {
   position: relative;
   flex: 1;
+  min-width: 0;
 }
 
 .perfil-field label {
@@ -156,6 +157,13 @@
   color: #333;
   background-color: #f9f9f9;
   transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.colonia-field input,
+.colonia-field select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .perfil-field input:disabled,
@@ -318,17 +326,17 @@
   }
 
   .perfil-container {
-    padding: 12px;
+    padding: 10px;
     margin: 0 auto;
-    width: min(320px, calc(100vw - 20px));
-    max-width: 320px;
-    border-radius: 16px;
+    width: min(300px, calc(100vw - 18px));
+    max-width: 300px;
+    border-radius: 14px;
   }
 
  .perfil-avatar-left {
-  width: 88px;
-  height: 88px;
-  margin: 0 auto 12px auto; 
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 10px auto; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -339,19 +347,19 @@
   .feed-section {
     width: 100%;
     margin: 0;
-    gap: 8px;
+    gap: 6px;
     align-items: center;
   }
 
   .feed-title {
-    margin-bottom: 2px;
-    width: min(320px, calc(100vw - 20px));
+    margin-bottom: 0;
+    width: min(300px, calc(100vw - 18px));
   }
 
   .perfil-field {
     flex-direction: column;
     align-items: stretch;
-    gap: 5px;
+    gap: 4px;
   }
 
   .perfil-field label {
@@ -364,8 +372,8 @@
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    padding: 9px 10px;
-    font-size: 0.95rem;
+    padding: 8px 9px;
+    font-size: 0.92rem;
   }
 
   .colonia-field {
@@ -382,8 +390,8 @@
     width: 100%;
     align-self: stretch;
     padding: 9px 14px;
-    font-size: 0.92rem;
-    margin-top: 10px;
+    font-size: 0.9rem;
+    margin-top: 8px;
   }
 }
 
