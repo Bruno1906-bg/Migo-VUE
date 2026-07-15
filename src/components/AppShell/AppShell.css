@@ -189,6 +189,14 @@
     padding: 12px 14px;
   }
 
+  .app-shell__topbar.app-shell__topbar--profile {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: calc(9px + env(safe-area-inset-top, 0px)) 12px 8px;
+    min-height: 44px;
+  }
+
   .app-shell__topbar--detail .app-shell__topbar-slot {
     order: 2;
     flex: 0 0 auto;
@@ -197,6 +205,17 @@
   }
 
   .app-shell__topbar--detail .app-shell__hamburger {
+    flex-shrink: 0;
+  }
+
+  .app-shell__topbar--profile .app-shell__topbar-slot {
+    order: 0;
+    flex: 0 1 auto;
+    width: auto;
+    margin-left: 0;
+  }
+
+  .app-shell__topbar--profile .app-shell__hamburger {
     flex-shrink: 0;
   }
 
