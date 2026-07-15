@@ -107,7 +107,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onUnmounted, nextTick, onBeforeUnmount, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import AppShell from '../AppShell/AppShell.vue';
 

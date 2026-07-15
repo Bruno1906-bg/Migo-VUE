@@ -90,8 +90,7 @@ const savedBodyOverflow = ref('');
 const menuItems = [
   { key: 'dashboard', to: '/dashboard', label: '° Publicaciones' },
   { key: 'perfil', to: '/perfil', label: '° Mi Perfil' },
-  { key: 'veterinarios', to: '/veterinarios', label: '° Veterinarios' },
-  { key: 'ajustes', to: '/ajustes', label: '° Ajustes' }
+  { key: 'veterinarios', to: '/veterinarios', label: '° Veterinarios' }
 ];
 
 const { isVisible } = useScrollHeader();

@@ -54,8 +54,9 @@
    ========================================================================== */
 .main-content {
   flex-grow: 1;
-  margin-left: 260px;
-  padding: 40px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  width: 100%;
   max-width: 900px;
   min-width: 0;
 }
@@ -218,6 +219,12 @@
 .close-sidebar { display: none; }
 
 @media (max-width: 768px) {
+  .main-content {
+    margin: 0;
+    padding: 20px;
+    max-width: none;
+  }
+
   .btn-hamburger { display: block; }
   .mobile-header {
     display: flex;
@@ -230,8 +237,6 @@
     padding: 8px 0 12px;
   }
   .btn-hamburger { display: block; margin-bottom: 0; }
-  .main-content { margin-left: 0; padding: 20px; }
-  
   .sidebar { 
     transform: translateX(-100%); 
     transition: 0.3s; 
