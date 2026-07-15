@@ -184,15 +184,16 @@
 
   .app-shell__topbar.app-shell__topbar--detail {
     flex-wrap: nowrap;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 8px;
     padding: 12px 14px;
   }
 
   .app-shell__topbar--detail .app-shell__topbar-slot {
-    order: 0;
-    flex: 0 1 auto;
+    order: 2;
+    flex: 0 0 auto;
     width: auto;
+    margin-left: auto;
   }
 
   .app-shell__topbar--detail .app-shell__hamburger {

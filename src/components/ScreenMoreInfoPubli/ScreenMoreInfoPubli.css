@@ -225,12 +225,21 @@
 @media (max-width: 768px) {
   .main-content {
     margin: 0;
-    padding: 20px;
+    padding: 20px 16px;
     max-width: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .btn-volver--desktop {
     display: none;
+  }
+
+  .card-detalles,
+  .seccion-resenas {
+    width: 100%;
+    max-width: 720px;
   }
 
   .btn-hamburger { display: block; }
