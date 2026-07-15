@@ -341,7 +341,7 @@ textarea {
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
   .main-content-detalle { margin-left: 0; padding: 20px; }
-  .btn-volver--desktop { display: none; }
+  .btn-volver--desktop { display: none !important; }
   .close-sidebar { display: block; position: absolute; top: 10px; right: 10px; border: none; background: none; font-size: 1.5rem; }
   
   .info-grid { grid-template-columns: 1fr; }
