@@ -262,12 +262,13 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    position: sticky;
-    top: 0;
-    z-index: 1400;
-    background: #f4f7f6;
-    padding: 4px 0 10px;
-    margin-bottom: 4px;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 2200;
+    background: transparent;
+    padding: 0;
+    margin: 0;
   }
 
   .btn-hamburger {
@@ -317,7 +318,7 @@
 
   .main-content {
     margin-left: 0; /* sidebar se oculta en móviles */
-    padding: 10px;
+    padding: 54px 8px 10px;
     min-height: 100dvh;
     overflow: hidden;
     display: flex;
@@ -326,17 +327,17 @@
   }
 
   .perfil-container {
-    padding: 10px;
+    padding: 9px;
     margin: 0 auto;
-    width: min(300px, calc(100vw - 18px));
-    max-width: 300px;
-    border-radius: 14px;
+    width: min(288px, calc(100vw - 16px));
+    max-width: 288px;
+    border-radius: 13px;
   }
 
  .perfil-avatar-left {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 10px auto; 
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 8px auto; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -347,19 +348,20 @@
   .feed-section {
     width: 100%;
     margin: 0;
-    gap: 6px;
+    gap: 5px;
     align-items: center;
   }
 
   .feed-title {
     margin-bottom: 0;
-    width: min(300px, calc(100vw - 18px));
+    width: min(288px, calc(100vw - 16px));
+    font-size: 1.35rem;
   }
 
   .perfil-field {
     flex-direction: column;
     align-items: stretch;
-    gap: 4px;
+    gap: 3px;
   }
 
   .perfil-field label {
@@ -372,8 +374,8 @@
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    padding: 8px 9px;
-    font-size: 0.92rem;
+    padding: 7px 9px;
+    font-size: 0.9rem;
   }
 
   .colonia-field {
@@ -390,8 +392,8 @@
     width: 100%;
     align-self: stretch;
     padding: 9px 14px;
-    font-size: 0.9rem;
-    margin-top: 8px;
+    font-size: 0.88rem;
+    margin-top: 6px;
   }
 }
 
