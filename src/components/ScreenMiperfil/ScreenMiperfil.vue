@@ -1,5 +1,5 @@
 <template>
-  <AppShell active-menu="perfil" :show-desktop-top-bar="false" :logout-to="'/'" :main-class="'perfil-main'" @logout="handleLogout">
+  <AppShell active-menu="perfil" :show-desktop-top-bar="false" :logout-to="'/'" :main-class="'perfil-main'" :top-bar-class="'app-shell__topbar--profile'" @logout="handleLogout">
       <template #header>
         <div class="perfil-mobile-title">Mi Perfil</div>
       </template>
@@ -9,6 +9,11 @@
 
         <div class="perfil-avatar-left">
            <Avatar :name="usuario?.nombre || 'U'" :size="150" :color="avatarColor" :rounded="true" :fontSize="60" />
+        </div>
+
+        <div v-if="usuario" class="perfil-identity">
+          <p class="perfil-identity__name">{{ nombreCompleto }}</p>
+          <p class="perfil-identity__email">{{ usuario.correo }}</p>
         </div>
 
         <div v-if="usuario" class="perfil-container">
@@ -49,6 +54,9 @@
               <p>{{ new Date(usuario.fecha_registro).toLocaleDateString() }}</p>
             </div>
           </div>
+        </div>
+
+        <div class="perfil-actions" v-if="usuario">
           <button class="btn-save" @click="guardarPerfil">Guardar cambios</button>
         </div>
       </main>
@@ -56,12 +64,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import Avatar from "vue3-avatar";
 import AppShell from '../AppShell/AppShell.vue';
 
 const router = useRouter();
+const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 
 const usuario = ref({
   nombre: '',
@@ -88,6 +97,12 @@ const editableFields = ref({
 });
 
 const idUsuario = sessionStorage.getItem('id_usuario');
+
+const nombreCompleto = computed(() => {
+  const nombre = usuario.value.nombre?.trim() || '';
+  const apellido = usuario.value.apellido?.trim() || '';
+  return `${nombre} ${apellido}`.trim() || 'Usuario';
+});
 
 function shadeColor(color, percent) {
   let f = parseInt(color.slice(1),16), 
@@ -136,14 +151,40 @@ onBeforeUnmount(() => {
 
 const guardarPerfil = async () => {
   try {
-await fetch(`https://migobackenddeploy-production.up.railway.app/api/usuarios/${idUsuario}`, {
+    const payload = {
+      nombre: usuario.value.nombre,
+      apellido: usuario.value.apellido,
+      correo: usuario.value.correo,
+      telefono: usuario.value.telefono,
+      direccion: usuario.value.direccion,
+      id_colonia: usuario.value.id_colonia
+    };
+
+    const response = await fetch(`${API_BASE_URL}/api/usuarios/${idUsuario}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(usuario.value)
+      body: JSON.stringify(payload)
     });
+
+    const respuesta = await response.json().catch(() => null);
+    if (!response.ok) {
+      throw new Error(respuesta?.error || respuesta?.message || 'No se pudo actualizar el perfil');
+    }
+
+    await cargarUsuario();
+    editableFields.value = {
+      nombre: false,
+      apellido: false,
+      correo: false,
+      telefono: false,
+      direccion: false,
+      colonia: false
+    };
+
     alert("Perfil actualizado correctamente");
   } catch (error) {
     console.error("Error al guardar perfil:", error);
+    alert(error?.message || 'No se pudo guardar el perfil');
   }
 };
 
@@ -153,22 +194,34 @@ const handleLogout = () => {
   router.push('/');
 };
 
+const cargarUsuario = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/usuarios/${idUsuario}`);
+  if (!response.ok) {
+    throw new Error('No se pudo cargar el perfil');
+  }
+
+  usuario.value = await response.json();
+
+  sessionStorage.setItem('migo_user', JSON.stringify(usuario.value));
+
+  const coloniaActual = colonias.value.find((colonia) => colonia.id_colonia === usuario.value.id_colonia);
+  coloniaInput.value = usuario.value.nombre_colonia || usuario.value.colonia || coloniaActual?.nombre || '';
+};
+
 onMounted(async () => {
   try {
-const response = await fetch(`https://migobackenddeploy-production.up.railway.app/api/usuarios/${idUsuario}`);
-    usuario.value = await response.json();
-
-const resColonias = await fetch("https://migobackenddeploy-production.up.railway.app/api/colonias");
+    const resColonias = await fetch(`${API_BASE_URL}/api/colonias`);
     colonias.value = await resColonias.json();
-    const coloniaActual = colonias.value.find((colonia) => colonia.id_colonia === usuario.value.id_colonia);
-    coloniaInput.value = usuario.value.nombre_colonia || usuario.value.colonia || coloniaActual?.nombre || '';
+
+    await cargarUsuario();
 
     const baseColors = ['#14a098', '#0f7d77', '#1abc9c', '#16a085'];
-    const index = idUsuario % baseColors.length;
-    const tone = (idUsuario % 3 - 1) * 0.2; // -0.2, 0, +0.2
+    const index = Number(idUsuario) % baseColors.length;
+    const tone = (Number(idUsuario) % 3 - 1) * 0.2;
     avatarColor.value = shadeColor(baseColors[index], tone);
 
-     } catch (error) {
+  } catch (error) {
+    console.error(error);
   }
   document.addEventListener('click', handleClickOutside);
 });
