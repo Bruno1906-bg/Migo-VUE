@@ -335,7 +335,17 @@ textarea {
   .info-grid { grid-template-columns: 1fr; }
   .cards-info { flex-direction: column; }
   .card-info { min-width: 100%; flex: 1; }
-  .top-bar-mobile { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+  .top-bar-mobile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 850;
+    background: #f4f7f6;
+    padding: 8px 0 12px;
+  }
 
   .logo-grande {
     max-width: 280px;

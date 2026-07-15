@@ -18,7 +18,7 @@
     </aside>
 
     <div class="main-content">
-      <header class="top-bar">
+      <header class="top-bar" :class="{ 'top-bar--hidden': !isTopBarVisible }">
         <button class="btn-hamburger" @click="menuAbierto = !menuAbierto" aria-label="Abrir menú">
           <span></span><span></span><span></span>
         </button>
@@ -148,8 +148,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useScrollHeader } from '../../composables/useScrollHeader';
 
 const router = useRouter();
+const { isVisible: isTopBarVisible } = useScrollHeader();
 
 const idUsuarioActual = sessionStorage.getItem('id_usuario')
   ? parseInt(sessionStorage.getItem('id_usuario'))

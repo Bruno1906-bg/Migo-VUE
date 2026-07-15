@@ -219,6 +219,17 @@
 
 @media (max-width: 768px) {
   .btn-hamburger { display: block; }
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: sticky;
+    top: 0;
+    z-index: 850;
+    background: #f4f7f6;
+    padding: 8px 0 12px;
+  }
+  .btn-hamburger { display: block; margin-bottom: 0; }
   .main-content { margin-left: 0; padding: 20px; }
   
   .sidebar { 

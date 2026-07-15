@@ -74,6 +74,10 @@
   color: white;
 }
 
+.mobile-header {
+  display: none;
+}
+
 /* CONTENIDO PRINCIPAL */
 .main-content {
   flex-grow: 1;
@@ -197,6 +201,19 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 850;
+    background: #f4f7f6;
+    padding: 8px 0 12px;
+    margin-bottom: 8px;
+  }
+
+  .btn-hamburger { margin-bottom: 0; }
+
   .main-content {
     margin-left: 0; /* sidebar se oculta en móviles */
     padding: 20px;
