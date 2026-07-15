@@ -313,6 +313,12 @@
   z-index: 2000;
 }
 
+.modal-overlay--edit {
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
 .modal-content-img img {
   max-width: 92vw;
   max-height: 88vh;
@@ -328,8 +334,8 @@
   border-radius: 20px;
   width: 100%;
   max-width: 520px;
-  max-height: 90vh;
-  overflow-y: auto;
+  max-height: calc(100dvh - 40px);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -380,6 +386,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow-y: auto;
 }
 
 .field {
@@ -607,7 +614,12 @@
 
   .modal-edicion {
     max-width: 95vw;
-    margin: 0 10px;
+    margin: 0;
+    max-height: calc(100dvh - 28px);
+  }
+
+  .modal-overlay--edit {
+    padding: 14px;
   }
 }
 
