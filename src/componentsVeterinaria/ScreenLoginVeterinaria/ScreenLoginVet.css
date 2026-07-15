@@ -1,53 +1,58 @@
-/* 1. Reset Global - Aplica solo a este scope si usas scoped */
+/* Layout general */
 .login-wrapper {
     min-height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f0f2f5;
+    background: linear-gradient(180deg, #f3f7f6 0%, #eef4f1 100%);
     padding: 20px;
 }
 
-/* 2. Contenedor principal */
+/* Tarjeta de login */
 .login-container {
     background-color: #ffffff;
     width: 100%;
-    max-width: 450px;
-    padding: 40px;
+    max-width: 560px;
+    padding: 30px 32px;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
     text-align: center;
 }
 
-/* 3. Cabecera */
+/* Cabecera */
 .login-header {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .login-logo {
-    height: 80px;
+    height: 68px;
     width: auto;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .login-header h2 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     color: #011627;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 }
 
 .login-header p {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: #6c757d;
+    line-height: 1.25;
 }
 
-/* 4. Formulario */
+/* Formulario */
 .login-form {
     text-align: left;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
+}
+
+.input-group {
+    width: 100%;
 }
 
 .input-group label {
@@ -60,22 +65,26 @@
 
 .input-group input {
     width: 100%;
-    padding: 12px 15px;
+    min-width: 0;
+    padding: 11px 14px;
     border: 1.5px solid #e1e1e1;
     border-radius: 12px;
     font-size: 0.95rem;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
 .input-group input:focus {
-    border-color: #2EC4B6;
+    border-color: #2ec4b6;
+    box-shadow: 0 0 0 3px rgba(46, 196, 182, 0.12);
 }
 
 .password-field {
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .password-field input {
@@ -88,11 +97,12 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #2EC4B6;
+    color: #2ec4b6;
     padding: 4px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .password-toggle svg {
@@ -101,28 +111,29 @@
     fill: currentColor;
 }
 
-/* 6. Botón */
+/* Botón */
 .btn-login {
     width: 100%;
-    background-color: #2EC4B6;
+    background-color: #2ec4b6;
     color: #ffffff;
-    padding: 14px;
+    padding: 13px;
     border: none;
     border-radius: 12px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.3s ease;
+    margin-top: 6px;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .btn-login:hover {
     background-color: #26a89c;
+    transform: translateY(-1px);
 }
 
-/* 7. Mensajes y Footer */
+/* Mensajes y footer */
 .form-message {
-    margin-top: 15px;
+    margin-top: 12px;
     font-size: 0.85rem;
     font-weight: 600;
     color: #e74c3c;
@@ -130,14 +141,18 @@
 }
 
 .login-footer {
-    margin-top: 30px;
+    margin-top: 20px;
     font-size: 0.85rem;
     border-top: 1px solid #eee;
-    padding-top: 20px;
+    padding-top: 16px;
+}
+
+.login-footer p {
+    margin-bottom: 10px;
 }
 
 .login-footer a {
-    color: #2EC4B6;
+    color: #2ec4b6;
     text-decoration: none;
     font-weight: 600;
 }
@@ -146,4 +161,93 @@
     display: block;
     margin-top: 15px;
     color: #999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .login-wrapper {
+        padding: 12px;
+    }
+
+    .login-container {
+        max-width: 100%;
+        padding: 24px 18px;
+        border-radius: 18px;
+    }
+
+    .login-logo {
+        height: 58px;
+    }
+
+    .login-header h2 {
+        font-size: 1.35rem;
+    }
+
+    .login-header p {
+        font-size: 0.84rem;
+    }
+
+    .input-group input {
+        padding: 11px 13px;
+        font-size: 0.93rem;
+    }
+
+    .btn-login {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+
+    .login-footer {
+        margin-top: 16px;
+        padding-top: 14px;
+    }
+}
+
+@media (max-width: 420px) {
+    .login-wrapper {
+        padding: 10px;
+    }
+
+    .login-container {
+        padding: 22px 16px;
+        border-radius: 16px;
+    }
+
+    .login-header {
+        margin-bottom: 16px;
+    }
+
+    .login-logo {
+        height: 54px;
+    }
+
+    .login-header h2 {
+        font-size: 1.22rem;
+    }
+
+    .login-form {
+        gap: 11px;
+    }
+
+    .input-group label {
+        font-size: 0.82rem;
+    }
+
+    .input-group input {
+        padding: 10px 12px;
+        border-radius: 11px;
+        font-size: 0.92rem;
+    }
+
+    .password-field input {
+        padding-right: 48px;
+    }
+
+    .password-toggle {
+        right: 10px;
+    }
+
+    .login-footer {
+        font-size: 0.78rem;
+    }
 }
