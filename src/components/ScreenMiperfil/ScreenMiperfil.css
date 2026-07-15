@@ -268,8 +268,10 @@
     right: 0;
     width: 100%;
     z-index: 2200;
-    background: transparent;
-    padding: calc(10px + env(safe-area-inset-top, 0px)) 10px 0;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 0 0 12px 12px;
+    padding: calc(14px + env(safe-area-inset-top, 0px)) 14px 12px;
     margin: 0;
     box-sizing: border-box;
   }
@@ -283,6 +285,7 @@
     height: 36px;
     background: none;
     border: none;
+    border-radius: 8px;
     appearance: none;
     -webkit-appearance: none;
     box-shadow: none;
@@ -326,7 +329,7 @@
 
   .main-content {
     margin-left: 0; /* sidebar se oculta en móviles */
-    padding: 52px 6px 8px;
+    padding: 72px 6px 8px;
     min-height: 100dvh;
     overflow: hidden;
     display: flex;

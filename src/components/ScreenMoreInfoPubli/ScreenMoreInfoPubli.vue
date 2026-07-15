@@ -1,34 +1,10 @@
 <template>
-  <div class="detalle-publi-container-layout">
-    <!-- Overlay para cerrar el menú al hacer clic fuera -->
-    <div class="sidebar-overlay" :class="{ active: menuAbierto }" @click="menuAbierto = false"></div>
-
-    <!-- Sidebar -->
-    <aside class="sidebar" :class="{ open: menuAbierto }">
-      <button class="close-sidebar" @click="menuAbierto = false">✕</button>
-      <div class="sidebar-logo">
-        <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
-      </div>
-      <nav class="sidebar-menu">
-        <router-link to="/dashboard" class="menu-item active">° Publicaciones</router-link>
-        <router-link to="/perfil" class="menu-item">° Mi Perfil</router-link>
-        <router-link to="/veterinarios" class="menu-item">° Veterinarios</router-link>
-      </nav>
-      <div class="sidebar-footer">
-        <button @click="handleLogout" class="btn-logout">Cerrar Sesión</button>
-      </div>
-    </aside>
-
-    <!-- Contenido principal -->
-    <main class="main-content" v-if="pub">
-      <div class="mobile-header">
-        <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-
+  <AppShell active-menu="dashboard" :show-desktop-top-bar="false" :logout-to="'/'" :main-class="'detalle-publi-main'" @logout="handleLogout">
+    <template #header>
       <button @click="$router.back()" class="btn-volver">← Volver</button>
+    </template>
 
+    <main class="main-content" v-if="pub">
       <div class="card-detalles">
 <img :src="getImageUrl(pub.ruta_imagen)" class="publi-grande" alt="Mascota">
         <h1>{{ pub.nombre_pet }}</h1>
@@ -88,13 +64,14 @@
         </div>
       </div>
     </main>
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Avatar from "vue3-avatar";
+import AppShell from '../AppShell/AppShell.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -108,7 +85,6 @@ const textoEdicion = ref('');
 const mostrarContacto = ref(false);
 const usuarioPub = ref(null);
 const avatarColor = ref('#14a098');
-const menuAbierto = ref(false); // Estado para menú móvil
 
 const getImageUrl = (ruta) => {
   if (!ruta) return '';

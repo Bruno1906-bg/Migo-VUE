@@ -1,30 +1,5 @@
 <template>
-  <div class="dashboard-layout">
-    <div class="sidebar-overlay" :class="{ active: menuAbierto }" @click="menuAbierto = false"></div>
-
-    <aside class="sidebar" :class="{ open: menuAbierto }">
-      <div class="sidebar-logo">
-        <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
-      </div>
-      
-      <nav class="sidebar-menu">
-        <router-link to="/dashboard" class="menu-item">° Publicaciones</router-link>
-        <router-link to="/perfil" class="menu-item active">° Mi Perfil</router-link>
-        <router-link to="/veterinarios" class="menu-item">° Veterinarios</router-link>
-      </nav>
-
-      <div class="sidebar-footer">
-        <button @click="handleLogout" class="btn-logout">Cerrar Sesión</button>
-      </div>
-    </aside>
-
-    <div class="main-content">
-      <div class="mobile-header">
-        <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-
+  <AppShell active-menu="perfil" :show-desktop-top-bar="false" :logout-to="'/'" :main-class="'perfil-main'" @logout="handleLogout">
       <main class="feed-section">
         <h2 class="feed-title">Mi Perfil</h2>
 
@@ -73,18 +48,16 @@
           <button class="btn-save" @click="guardarPerfil">Guardar cambios</button>
         </div>
       </main>
-    </div>
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import Avatar from "vue3-avatar";
+import AppShell from '../AppShell/AppShell.vue';
 
 const router = useRouter();
-const menuAbierto = ref(false);
-const savedBodyOverflow = ref('');
 
 const usuario = ref({
   nombre: '',
@@ -153,20 +126,7 @@ const handleClickOutside = (event) => {
   }
 };
 
-watch(menuAbierto, (isOpen) => {
-  if (typeof document === 'undefined') return;
-
-  if (isOpen) {
-    savedBodyOverflow.value = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = savedBodyOverflow.value;
-  }
-});
-
 onBeforeUnmount(() => {
-  if (typeof document === 'undefined') return;
-  document.body.style.overflow = savedBodyOverflow.value;
   document.removeEventListener('click', handleClickOutside);
 });
 

@@ -1,10 +1,11 @@
 <template>
-  <div class="modal-overlay">
-    <div class="modal-card">
-      <header>
-        <h2>Nueva Publicación</h2>
-        <router-link to="/dashboard" class="close-btn">✕</router-link>
-      </header>
+  <AppShell active-menu="dashboard" :show-desktop-top-bar="false" :logout-to="'/'" :main-class="'crear-publicacion-main'" @logout="handleLogout">
+    <div class="modal-overlay">
+      <div class="modal-card">
+        <header>
+          <h2>Nueva Publicación</h2>
+          <router-link to="/dashboard" class="close-btn">✕</router-link>
+        </header>
 
       <form @submit.prevent="handlePublicar">
         <div class="form-grid">
@@ -78,13 +79,15 @@
           {{ cargando ? 'Publicando...' : 'Publicar Reporte' }}
         </button>
       </form>
+      </div>
     </div>
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
+import AppShell from '../AppShell/AppShell.vue';
 
 const router = useRouter();
 const fotoInput = ref(null);
@@ -159,6 +162,12 @@ const handleClickOutside = (event) => {
   if (input && !input.contains(event.target)) {
     showSuggestions.value = false;
   }
+};
+
+const handleLogout = () => {
+  sessionStorage.removeItem('migo_user');
+  sessionStorage.removeItem('id_usuario');
+  router.push('/');
 };
 
 const handlePublicar = async () => {

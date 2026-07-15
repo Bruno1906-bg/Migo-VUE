@@ -1,30 +1,10 @@
 <template>
-  <div class="detalle-vet-container-layout">
-    <div class="sidebar-overlay" :class="{ active: menuAbierto }" @click="menuAbierto = false"></div>
-
-    <aside class="sidebar" :class="{ open: menuAbierto }">
-      <button class="close-sidebar" @click="menuAbierto = false">✕</button>
-      <div class="sidebar-logo">
-        <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
-      </div>
-      <nav class="sidebar-menu">
-        <router-link to="/dashboard" class="menu-item">° Publicaciones</router-link>
-        <router-link to="/perfil" class="menu-item">° Mi Perfil</router-link>
-        <router-link to="/veterinarios" class="menu-item active">° Veterinarios</router-link>
-      </nav>
-      <div class="sidebar-footer">
-        <button @click="handleLogout" class="btn-logout">Cerrar Sesión</button>
-      </div>
-    </aside>
+  <AppShell active-menu="veterinarios" :show-desktop-top-bar="false" :logout-to="'/'" :main-class="'detalle-vet-main'" @logout="handleLogout">
+    <template #header>
+      <button @click="$router.back()" class="btn-volver">← Volver</button>
+    </template>
 
     <main class="main-content-detalle" v-if="vet">
-      <div class="top-bar-mobile">
-        <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
-          <span></span><span></span><span></span>
-        </button>
-        <button @click="$router.back()" class="btn-volver">← Volver</button>
-      </div>
-
       <div class="card-detalles">
         <img :src="getImageUrl(vet.imagen_logo)" class="logo-grande" alt="Logo">
         <h1>{{ vet.nombre_establecimiento }}</h1>
@@ -90,12 +70,13 @@
         </div>
       </div>
     </main>
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import AppShell from '../AppShell/AppShell.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -107,7 +88,6 @@ const nuevaCalificacion = ref(5);
 const editingId = ref(null);
 const editTexto = ref('');
 const editCalificacion = ref(5);
-const menuAbierto = ref(false);
 const currentUser = JSON.parse(sessionStorage.getItem('migo_user'));
 
 const cargarDatosCompletos = async () => {

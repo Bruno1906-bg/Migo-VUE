@@ -1,42 +1,19 @@
 <template>
-  <div class="veterinarios-container">
-    <div class="sidebar-overlay" :class="{ active: menuAbierto }" @click="menuAbierto = false"></div>
-
-    <aside class="sidebar" :class="{ open: menuAbierto }">
-      <div class="sidebar-logo">
-        <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
+  <AppShell active-menu="veterinarios" :hide-top-bar-on-scroll="true" :logout-to="'/'" :main-class="'veterinarios-main'" @logout="handleLogout">
+    <template #header>
+      <div class="search-container">
+        <input
+          type="text"
+          v-model="searchQuery"
+          placeholder="Busca tu veterinaria ideal aquí..."
+          class="search-input"
+        >
       </div>
 
-      <nav class="sidebar-menu">
-        <router-link to="/dashboard" class="menu-item">° Publicaciones</router-link>
-        <router-link to="/perfil" class="menu-item">° Mi Perfil</router-link>
-        <router-link to="/veterinarios" class="menu-item active">° Veterinarios</router-link>
-      </nav>
+      <button class="btn-map" @click="abrirMapa">Mapa</button>
+    </template>
 
-      <div class="sidebar-footer">
-        <button @click="handleLogout" class="btn-logout">Cerrar Sesión</button>
-      </div>
-    </aside>
-
-    <div class="main-content">
-      <header class="top-bar" :class="{ 'top-bar--hidden': !isTopBarVisible }">
-        <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
-          <span></span><span></span><span></span>
-        </button>
-
-        <div class="search-container">
-          <input
-            type="text"
-            v-model="searchQuery"
-            placeholder="Busca tu veterinaria ideal aquí..."
-            class="search-input"
-          >
-        </div>
-
-        <button class="btn-map" @click="abrirMapa">Mapa</button>
-      </header>
-
-      <main class="feed-section">
+    <main class="feed-section">
         <h2 class="feed-title">Encuentra tu veterinaria ideal aquí 🐶😽</h2>
         <p>{{ veterinariosDentroRadio.length }} veterinarias encontradas en un radio de {{ radioBusquedaKm }} km</p>
 
@@ -89,7 +66,6 @@
           No se encontraron veterinarios..💩💩
         </p>
       </main>
-    </div>
 
     <Teleport to="body">
       <div v-if="mostrarMapa" class="map-modal-backdrop" @click.self="cerrarMapa">
@@ -127,22 +103,19 @@
         </div>
       </div>
     </Teleport>
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch, nextTick, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onUnmounted, nextTick, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
-import { useScrollHeader } from '../../composables/useScrollHeader';
+import AppShell from '../AppShell/AppShell.vue';
 
 const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 
 const router = useRouter();
 const searchQuery = ref('');
-const { isVisible: isTopBarVisible } = useScrollHeader();
 const veterinarios = ref([]);
-const menuAbierto = ref(false);
-const savedBodyOverflow = ref('');
 const diaActual = new Date().getDay();
 const radioBusquedaKm = ref(10);
 const ubicacionActual = ref({ latitud: null, longitud: null, etiqueta: 'Ciudad de México · ubicación actual' });
@@ -156,22 +129,6 @@ const currentRadiusCircle = ref(null);
 const cargandoMapa = ref(false);
 const errorMapa = ref('');
 const errorMapaDetalle = ref('');
-
-watch(menuAbierto, (isOpen) => {
-  if (typeof document === 'undefined') return;
-
-  if (isOpen) {
-    savedBodyOverflow.value = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = savedBodyOverflow.value;
-  }
-});
-
-onBeforeUnmount(() => {
-  if (typeof document === 'undefined') return;
-  document.body.style.overflow = savedBodyOverflow.value;
-});
 
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
 let googleMapsLoaderPromise = null;
