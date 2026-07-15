@@ -5,6 +5,8 @@
     </template>
 
     <main class="main-content" v-if="pub">
+      <button @click="$router.back()" class="btn-volver btn-volver--desktop">← Volver</button>
+
       <div class="card-detalles">
 <img :src="getImageUrl(pub.ruta_imagen)" class="publi-grande" alt="Mascota">
         <h1>{{ pub.nombre_pet }}</h1>

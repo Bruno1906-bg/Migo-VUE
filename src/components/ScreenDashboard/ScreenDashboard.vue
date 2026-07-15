@@ -147,6 +147,13 @@ const colonias_cat = ref([]);
 const especies_cat = ref([]);
 const tipos_cat = ref([]);
 
+const savedBodyOverflow = ref('');
+
+const restoreBodyScroll = () => {
+  if (typeof document === 'undefined') return;
+  document.body.style.overflow = savedBodyOverflow.value;
+};
+
 const imagenAmpliada = ref(null);
 const abrirImagen = (src) => { imagenAmpliada.value = src; };
 const cerrarImagen = () => { imagenAmpliada.value = null; };
@@ -173,7 +180,6 @@ const formEdicion = ref({
 const coloniaInputEdicion = ref('');
 const filteredColoniasEdicion = ref([]);
 const showSuggestionsEdicion = ref(false);
-const savedBodyOverflow = ref('');
 
 const lockBodyScroll = (isLocked) => {
   if (typeof document === 'undefined') return;
@@ -309,11 +315,16 @@ const cargarCatalogos = async () => {
 };
 
 onMounted(async () => {
+  if (typeof document !== 'undefined') {
+    savedBodyOverflow.value = document.body.style.overflow;
+    document.body.style.overflow = '';
+  }
+
   await Promise.all([cargarPublicaciones(), cargarCatalogos()]);
 });
 
 onBeforeUnmount(() => {
-  lockBodyScroll(false);
+  restoreBodyScroll();
 });
 
 const filteredPublicaciones = computed(() => {

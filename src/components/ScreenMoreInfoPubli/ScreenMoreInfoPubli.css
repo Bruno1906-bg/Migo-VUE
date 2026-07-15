@@ -74,6 +74,10 @@
   align-items: center;
 }
 
+.btn-volver--desktop {
+  display: flex;
+}
+
 .card-detalles, .seccion-resenas {
   background: white;
   padding: 30px;
@@ -223,6 +227,10 @@
     margin: 0;
     padding: 20px;
     max-width: none;
+  }
+
+  .btn-volver--desktop {
+    display: none;
   }
 
   .btn-hamburger { display: block; }
