@@ -9,6 +9,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  overflow-y: auto;
   z-index: 1000;
 }
 
@@ -16,10 +19,12 @@
   background: white;
   width: 90%;
   max-width: 600px;
+  max-height: calc(100dvh - 48px);
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   position: relative;
+  overflow-y: auto;
 }
 
 /* Encabezado */
@@ -70,6 +75,20 @@ textarea { height: 80px; resize: none; }
   cursor: pointer;
   background: #fdfdfd;
   transition: 0.3s;
+  min-height: 260px;
+}
+
+.upload-area {
+  width: 100%;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 18px;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .col-photo:hover { border-color: #14a098; }
@@ -150,35 +169,73 @@ textarea { height: 80px; resize: none; }
 @media (max-width: 768px) {
   .modal-overlay {
     align-items: flex-start;
-    padding: 16px;
-    overflow-y: auto;
+    padding: 12px;
   }
 
   .modal-card {
     width: 100%;
     max-width: 100%;
+    max-height: calc(100dvh - 24px);
     padding: 18px;
     border-radius: 16px;
   }
 
   .modal-card header {
     margin-bottom: 18px;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .modal-card header h2 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .close-btn {
+    line-height: 1;
+    flex-shrink: 0;
   }
 
   .form-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .col-photo {
-    min-height: 220px;
-    padding: 16px;
+    min-height: 200px;
+    padding: 12px;
+  }
+
+  .upload-area {
+    min-height: 200px;
+    padding: 12px;
   }
 
   .preview-container {
-    height: 180px;
+    height: 170px;
   }
 
   .btn-primary {
     margin-top: 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .modal-overlay {
+    padding: 8px;
+  }
+
+  .modal-card {
+    max-height: calc(100dvh - 16px);
+    padding: 16px;
+  }
+
+  .col-photo,
+  .upload-area {
+    min-height: 180px;
+  }
+
+  .preview-container {
+    height: 150px;
   }
 }
