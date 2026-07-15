@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <div v-if="modalEdicion" class="modal-overlay" @click.self="cerrarModalEdicion">
+    <div v-if="modalEdicion" class="modal-overlay modal-overlay--edit" @click.self="cerrarModalEdicion">
       <div class="modal-edicion">
         <header class="modal-edicion-header">
           <h2>Editar Publicación</h2>
@@ -124,7 +124,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import AppShell from '../AppShell/AppShell.vue';
 
@@ -173,6 +173,18 @@ const formEdicion = ref({
 const coloniaInputEdicion = ref('');
 const filteredColoniasEdicion = ref([]);
 const showSuggestionsEdicion = ref(false);
+const savedBodyOverflow = ref('');
+
+const lockBodyScroll = (isLocked) => {
+  if (typeof document === 'undefined') return;
+
+  if (isLocked) {
+    savedBodyOverflow.value = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = savedBodyOverflow.value;
+  }
+};
 
 const filtrarColoniasEdicion = () => {
   const query = coloniaInputEdicion.value.toLowerCase();
@@ -203,11 +215,13 @@ const abrirModalEdicion = (pub) => {
   coloniaInputEdicion.value = pub.nombre_colonia ?? '';
   showSuggestionsEdicion.value = false;
   modalEdicion.value = true;
+  lockBodyScroll(true);
 };
 
 const cerrarModalEdicion = () => {
   modalEdicion.value = false;
   guardando.value = false;
+  lockBodyScroll(false);
 };
 
 const eliminarPublicacion = async (idPubli) => {
@@ -296,6 +310,10 @@ const cargarCatalogos = async () => {
 
 onMounted(async () => {
   await Promise.all([cargarPublicaciones(), cargarCatalogos()]);
+});
+
+onBeforeUnmount(() => {
+  lockBodyScroll(false);
 });
 
 const filteredPublicaciones = computed(() => {

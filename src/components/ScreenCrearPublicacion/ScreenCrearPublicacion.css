@@ -110,6 +110,27 @@ textarea { height: 80px; resize: none; }
 
 .btn-primary:hover { background: #0f7d77; }
 
+.crear-publicacion-main {
+  padding-top: 18px;
+}
+
+.crear-publicacion-main .modal-overlay {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  min-height: calc(100dvh - 60px);
+  height: auto;
+  background: transparent;
+  padding: 0;
+  overflow: visible;
+  align-items: flex-start;
+}
+
+.crear-publicacion-main .modal-card {
+  width: 100%;
+  max-width: 600px;
+}
+
 .form-message {
   margin-top: 15px;
   text-align: center;
@@ -167,6 +188,14 @@ textarea { height: 80px; resize: none; }
 }
 
 @media (max-width: 768px) {
+  .crear-publicacion-main {
+    padding-top: 8px;
+  }
+
+  .crear-publicacion-main .modal-overlay {
+    min-height: auto;
+  }
+
   .modal-overlay {
     align-items: flex-start;
     padding: 12px;

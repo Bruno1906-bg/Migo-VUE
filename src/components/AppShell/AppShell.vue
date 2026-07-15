@@ -35,7 +35,7 @@
           topBarClass
         ]"
       >
-        <button class="app-shell__hamburger" type="button" @click="menuOpen = !menuOpen" aria-label="Abrir menú">
+        <button class="app-shell__hamburger" type="button" @click="toggleMenu" aria-label="Abrir menú">
           <span></span><span></span><span></span>
         </button>
 
@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-import { computed, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useScrollHeader } from '../../composables/useScrollHeader';
 
@@ -97,7 +97,7 @@ const menuItems = [
 const { isVisible } = useScrollHeader();
 const topBarVisible = computed(() => (props.hideTopBarOnScroll ? isVisible.value : true));
 
-const lockBodyScroll = (isOpen) => {
+const updateBodyScroll = (isOpen) => {
   if (typeof document === 'undefined') return;
 
   if (isOpen) {
@@ -108,17 +108,21 @@ const lockBodyScroll = (isOpen) => {
   }
 };
 
-watch(menuOpen, lockBodyScroll);
-
 onBeforeUnmount(() => {
   if (typeof document === 'undefined') return;
   document.body.style.overflow = savedBodyOverflow.value;
 });
 
 const handleLogout = () => {
+  updateBodyScroll(false);
   emit('logout');
   menuOpen.value = false;
   router.push(props.logoutTo);
+};
+
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value;
+  updateBodyScroll(menuOpen.value);
 };
 </script>
 
