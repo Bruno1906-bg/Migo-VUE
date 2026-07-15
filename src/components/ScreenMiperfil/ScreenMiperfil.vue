@@ -19,9 +19,11 @@
     </aside>
 
     <div class="main-content">
-      <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
-        <span></span><span></span><span></span>
-      </button>
+      <div class="mobile-header">
+        <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
 
       <main class="feed-section">
         <h2 class="feed-title">Mi Perfil</h2>

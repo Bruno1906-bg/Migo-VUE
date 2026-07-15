@@ -19,7 +19,7 @@
     </aside>
 
     <div class="main-content">
-      <header class="top-bar">
+      <header class="top-bar" :class="{ 'top-bar--hidden': !isTopBarVisible }">
         <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
           <span></span><span></span><span></span>
         </button>
@@ -133,11 +133,13 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
+import { useScrollHeader } from '../../composables/useScrollHeader';
 
 const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 
 const router = useRouter();
 const searchQuery = ref('');
+const { isVisible: isTopBarVisible } = useScrollHeader();
 const veterinarios = ref([]);
 const menuAbierto = ref(false);
 const diaActual = new Date().getDay();

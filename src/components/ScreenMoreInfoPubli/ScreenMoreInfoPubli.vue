@@ -21,10 +21,11 @@
 
     <!-- Contenido principal -->
     <main class="main-content" v-if="pub">
-      <!-- Botón Hamburguesa -->
-      <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
-        <span></span><span></span><span></span>
-      </button>
+      <div class="mobile-header">
+        <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
 
       <button @click="$router.back()" class="btn-volver">← Volver</button>
 
