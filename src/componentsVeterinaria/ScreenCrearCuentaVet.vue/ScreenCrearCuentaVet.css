@@ -8,6 +8,7 @@
 
 .register-wrapper {
     min-height: 100vh;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,8 +20,8 @@
 .register-container {
     background-color: #ffffff;
     width: 100%;
-    max-width: 500px;
-    padding: 40px;
+    max-width: 560px;
+    padding: 34px 32px;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
@@ -28,11 +29,11 @@
 /* 3. Cabecera */
 .register-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 22px;
 }
 
 .register-logo {
-    height: 70px;
+    height: 64px;
     margin-bottom: 15px;
 }
 
@@ -50,8 +51,8 @@
 /* 4. Grid del Formulario */
 .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas para nombre/apellido */
-    gap: 15px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
 }
 
 .full-width {
@@ -68,7 +69,7 @@
 
 .input-group input {
     width: 100%;
-    padding: 12px;
+    padding: 11px 14px;
     border: 1.5px solid #e1e1e1;
     border-radius: 12px;
     font-size: 0.95rem;
@@ -143,13 +144,13 @@
     width: 100%;
     background-color: #2EC4B6;
     color: #ffffff;
-    padding: 14px;
+    padding: 13px;
     border: none;
     border-radius: 12px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 8px;
     transition: background 0.3s;
 }
 
@@ -169,7 +170,7 @@
 .error { color: #e74c3c; }
 
 .register-footer {
-    margin-top: 25px;
+    margin-top: 20px;
     text-align: center;
     font-size: 0.85rem;
     color: #666;
@@ -185,4 +186,47 @@
     display: block;
     margin-top: 15px;
     color: #999;
+}
+
+/* --- ADAPTACIONES RESPONSIVAS PARA REGISTRO --- */
+
+@media (max-width: 600px) {
+  .register-wrapper {
+    padding: 12px;
+  }
+
+  .register-container {
+    max-width: 100%;
+    padding: 24px 18px;
+    border-radius: 18px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 11px;
+  }
+
+  .register-logo {
+    height: 58px;
+  }
+
+  .input-group input,
+  .input-group select {
+    padding: 11px 13px;
+    font-size: 16px;
+  }
+
+  .password-field input {
+    padding-right: 48px;
+  }
+
+  .btn-register {
+    padding: 12px;
+    margin-top: 12px;
+  }
+
+  .suggestions {
+    max-height: 150px;
+    font-size: 16px;
+  }
 }

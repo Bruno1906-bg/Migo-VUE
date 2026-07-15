@@ -21,8 +21,8 @@
 .register-container {
     background-color: #ffffff;
     width: 100%;
-    max-width: 500px;
-    padding: 40px;
+    max-width: 560px;
+    padding: 34px 32px;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
     text-align: center;
@@ -30,11 +30,11 @@
 
 /* 4. Cabecera */
 .register-header {
-    margin-bottom: 30px;
+    margin-bottom: 22px;
 }
 
 .register-logo {
-    height: 60px;
+    height: 64px;
     width: auto;
     margin-bottom: 15px;
 }
@@ -50,12 +50,16 @@
     color: rgba(1, 22, 39, 0.6);
 }
 
-/* 5. Formulario y Grid */
+/* 5. Grid del Formulario */
 .form-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
     text-align: left;
+}
+
+.full-width {
+    grid-column: span 2;
 }
 
 .input-group {
@@ -70,10 +74,10 @@
     color: #011627;
 }
 
-.input-group input, 
+.input-group input,
 .input-group select {
     width: 100%;
-    padding: 12px 15px;
+    padding: 11px 14px;
     border: 1.5px solid #e1e1e1;
     border-radius: 12px;
     font-size: 0.95rem;
@@ -114,18 +118,47 @@
   fill: currentColor;
 }
 
-/* 6. Botón */
+/* 5. Autocomplete (Colonia) */
+.autocomplete {
+    position: relative;
+}
+
+.suggestions {
+    position: absolute;
+    width: 100%;
+    background: white;
+    border: 1px solid #e1e1e1;
+    border-radius: 0 0 12px 12px;
+    list-style: none;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+}
+
+.suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.suggestions li:hover {
+    background-color: #f0fcfb;
+    color: #2EC4B6;
+}
+
+/* 6. Botón Principal */
 .btn-register {
     width: 100%;
     background-color: #2EC4B6;
     color: #ffffff;
-    padding: 14px;
+    padding: 13px;
     border: none;
     border-radius: 12px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 8px;
     transition: background 0.3s ease, transform 0.2s ease;
 }
 
@@ -136,19 +169,20 @@
 
 /* 7. Mensajes y Footer */
 .form-message {
+    text-align: center;
     margin-top: 15px;
     font-size: 0.85rem;
     font-weight: 600;
 }
 
-.form-message.success { color: #2EC4B6; }
-.form-message.error { color: #e74c3c; }
+.success { color: #2EC4B6; }
+.error { color: #e74c3c; }
 
 .register-footer {
-    margin-top: 25px;
+    margin-top: 20px;
+    text-align: center;
     font-size: 0.85rem;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
+    color: #666;
 }
 
 .register-footer a {
@@ -159,66 +193,38 @@
 
 .btn-back {
     display: block;
-    margin-top: 10px;
+    margin-top: 15px;
     color: #999;
-}
-
-/* Autocomplete */
-.autocomplete {
-  position: relative;
-  width: 100%;
-}
-
-.suggestions {
-  position: absolute;
-  top: 100%; 
-  left: 0;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 100%;
-  max-height: 120px;
-  overflow-y: auto;
-  list-style: none;
-  padding: 0;
-  margin: 4px 0 0 0;
-  z-index: 1000;
-  box-sizing: border-box;
-}
-
-.suggestions li {
-  padding: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.suggestions li:hover {
-  background: #f0f0f0;
 }
 
 /* --- ADAPTACIONES RESPONSIVAS PARA REGISTRO --- */
 
 @media (max-width: 600px) {
+  .register-wrapper {
+    padding: 12px;
+  }
+
   .register-container {
-    padding: 25px 20px;
-    border-radius: 15px;
+    max-width: 100%;
+    padding: 24px 18px;
+    border-radius: 18px;
   }
 
   /* Convertimos el grid en una sola columna en móvil */
   .form-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 11px;
   }
 
   .register-logo {
-    height: 50px;
+    height: 58px;
   }
 
   /* Ajustes de inputs para evitar zoom en móviles */
-  .input-group input, 
+  .input-group input,
   .input-group select {
-    padding: 12px;
-    font-size: 16px; /* Vital para evitar zoom en iOS */
+    padding: 11px 13px;
+    font-size: 16px;
   }
 
   .password-field input {
@@ -227,12 +233,12 @@
 
   .btn-register {
     padding: 12px;
-    margin-top: 15px;
+    margin-top: 12px;
   }
 
   /* Ajuste del Autocomplete en móvil */
   .suggestions {
-    max-height: 150px; /* Un poco más alto para facilitar el dedo */
+    max-height: 150px;
     font-size: 16px;
   }
 }
