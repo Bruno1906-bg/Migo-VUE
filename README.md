@@ -101,3 +101,7 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_m
 --MODELO DE NEGOCIOS--
 
 <img width="1150" height="830" alt="Modelo_Negocio_MIGO" src="https://github.com/user-attachments/assets/b293a268-758c-45c3-a598-8ee1e5154b9f" />
+
+--DIAGRAMA ENTIDAD RELACION--
+
+<img width="3000" height="1700" alt="migo_db (1) (1)" src="https://github.com/user-attachments/assets/d9daef86-502f-4aa4-8656-41eff2e66d95" />
