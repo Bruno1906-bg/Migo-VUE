@@ -1,5 +1,9 @@
 <template>
   <AppShell active-menu="perfil" :show-desktop-top-bar="false" :logout-to="'/'" :main-class="'perfil-main'" @logout="handleLogout">
+      <template #header>
+        <div class="perfil-mobile-title">Mi Perfil</div>
+      </template>
+
       <main class="feed-section">
         <h2 class="feed-title">Mi Perfil</h2>
 
