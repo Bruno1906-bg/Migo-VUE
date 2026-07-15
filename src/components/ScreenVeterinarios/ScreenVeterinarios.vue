@@ -129,6 +129,7 @@ const currentRadiusCircle = ref(null);
 const cargandoMapa = ref(false);
 const errorMapa = ref('');
 const errorMapaDetalle = ref('');
+const savedBodyOverflow = ref('');
 
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
 let googleMapsLoaderPromise = null;
@@ -140,6 +141,17 @@ function mostrarErrorMapa(contexto, error) {
   errorMapaDetalle.value = detalle;
   console.error(contexto, error);
 }
+
+const lockBodyScroll = (isLocked) => {
+  if (typeof document === 'undefined') return;
+
+  if (isLocked) {
+    savedBodyOverflow.value = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = savedBodyOverflow.value;
+  }
+};
 
 function cargarGoogleMapsApi() {
   if (window.google?.maps) {
@@ -542,12 +554,15 @@ onUnmounted(() => {
     window.gm_authFailure = previousGmAuthFailure;
     previousGmAuthFailure = null;
   }
+  lockBodyScroll(false);
 });
 
 watch(mostrarMapa, async abierto => {
   if (abierto) {
+    lockBodyScroll(true);
     await cargarMapa();
   } else {
+    lockBodyScroll(false);
     destruirMapa();
   }
 });
