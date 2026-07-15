@@ -253,15 +253,37 @@
   .mobile-header {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     position: sticky;
     top: 0;
-    z-index: 850;
+    z-index: 1400;
     background: #f4f7f6;
-    padding: 8px 0 12px;
-    margin-bottom: 8px;
+    padding: 4px 0 10px;
+    margin-bottom: 4px;
   }
 
-  .btn-hamburger { margin-bottom: 0; }
+  .btn-hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    margin-bottom: 0;
+    z-index: 1450;
+  }
+
+  .btn-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: #14a098;
+    border-radius: 2px;
+  }
 
   .sidebar {
     transform: translateX(-100%);
@@ -287,7 +309,7 @@
 
   .main-content {
     margin-left: 0; /* sidebar se oculta en móviles */
-    padding: 12px;
+    padding: 10px;
     min-height: 100dvh;
     overflow: hidden;
     display: flex;
@@ -296,17 +318,17 @@
   }
 
   .perfil-container {
-    padding: 14px;
+    padding: 12px;
     margin: 0 auto;
-    width: min(340px, calc(100vw - 24px));
-    max-width: 340px;
+    width: min(320px, calc(100vw - 20px));
+    max-width: 320px;
     border-radius: 16px;
   }
 
  .perfil-avatar-left {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 14px auto; 
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 12px auto; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -317,24 +339,37 @@
   .feed-section {
     width: 100%;
     margin: 0;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
   }
 
   .feed-title {
-    margin-bottom: 4px;
-    width: min(340px, calc(100vw - 24px));
+    margin-bottom: 2px;
+    width: min(320px, calc(100vw - 20px));
   }
 
   .perfil-field {
     flex-direction: column;
     align-items: stretch;
-    gap: 6px;
+    gap: 5px;
   }
 
   .perfil-field label {
     width: auto;
     font-size: 0.82rem;
+  }
+
+  .perfil-field input,
+  .perfil-field select {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 9px 10px;
+    font-size: 0.95rem;
+  }
+
+  .colonia-field {
+    width: 100%;
   }
 
   .edit-icon {
@@ -348,7 +383,7 @@
     align-self: stretch;
     padding: 9px 14px;
     font-size: 0.92rem;
-    margin-top: 14px;
+    margin-top: 10px;
   }
 }
 
