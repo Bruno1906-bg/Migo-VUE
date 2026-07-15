@@ -1,10 +1,12 @@
 <template>
-  <AppShell active-menu="veterinarios" :show-desktop-top-bar="false" :logout-to="'/'" :main-class="'detalle-vet-main'" @logout="handleLogout">
+  <AppShell active-menu="veterinarios" :show-desktop-top-bar="false" :logout-to="'/'" :main-class="'detalle-vet-main'" :top-bar-class="'app-shell__topbar--detail'" @logout="handleLogout">
     <template #header>
       <button @click="$router.back()" class="btn-volver">← Volver</button>
     </template>
 
     <main class="main-content-detalle" v-if="vet">
+      <button @click="$router.back()" class="btn-volver btn-volver--desktop">← Volver</button>
+
       <div class="card-detalles">
         <img :src="getImageUrl(vet.imagen_logo)" class="logo-grande" alt="Logo">
         <h1>{{ vet.nombre_establecimiento }}</h1>
