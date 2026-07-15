@@ -78,12 +78,17 @@
 }
 
 /* --- CONTENIDO PRINCIPAL --- */
+.detalle-vet-main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .main-content-detalle {
   flex-grow: 1;
   margin: 0 auto;
   padding: 40px 24px;
-  width: 100%;
-  max-width: 980px;
+  width: min(100%, 980px);
   min-width: 0;
 }
 
@@ -337,6 +342,10 @@ textarea {
 .close-sidebar { display: none; }
 
 @media (max-width: 768px) {
+  .detalle-vet-main {
+    display: block;
+  }
+
   .btn-hamburger { display: block; }
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
