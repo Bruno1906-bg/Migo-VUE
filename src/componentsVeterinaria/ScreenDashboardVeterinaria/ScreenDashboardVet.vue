@@ -1,44 +1,38 @@
 <template>
-  <div class="dashboard-vet-layout">
-    <div class="sidebar-overlay" :class="{ active: menuAbierto }" @click="menuAbierto = false"></div>
-
-    <aside class="sidebar" :class="{ open: menuAbierto }">
-      <button class="close-sidebar" @click="menuAbierto = false">✕</button>
-      <div class="sidebar-logo">
-        <img src="../../assets/LogoMigo.jpeg" alt="MIGO Logo">
-      </div>
-      
-      <nav class="sidebar-menu">
-        <router-link to="/dashboardvet" class="menu-item">° Mi Negocio</router-link>
-        <router-link to="/dashboardvet/resenas" class="menu-item">° Reseñas</router-link>
-        <router-link to="/dashboardvet/ajustes-vet" class="menu-item">° Ajustes</router-link>
-      </nav>
-
-      <div class="sidebar-footer">
-        <button @click="handleLogout" class="btn-logout">Cerrar Sesión</button>
-      </div>
-    </aside>
-
-    <main class="main-content">
-      <button class="btn-hamburger" @click="menuAbierto = !menuAbierto">
-        <span></span><span></span><span></span>
-      </button>
-      
-      <router-view />
-    </main>
-  </div>
+  <AppShell
+    :active-menu="activeMenu"
+    :menu-items="vetMenuItems"
+    :show-desktop-top-bar="false"
+    :hide-top-bar-on-scroll="true"
+    :logout-to="'/loginvet'"
+    :main-class="'dashboard-vet-main'"
+    @logout="handleLogout"
+  >
+    <router-view />
+  </AppShell>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+import AppShell from '../../components/AppShell/AppShell.vue';
 
-const router = useRouter();
-const menuAbierto = ref(false);
+const route = useRoute();
+
+const vetMenuItems = [
+  { key: 'minegocio', to: '/dashboardvet', label: '° Mi Negocio' },
+  { key: 'resenas', to: '/dashboardvet/resenas', label: '° Reseñas' },
+  { key: 'ajustes', to: '/dashboardvet/ajustes-vet', label: '° Ajustes' }
+];
+
+const activeMenu = computed(() => {
+  if (route.path.includes('/resenas')) return 'resenas';
+  if (route.path.includes('/ajustes-vet')) return 'ajustes';
+  return 'minegocio';
+});
 
 const handleLogout = () => {
   sessionStorage.clear();
-  router.push('/loginvet');
 };
 </script>
 
