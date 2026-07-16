@@ -154,7 +154,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick, computed } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch, nextTick, computed } from 'vue';
 
 const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
 const API_URL = `${API_BASE_URL}/api`;
@@ -162,6 +162,7 @@ const API_URL = `${API_BASE_URL}/api`;
 const coloniaInput = ref('');
 const filteredColonias = ref([]);
 const mostrarModalUbicacion = ref(false);
+const savedBodyOverflow = ref('');
 const mapContainer = ref(null);
 const mapa = ref(null);
 const marcadorActual = ref(null);
@@ -478,6 +479,17 @@ async function cargarMapa() {
   }
 }
 
+function lockBodyScroll(isLocked) {
+  if (typeof document === 'undefined') return;
+
+  if (isLocked) {
+    savedBodyOverflow.value = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = savedBodyOverflow.value;
+  }
+}
+
 function abrirModalUbicacion() {
   ubicacionTemporal.value = {
     latitud: negocio.value.latitud !== null ? Number(negocio.value.latitud) : null,
@@ -672,9 +684,15 @@ function getImageUrl(ruta) {
 }
 
 watch(mostrarModalUbicacion, async abierto => {
+  lockBodyScroll(abierto);
+
   if (abierto) {
     await cargarMapa();
   }
+});
+
+onBeforeUnmount(() => {
+  lockBodyScroll(false);
 });
 
 onMounted(async () => {

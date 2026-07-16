@@ -20,7 +20,7 @@ const handleLogin = async () => {
 
     if (respuesta.rol === 'administrador') {
       sessionStorage.setItem('id_admin', respuesta.id_usuario);
-      router.push('/dashboardadmin'); // 👈 ajusta esto a la ruta real de tu panel admin
+      router.push('/dashboardadmin'); 
     } else {
       sessionStorage.setItem('id_usuario', respuesta.id_usuario);
       router.push('/dashboard');

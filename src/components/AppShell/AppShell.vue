@@ -9,7 +9,7 @@
 
       <nav class="app-shell__sidebar-menu">
         <router-link
-          v-for="item in menuItems"
+          v-for="item in resolvedMenuItems"
           :key="item.to"
           :to="item.to"
           class="app-shell__menu-item"
@@ -80,6 +80,10 @@ const props = defineProps({
   logoutTo: {
     type: String,
     default: '/'
+  },
+  menuItems: {
+    type: Array,
+    default: null
   }
 });
 
@@ -87,11 +91,15 @@ const emit = defineEmits(['logout']);
 const router = useRouter();
 const menuOpen = ref(false);
 const savedBodyOverflow = ref('');
-const menuItems = [
+const defaultMenuItems = [
   { key: 'dashboard', to: '/dashboard', label: '° Publicaciones' },
   { key: 'perfil', to: '/perfil', label: '° Mi Perfil' },
   { key: 'veterinarios', to: '/veterinarios', label: '° Veterinarios' }
 ];
+
+const resolvedMenuItems = computed(() => (
+  Array.isArray(props.menuItems) && props.menuItems.length > 0 ? props.menuItems : defaultMenuItems
+));
 
 const { isVisible } = useScrollHeader();
 const topBarVisible = computed(() => (props.hideTopBarOnScroll ? isVisible.value : true));
