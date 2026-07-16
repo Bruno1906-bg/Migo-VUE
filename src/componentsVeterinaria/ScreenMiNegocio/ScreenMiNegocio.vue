@@ -112,7 +112,7 @@
     </div>
 
     <Teleport to="body">
-      <div v-show="mostrarModalUbicacion" class="ubicacion-modal-backdrop" @click.self="cerrarModalUbicacion">
+      <div v-if="mostrarModalUbicacion" class="ubicacion-modal-backdrop" @click.self="cerrarModalUbicacion">
         <div class="ubicacion-modal">
           <div class="ubicacion-modal__header">
             <div>
@@ -687,7 +687,10 @@ watch(mostrarModalUbicacion, async abierto => {
   lockBodyScroll(abierto);
 
   if (abierto) {
+    await nextTick();
     await cargarMapa();
+  } else {
+    destruirMapa();
   }
 });
 
