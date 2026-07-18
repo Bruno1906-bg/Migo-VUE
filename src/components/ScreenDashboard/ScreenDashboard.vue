@@ -57,6 +57,10 @@
             </div>
           </div>
         </div>
+
+        <p v-if="!cargando && filteredPublicaciones.length === 0" class="feed-empty">
+          Sin publicaciones disponibles
+        </p>
       </main>
 
     <div v-if="imagenAmpliada" class="modal-overlay" @click="cerrarImagen">
@@ -135,6 +139,7 @@ const idUsuarioActual = sessionStorage.getItem('id_usuario')
   : null;
 
 const publicaciones = ref([]);
+const cargando = ref(true);
 const searchQuery = ref('');
 const selectedEstado = ref('');
 const selectedEspecie = ref('');
@@ -286,6 +291,7 @@ const guardarEdicion = async () => {
 };
 
 const cargarPublicaciones = async () => {
+  cargando.value = true;
   try {
     const res = await fetch('https://migobackenddeploy-production.up.railway.app/api/publicaciones');
     if (!res.ok) throw new Error('Error al cargar publicaciones');
@@ -296,6 +302,8 @@ const cargarPublicaciones = async () => {
     tipos.value = [...new Set(publicaciones.value.map(p => p.tipo))];
   } catch (err) {
     console.error('Error:', err);
+  } finally {
+    cargando.value = false;
   }
 };
 
