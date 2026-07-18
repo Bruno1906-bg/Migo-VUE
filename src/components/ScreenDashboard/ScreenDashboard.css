@@ -168,6 +168,12 @@
   margin-bottom: 20px;
 }
 
+.feed-empty {
+  color: #666;
+  margin-top: 18px;
+  font-weight: 600;
+}
+
 /* ===========================
    FILTROS
 =========================== */
