@@ -100,7 +100,7 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_m
 [DISEÑOS DE INTERFACES EN FIGMA](https://www.figma.com/design/nCnZo8WIk8Tdqsu60nVrwZ/Wireframes?node-id=0-1&p=f&t=vqyf1YhMBRUs2gK9-0
 )
 
-[LINK DE PRESENTACION EN CANVA](https://canva.link/invmwm15xp6j6zp)
+[LINK DE PRESENTACION EN CANVA](https://canva.link/yzm70xpqjmlt2jd)
 
 --MODELO DE NEGOCIOS--
 
