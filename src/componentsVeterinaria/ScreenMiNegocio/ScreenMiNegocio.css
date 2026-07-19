@@ -420,22 +420,39 @@
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .mi-negocio-container {
-    padding: 12px 12px 28px;
+    padding: 16px 12px 28px;
+    box-sizing: border-box;
+  }
+
+  .mi-negocio-container h2 {
+    margin: 0 0 18px;
+    padding: 0 4px;
+    width: 100%;
   }
 
   .negocio-layout {
     flex-direction: column;
     display: flex;
+    width: 100%;
+    gap: 16px;
   }
 
   .negocio-form {
     padding: 18px;
     max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .cards-right {
+    width: 100%;
   }
 
   .horarios-card,
   .servicios-card {
     margin-top: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .horario-row {
