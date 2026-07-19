@@ -144,7 +144,7 @@ let intervaloRecarga = null;
 
 const estadoLabelMap = {
   pendiente: '⏳ Pendiente',
-  aprobada: '✓ Verificado',
+  aprobada: 'Verificado',
   rechazada: 'Rechazado',
   sin_solicitud: '• Sin revisión'
 };

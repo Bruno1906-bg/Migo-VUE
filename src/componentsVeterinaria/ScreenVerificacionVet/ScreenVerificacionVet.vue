@@ -22,6 +22,9 @@
           </div>
           <h2>Tu veterinaria ya fue aprobada</h2>
           <p>Tu cuenta ya pasó la revisión del administrador.</p>
+          <button type="button" class="vet-verification-link-button" @click="subirOtroDocumento">
+            Subir nueva cédula
+          </button>
         </div>
       </template>
 
