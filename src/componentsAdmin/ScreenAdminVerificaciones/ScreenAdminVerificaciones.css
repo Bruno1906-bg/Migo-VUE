@@ -1,0 +1,473 @@
+.vet-verifications-page {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.vet-verifications-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 4px 0 22px;
+}
+
+.vet-verifications-header h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  line-height: 1.1;
+  color: #111827;
+  font-weight: 800;
+}
+
+.vet-verifications-header p {
+  margin: 8px 0 0;
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.vet-verifications-header__pill {
+  background: #ef4444;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 10px 18px rgba(239, 68, 68, 0.18);
+}
+
+.vet-verifications-header__pill.is-empty {
+  background: #d7dde7;
+  color: #556070;
+  box-shadow: none;
+}
+
+.vet-verifications-loading,
+.vet-verifications-empty {
+  color: #64748b;
+  font-size: 1rem;
+  padding: 16px 0;
+}
+
+.vet-verifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.vet-verification-card {
+  appearance: none;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.vet-verification-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+  border-color: #d7e6e4;
+}
+
+.vet-verification-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.vet-verification-card__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #effbf8 0%, #e7f7f4 100%);
+  color: #b970b6;
+  flex-shrink: 0;
+}
+
+.vet-verification-card__icon svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+.vet-verification-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.vet-verification-status__icon {
+  font-size: 0.92rem;
+  line-height: 1;
+}
+
+.vet-verification-status.is-pendiente {
+  background: #fff7e6;
+  color: #f59e0b;
+}
+
+.vet-verification-status.is-aprobada {
+  background: #ecfdf5;
+  color: #0f8f64;
+}
+
+.vet-verification-status.is-rechazada {
+  background: #fff1f2;
+  color: #ef4444;
+}
+
+.vet-verification-status.is-sin_solicitud {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.vet-verification-card__body h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.vet-verification-card__body p {
+  margin: 0;
+  color: #52606d;
+  font-size: 0.94rem;
+}
+
+.vet-verification-card__file {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  color: #94a3b8;
+  font-size: 0.88rem;
+}
+
+.vet-verification-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.58);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 3000;
+}
+
+.vet-verification-modal {
+  width: min(760px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.22);
+}
+
+.vet-verification-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.vet-verification-modal__header-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.vet-verification-modal__icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #effbf8 0%, #e7f7f4 100%);
+  color: #b970b6;
+}
+
+.vet-verification-modal__icon svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.vet-verification-modal__header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.vet-verification-modal__status-text {
+  margin: 4px 0 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.vet-verification-modal__status-text.is-pendiente {
+  color: #f59e0b;
+}
+
+.vet-verification-modal__status-text.is-aprobada {
+  color: #0f8f64;
+}
+
+.vet-verification-modal__status-text.is-rechazada {
+  color: #ef4444;
+}
+
+.vet-verification-modal__status-text.is-sin_solicitud {
+  color: #64748b;
+}
+
+.vet-verification-modal__close {
+  appearance: none;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.vet-verification-modal__body {
+  padding: 18px 20px 8px;
+  display: grid;
+  gap: 18px;
+}
+
+.vet-verification-info-card,
+.vet-verification-document-card,
+.vet-verification-reason {
+  background: #f8fafc;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.vet-verification-info-card h4,
+.vet-verification-document-card h4 {
+  margin: 0 0 14px;
+  color: #94a3b8;
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.vet-verification-info-grid {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  gap: 14px 18px;
+  align-items: start;
+}
+
+.vet-verification-info-grid span {
+  color: #0f8f64;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.vet-verification-info-grid strong {
+  color: #243040;
+  font-weight: 500;
+}
+
+.vet-verification-services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.vet-verification-services span {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #eefcf8;
+  color: #0d9d87;
+  font-size: 0.88rem;
+}
+
+.vet-verification-document-box {
+  border: 2px dashed #c8f3e3;
+  border-radius: 18px;
+  min-height: 266px;
+  background: #fbfffd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 28px 18px;
+}
+
+.vet-verification-document-box__icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+  color: #c7a3ce;
+  background: rgba(233, 248, 245, 0.92);
+  border: 1px solid #bdeee0;
+}
+
+.vet-verification-document-box__icon.is-pdf {
+  color: #e2c6d6;
+}
+
+.vet-verification-document-box__icon svg {
+  width: 34px;
+  height: 34px;
+  fill: currentColor;
+}
+
+.vet-verification-document-box strong {
+  color: #223042;
+  font-size: 1.02rem;
+  margin-bottom: 6px;
+}
+
+.vet-verification-document-box p {
+  margin: 0;
+  color: #8b95a7;
+}
+
+.vet-verification-document-box__button {
+  margin-top: 18px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid #c8f3e3;
+  background: #ffffff;
+  color: #0d9d87;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.vet-verification-reason {
+  background: #fff5f5;
+  border: 1px solid #ffd6d6;
+}
+
+.vet-verification-reason strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #ef4444;
+}
+
+.vet-verification-reason p {
+  margin: 0;
+  color: #7f4b4b;
+}
+
+.vet-verification-modal__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 0 20px 20px;
+}
+
+.btn-rechazar,
+.btn-verificar {
+  border-radius: 16px;
+  padding: 16px 18px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-rechazar {
+  background: #ffffff;
+  color: #ff4b4b;
+  border: 2px solid #ff4b4b;
+}
+
+.btn-verificar {
+  background: #14a098;
+  color: #ffffff;
+}
+
+.btn-rechazar:hover:not(:disabled),
+.btn-verificar:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn-rechazar:disabled,
+.btn-verificar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.vet-verification-modal__status-banner {
+  margin: 0 20px 20px;
+  border-radius: 16px;
+  padding: 14px 18px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.vet-verification-modal__status-banner.is-aprobada {
+  background: #eafbf4;
+  color: #0f8f64;
+}
+
+.vet-verification-modal__status-banner.is-rechazada {
+  background: #fff0f0;
+  color: #ef4444;
+}
+
+.vet-verification-modal__status-banner.is-pendiente {
+  background: #fff7e6;
+  color: #f59e0b;
+}
+
+.vet-verification-modal__status-banner.is-sin_solicitud {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+@media (max-width: 768px) {
+  .vet-verifications-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .vet-verifications-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vet-verification-info-grid {
+    grid-template-columns: 1fr;
+    gap: 8px 0;
+  }
+
+  .vet-verification-modal__actions {
+    grid-template-columns: 1fr;
+  }
+
+  .vet-verification-modal__header,
+  .vet-verification-modal__body,
+  .vet-verification-modal__actions,
+  .vet-verification-modal__status-banner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

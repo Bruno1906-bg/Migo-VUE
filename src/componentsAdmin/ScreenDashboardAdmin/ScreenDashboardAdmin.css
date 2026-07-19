@@ -37,12 +37,41 @@
 .menu-item {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   padding: 12px 15px;
   text-decoration: none;
   color: #555;
   border-radius: 8px;
   margin-bottom: 10px;
   transition: 0.3s;
+}
+
+.menu-item__label {
+  min-width: 0;
+}
+
+.menu-item__badge {
+  min-width: 24px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.24);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.menu-item--verification {
+  position: relative;
+}
+
+.menu-item--verification.router-link-exact-active .menu-item__badge {
+  background: rgba(255, 255, 255, 0.28);
 }
 
 .menu-item:hover {
