@@ -37,7 +37,7 @@
           <p>{{ vet.correo_negocio }}</p>
           <div class="vet-verification-card__file">
             <span>📎</span>
-            <span>{{ vet.documento_verificacion_nombre || 'Documento no disponible' }}</span>
+            <span>{{ nombreDocumento(vet.documento_verificacion_nombre) }}</span>
           </div>
         </div>
       </button>
@@ -95,7 +95,7 @@
                   <path d="M4 4h16v16H4V4zm3.2 10.4 2.4-3 2.1 2.7 3-4 3.3 4.3V18H7.2v-3.6zM9.5 9A1.5 1.5 0 1 1 6.5 9a1.5 1.5 0 0 1 3 0z" />
                 </svg>
               </div>
-              <strong>{{ veterinariaDetalle?.documento_verificacion_nombre || 'Documento no disponible' }}</strong>
+              <strong>{{ nombreDocumento(veterinariaDetalle?.documento_verificacion_nombre) }}</strong>
               <p>Cédula profesional</p>
               <button
                 type="button"
@@ -144,8 +144,8 @@ let intervaloRecarga = null;
 
 const estadoLabelMap = {
   pendiente: '⏳ Pendiente',
-  aprobada: '✓ Verificado',
-  rechazada: '✕ Rechazado',
+  aprobada: 'Verificado',
+  rechazada: 'Rechazado',
   sin_solicitud: '• Sin revisión'
 };
 
@@ -174,6 +174,25 @@ const estadoIcon = (estado) => {
   if (valor === 'pendiente') return '⏳';
   return '•';
 };
+
+const normalizarNombreArchivo = (texto) => {
+  if (!texto) return '';
+  const valor = String(texto);
+
+  if (!/[ÃÂâ�]/.test(valor)) {
+    return valor;
+  }
+
+  try {
+    const bytes = Uint8Array.from(valor, caracter => caracter.charCodeAt(0));
+    const reparado = new TextDecoder('utf-8').decode(bytes);
+    return reparado || valor;
+  } catch (error) {
+    return valor;
+  }
+};
+
+const nombreDocumento = (texto) => normalizarNombreArchivo(texto) || 'Documento no disponible';
 
 const documentoTipoClase = computed(() => {
   const nombre = veterinariaDetalle.value?.documento_verificacion_nombre || '';
