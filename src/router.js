@@ -19,6 +19,7 @@ import ScreenCrearCuentaVet from './componentsVeterinaria/ScreenCrearCuentaVet.v
 import ScreenResenasVet from './componentsVeterinaria/ScreenResenasVeterinaria/ScreenResenasVet.vue'
 import ScreenMiNegocio from './componentsVeterinaria/ScreenMiNegocio/ScreenMiNegocio.vue'
 import ScreenAjustesVet from './componentsVeterinaria/ScreenAjustesVet/ScreenAjustesVet.vue'
+import ScreenVerificacionVet from './componentsVeterinaria/ScreenVerificacionVet/ScreenVerificacionVet.vue'
 
 //**RUTAS ADMIN */
 import ScreenDashboardAdmin from './componentsAdmin/ScreenDashboardAdmin/ScreenDashboardAdmin.vue'
@@ -55,7 +56,8 @@ const router = createRouter({
         { path: '', component: ScreenMiNegocio },
         { path: 'resenas', component: ScreenResenasVet },
         { path: 'minegocio', component: ScreenMiNegocio },
-        { path: 'ajustes-vet', component: ScreenAjustesVet }
+        { path: 'ajustes-vet', component: ScreenAjustesVet },
+        { path: 'verificacion', component: ScreenVerificacionVet }
       ]
     },
     {

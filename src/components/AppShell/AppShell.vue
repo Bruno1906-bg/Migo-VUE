@@ -13,10 +13,19 @@
           :key="item.to"
           :to="item.to"
           class="app-shell__menu-item"
-          :class="{ active: activeMenu === item.key }"
+          :class="[
+            { active: activeMenu === item.key },
+            item.variant ? `app-shell__menu-item--${item.variant}` : '',
+            item.verificationState ? `app-shell__menu-item--verification-${item.verificationState}` : ''
+          ]"
           @click="menuOpen = false"
         >
-          {{ item.label }}
+          <span v-if="item.icon === 'check'" class="app-shell__menu-item-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M9.55 16.94 4.8 12.2l1.42-1.41 3.33 3.33 8.21-8.21 1.41 1.41z" />
+            </svg>
+          </span>
+          <span class="app-shell__menu-item-label">{{ item.label }}</span>
         </router-link>
       </nav>
 
