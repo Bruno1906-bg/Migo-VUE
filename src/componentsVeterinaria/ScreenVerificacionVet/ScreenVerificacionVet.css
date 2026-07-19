@@ -205,14 +205,15 @@
   font-size: 1rem;
   font-weight: 700;
   color: #ffffff;
-  background: linear-gradient(180deg, #b4ddd8 0%, #9fcfc9 100%);
+  background: linear-gradient(180deg, #1cc28a 0%, #0f8f64 100%);
+  box-shadow: 0 12px 22px rgba(15, 143, 100, 0.22);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .vet-verification-submit:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 14px 24px rgba(20, 160, 152, 0.18);
+  box-shadow: 0 16px 28px rgba(15, 143, 100, 0.28);
 }
 
 .vet-verification-submit:disabled {
