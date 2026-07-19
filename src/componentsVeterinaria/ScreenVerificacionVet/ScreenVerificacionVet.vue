@@ -57,7 +57,7 @@
             <span>En revisión · {{ archivoNombre }}</span>
           </div>
 
-          <button type="button" class="vet-verification-link-button" @click="abrirSelectorArchivo">
+          <button type="button" class="vet-verification-link-button" @click="subirOtroDocumento">
             Subir otro documento
           </button>
         </div>
@@ -168,6 +168,12 @@ const abrirSelectorArchivo = () => {
   if (fileInput.value) {
     fileInput.value.click();
   }
+};
+
+const subirOtroDocumento = async () => {
+  restablecerFormulario();
+  await new Promise(resolve => requestAnimationFrame(() => resolve()));
+  abrirSelectorArchivo();
 };
 
 const validarArchivo = (file) => {
