@@ -21,7 +21,7 @@
             </svg>
           </div>
           <h2>Tu veterinaria ya fue aprobada</h2>
-          <p>Tu cuenta ya pasó la revisión del administrador. El botón del menú se mostrará en verde para confirmarlo.</p>
+          <p>Tu cuenta ya pasó la revisión del administrador.</p>
         </div>
       </template>
 
@@ -54,7 +54,7 @@
 
           <div class="vet-verification-status-pill">
             <span class="vet-verification-status-pill__icon">✓</span>
-            <span>En revisión · {{ archivoNombre }}</span>
+            <span>En revisión · {{ nombreDocumento(archivoNombre) }}</span>
           </div>
 
           <button type="button" class="vet-verification-link-button" @click="subirOtroDocumento">
@@ -104,7 +104,7 @@
 
           <div v-if="archivoNombre" class="vet-verification-file-preview">
             <span class="vet-verification-file-preview__label">Archivo seleccionado</span>
-            <strong>{{ archivoNombre }}</strong>
+            <strong>{{ nombreDocumento(archivoNombre) }}</strong>
           </div>
         </div>
 
@@ -152,6 +152,25 @@ const mostrarMensaje = (texto, tipo = 'info') => {
   mensaje.value = texto;
   mensajeTipo.value = tipo;
 };
+
+const normalizarNombreArchivo = (texto) => {
+  if (!texto) return '';
+  const valor = String(texto);
+
+  if (!/[ÃÂâ�]/.test(valor)) {
+    return valor;
+  }
+
+  try {
+    const bytes = Uint8Array.from(valor, caracter => caracter.charCodeAt(0));
+    const reparado = new TextDecoder('utf-8').decode(bytes);
+    return reparado || valor;
+  } catch (error) {
+    return valor;
+  }
+};
+
+const nombreDocumento = (texto) => normalizarNombreArchivo(texto) || 'Documento no disponible';
 
 const restablecerFormulario = () => {
   archivoSeleccionado.value = null;
