@@ -25,6 +25,7 @@ import ScreenVerificacionVet from './componentsVeterinaria/ScreenVerificacionVet
 import ScreenDashboardAdmin from './componentsAdmin/ScreenDashboardAdmin/ScreenDashboardAdmin.vue'
 import ScreenAdminPublicaciones from './componentsAdmin/ScreenAdminPublicaciones/ScreenAdminPublicaciones.vue'
 import ScreenAdminUsuarios from './componentsAdmin/ScreenAdminUsuarios/ScreenAdminUsuarios.vue'
+import ScreenAdminVerificaciones from './componentsAdmin/ScreenAdminVerificaciones/ScreenAdminVerificaciones.vue'
 
 const roleHomeRoutes = {
   usuario: '/dashboard',
@@ -66,7 +67,8 @@ const router = createRouter({
       children: [
         { path: '', component: ScreenAdminPublicaciones },
         { path: 'administracionpublicaciones', component: ScreenAdminPublicaciones},
-        { path: 'usuarios', component: ScreenAdminUsuarios}
+        { path: 'usuarios', component: ScreenAdminUsuarios },
+        { path: 'verificaciones', component: ScreenAdminVerificaciones }
       ]
     },
     
