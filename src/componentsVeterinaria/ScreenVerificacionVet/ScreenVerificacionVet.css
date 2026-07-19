@@ -1,0 +1,366 @@
+.vet-verification-page {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+.vet-verification-hero {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.vet-verification-hero__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #f4fffc 0%, #e4fbf7 100%);
+  color: #14a098;
+  box-shadow: 0 12px 24px rgba(20, 160, 152, 0.12);
+}
+
+.vet-verification-hero__icon svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.vet-verification-hero__text h1 {
+  margin: 0;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  line-height: 1.1;
+  color: #0f1720;
+  font-weight: 800;
+}
+
+.vet-verification-hero__text p {
+  margin: 6px 0 0;
+  color: #8a98ad;
+  font-size: 0.96rem;
+}
+
+.vet-verification-card {
+  width: min(560px, 100%);
+  background: #ffffff;
+  border: 1px solid rgba(20, 160, 152, 0.12);
+  border-radius: 24px;
+  box-shadow: 0 16px 32px rgba(7, 26, 25, 0.08);
+  overflow: hidden;
+}
+
+.vet-verification-card--sin_solicitud {
+  border-color: rgba(255, 96, 96, 0.22);
+}
+
+.vet-verification-card--pendiente {
+  border-color: rgba(20, 160, 152, 0.15);
+}
+
+.vet-verification-card--aprobada {
+  border-color: rgba(42, 173, 109, 0.18);
+}
+
+.vet-verification-card--rechazada {
+  border-color: rgba(255, 96, 96, 0.22);
+}
+
+.vet-verification-intro {
+  padding: 24px 24px 16px;
+}
+
+.vet-verification-intro__lead {
+  margin: 0 0 14px;
+  color: #26343e;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.vet-verification-intro__lead strong {
+  color: #14a098;
+}
+
+.vet-verification-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 9px;
+}
+
+.vet-verification-checklist li {
+  position: relative;
+  padding-left: 24px;
+  color: #50616a;
+  font-size: 0.95rem;
+}
+
+.vet-verification-checklist li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #14a098;
+  font-weight: 700;
+}
+
+.vet-verification-upload {
+  padding: 16px 24px 24px;
+  border-top: 1px solid #e8f2f0;
+}
+
+.vet-verification-upload__input {
+  display: none;
+}
+
+.vet-verification-dropzone {
+  width: 100%;
+  min-height: 250px;
+  border-radius: 24px;
+  border: 2px dashed #b9eddc;
+  background: linear-gradient(180deg, #f8fffe 0%, #f3fbf9 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #24424e;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.vet-verification-dropzone:hover {
+  transform: translateY(-1px);
+  border-color: #9ce0cc;
+  box-shadow: 0 12px 24px rgba(20, 160, 152, 0.08);
+}
+
+.vet-verification-dropzone__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  background: rgba(20, 160, 152, 0.08);
+  color: #14a098;
+  margin-bottom: 8px;
+}
+
+.vet-verification-dropzone__icon svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+
+.vet-verification-dropzone strong {
+  font-size: 1.05rem;
+}
+
+.vet-verification-dropzone span {
+  font-size: 0.95rem;
+  color: #7d8e97;
+}
+
+.vet-verification-dropzone__cta {
+  margin-top: 10px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: #c8faf0;
+  color: #11815d;
+  font-weight: 700;
+  box-shadow: 0 10px 18px rgba(17, 129, 93, 0.08);
+}
+
+.vet-verification-file-preview {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: #f5fbfa;
+  border: 1px solid rgba(20, 160, 152, 0.12);
+}
+
+.vet-verification-file-preview__label {
+  display: block;
+  color: #6f8791;
+  font-size: 0.82rem;
+  margin-bottom: 4px;
+}
+
+.vet-verification-file-preview strong {
+  color: #10333c;
+  word-break: break-word;
+}
+
+.vet-verification-submit {
+  width: calc(100% - 48px);
+  margin: 0 24px 24px;
+  border: none;
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(180deg, #b4ddd8 0%, #9fcfc9 100%);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.vet-verification-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(20, 160, 152, 0.18);
+}
+
+.vet-verification-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.vet-verification-state {
+  padding: 42px 28px 34px;
+  text-align: center;
+}
+
+.vet-verification-state__badge {
+  width: 86px;
+  height: 86px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #eafff7 0%, #dff8ef 100%);
+  border: 2px solid #9be1c0;
+  color: #5d3f78;
+  box-shadow: 0 14px 24px rgba(20, 160, 152, 0.12);
+}
+
+.vet-verification-state__badge svg {
+  width: 38px;
+  height: 38px;
+  fill: currentColor;
+}
+
+.vet-verification-state__badge--rejected {
+  background: linear-gradient(180deg, #fff0f0 0%, #ffe5e5 100%);
+  border-color: #f2abab;
+  color: #db5f5f;
+}
+
+.vet-verification-state--rejected h2,
+.vet-verification-state--pending h2,
+.vet-verification-state--approved h2 {
+  margin: 0 0 12px;
+  color: #13222b;
+  font-size: 1.38rem;
+}
+
+.vet-verification-state p {
+  margin: 0;
+  color: #6d7d87;
+  line-height: 1.55;
+  font-size: 0.98rem;
+}
+
+.vet-verification-state p + p {
+  margin-top: 6px;
+}
+
+.vet-verification-status-pill {
+  margin: 22px auto 0;
+  width: min(100%, 420px);
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: #f2fbf9;
+  border: 1px solid rgba(20, 160, 152, 0.18);
+  color: #0c8d7f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+.vet-verification-status-pill__icon {
+  font-size: 1rem;
+}
+
+.vet-verification-link-button {
+  margin-top: 22px;
+  background: none;
+  border: none;
+  color: #8a90a3;
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vet-verification-message {
+  width: min(560px, 100%);
+  margin: 14px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.vet-verification-message.info {
+  color: #5c6c76;
+}
+
+.vet-verification-message.success {
+  color: #11815d;
+}
+
+.vet-verification-message.error {
+  color: #c53e3e;
+}
+
+@media (max-width: 768px) {
+  .vet-verification-page {
+    padding: 18px 8px 28px;
+  }
+
+  .vet-verification-hero {
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .vet-verification-hero__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+  }
+
+  .vet-verification-card {
+    border-radius: 20px;
+  }
+
+  .vet-verification-intro,
+  .vet-verification-upload {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .vet-verification-dropzone {
+    min-height: 220px;
+    border-radius: 20px;
+  }
+
+  .vet-verification-submit {
+    width: calc(100% - 36px);
+    margin: 0 18px 18px;
+    border-radius: 14px;
+  }
+
+  .vet-verification-state {
+    padding: 32px 20px 28px;
+  }
+
+  .vet-verification-state__badge {
+    width: 76px;
+    height: 76px;
+    margin-bottom: 18px;
+  }
+}
