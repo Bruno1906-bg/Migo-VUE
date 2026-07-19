@@ -95,9 +95,14 @@
                   <path d="M4 4h16v16H4V4zm3.2 10.4 2.4-3 2.1 2.7 3-4 3.3 4.3V18H7.2v-3.6zM9.5 9A1.5 1.5 0 1 1 6.5 9a1.5 1.5 0 0 1 3 0z" />
                 </svg>
               </div>
-              <strong>{{ veterinariaDetalle?.documento_verificacion_nombre || 'Documento' }}</strong>
+              <strong>{{ veterinariaDetalle?.documento_verificacion_nombre || 'Documento no disponible' }}</strong>
               <p>Cédula profesional</p>
-              <button type="button" class="vet-verification-document-box__button" @click="verDocumento">
+              <button
+                type="button"
+                class="vet-verification-document-box__button"
+                :disabled="!tieneDocumento"
+                @click="verDocumento"
+              >
                 Ver documento
               </button>
             </div>
@@ -178,6 +183,7 @@ const documentoTipoClase = computed(() => {
 });
 
 const esPdfDocumento = computed(() => documentoTipoClase.value === 'is-pdf');
+const tieneDocumento = computed(() => Boolean(veterinariaDetalle.value?.documento_verificacion_nombre));
 
 const cargarVeterinarias = async () => {
   cargando.value = true;
@@ -214,7 +220,7 @@ const cerrarDetalle = () => {
 };
 
 const verDocumento = () => {
-  if (!veterinariaDetalle.value?.id_vet) return;
+  if (!veterinariaDetalle.value?.id_vet || !tieneDocumento.value) return;
   const url = `${API_BASE_URL}/api/veterinarias/${veterinariaDetalle.value.id_vet}/verificacion/documento?inline=1`;
   window.open(url, '_blank', 'noopener,noreferrer');
 };
