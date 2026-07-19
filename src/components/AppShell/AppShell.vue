@@ -1,6 +1,6 @@
 <template>
   <div class="app-shell">
-    <div class="app-shell__overlay" :class="{ active: menuOpen }" @click="menuOpen = false"></div>
+    <div class="app-shell__overlay" :class="{ active: menuOpen }" @click="closeMenu"></div>
 
     <aside class="app-shell__sidebar" :class="{ open: menuOpen }">
       <div class="app-shell__sidebar-logo">
@@ -18,7 +18,7 @@
             item.variant ? `app-shell__menu-item--${item.variant}` : '',
             item.verificationState ? `app-shell__menu-item--verification-${item.verificationState}` : ''
           ]"
-          @click="menuOpen = false"
+          @click="closeMenu"
         >
           <span v-if="item.icon === 'check'" class="app-shell__menu-item-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" focusable="false">
@@ -130,15 +130,19 @@ onBeforeUnmount(() => {
 });
 
 const handleLogout = () => {
-  updateBodyScroll(false);
+  closeMenu();
   emit('logout');
-  menuOpen.value = false;
   router.push(props.logoutTo);
 };
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
   updateBodyScroll(menuOpen.value);
+};
+
+const closeMenu = () => {
+  menuOpen.value = false;
+  updateBodyScroll(false);
 };
 </script>
 
