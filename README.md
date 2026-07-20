@@ -83,6 +83,10 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_m
 
 --BASE DE DATOS--
 
+Respaldo actual:[respaldo.zip](https://github.com/user-attachments/files/30176436/respaldo.zip)
+
+
+
 --SEGURIDAD--
 
 [Reporte de seguridad](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQCTzkJHh2_eSKftV321IpJaAQLDL0iUWPCUwE6bc9g26fM?e=nbzP70)
