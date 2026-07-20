@@ -1,5 +1,5 @@
 export const loginVeterinario = async (correo, contrasena) => {
-const response = await fetch('https://migobackenddeploy-production.up.railway.app/api/login-vet', {
+const response = await fetch('http://localhost:4000/api/login-vet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ correo, contrasena })

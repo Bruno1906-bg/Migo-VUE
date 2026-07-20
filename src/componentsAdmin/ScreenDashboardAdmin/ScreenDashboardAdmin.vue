@@ -42,7 +42,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const menuAbierto = ref(false);
 const verificationCount = ref(0);
-const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
+const API_BASE_URL = 'http://localhost:4000/api';
 
 const cargarContadorVerificaciones = async () => {
   try {

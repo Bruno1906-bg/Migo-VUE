@@ -70,7 +70,7 @@ import Avatar from "vue3-avatar";
 import AppShell from '../AppShell/AppShell.vue';
 
 const router = useRouter();
-const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
+const API_BASE_URL = 'http://localhost:4000/api';
 
 const usuario = ref({
   nombre: '',

@@ -121,7 +121,7 @@ const cerrarImagen = () => { imagenAmpliada.value = null; };
 
 const getImageUrl = (ruta) => {
   if (!ruta) return '';
-  return /^https?:\/\//i.test(ruta) ? ruta : `https://migobackenddeploy-production.up.railway.app${ruta}`;
+  return /^https?:\/\//i.test(ruta) ? ruta : `http://localhost:4000${ruta}`;
 };
 
 const modalReporte = ref(false);

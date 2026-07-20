@@ -131,7 +131,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 
-const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
+const API_BASE_URL = 'http://localhost:4000/api';
 const idVet = sessionStorage.getItem('id_vet');
 
 const fileInput = ref(null);

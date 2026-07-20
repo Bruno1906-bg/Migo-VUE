@@ -1,4 +1,4 @@
-const API_URL = 'https://migobackenddeploy-production.up.railway.app/api';
+const API_URL = 'http://localhost:4000/api';
 
 let publicando = false; // Guard global anti-doble-submit
 

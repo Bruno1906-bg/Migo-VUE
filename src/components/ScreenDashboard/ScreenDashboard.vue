@@ -165,7 +165,7 @@ const cerrarImagen = () => { imagenAmpliada.value = null; };
 
 const getImageUrl = (ruta) => {
   if (!ruta) return '';
-  return /^https?:\/\//i.test(ruta) ? ruta : `https://migobackenddeploy-production.up.railway.app${ruta}`;
+  return /^https?:\/\//i.test(ruta) ? ruta : `http://localhost:4000${ruta}`;
 };
 
 const modalEdicion = ref(false);
@@ -241,7 +241,7 @@ const eliminarPublicacion = async (idPubli) => {
   }
 
   try {
-const res = await fetch(`https://migobackenddeploy-production.up.railway.app/api/publicaciones/${idPubli}`, {
+const res = await fetch(`http://localhost:4000/api/publicaciones/${idPubli}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id_usuario: idUsuarioActual })
@@ -263,7 +263,7 @@ const guardarEdicion = async () => {
   guardando.value = true;
 
   try {
-    const res = await fetch(`https://migobackenddeploy-production.up.railway.app/api/publicaciones/${formEdicion.value.id_publi}`, {
+    const res = await fetch(`http://localhost:4000/api/publicaciones/${formEdicion.value.id_publi}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -293,7 +293,7 @@ const guardarEdicion = async () => {
 const cargarPublicaciones = async () => {
   cargando.value = true;
   try {
-    const res = await fetch('https://migobackenddeploy-production.up.railway.app/api/publicaciones');
+    const res = await fetch('http://localhost:4000/api/publicaciones');
     if (!res.ok) throw new Error('Error al cargar publicaciones');
     publicaciones.value = await res.json();
 
@@ -310,9 +310,9 @@ const cargarPublicaciones = async () => {
 const cargarCatalogos = async () => {
   try {
     const [resC, resE, resT] = await Promise.all([
-      fetch('https://migobackenddeploy-production.up.railway.app/api/colonias'),
-      fetch('https://migobackenddeploy-production.up.railway.app/api/especies'),
-      fetch('https://migobackenddeploy-production.up.railway.app/api/tipos_publi')
+      fetch('http://localhost:4000/api/colonias'),
+      fetch('http://localhost:4000/api/especies'),
+      fetch('http://localhost:4000/api/tipos_publi')
     ]);
     colonias_cat.value = await resC.json();
     especies_cat.value = await resE.json();

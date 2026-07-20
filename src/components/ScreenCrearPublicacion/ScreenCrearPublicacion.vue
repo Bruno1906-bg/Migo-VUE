@@ -124,9 +124,9 @@ const handleFileChange = (e) => {
 onMounted(async () => {
   try {
 const [resC, resE, resT] = await Promise.all([
-       fetch('https://migobackenddeploy-production.up.railway.app/api/colonias'),
-       fetch('https://migobackenddeploy-production.up.railway.app/api/especies'),
-       fetch('https://migobackenddeploy-production.up.railway.app/api/tipos_publi')
+       fetch('http://localhost:4000/api/colonias'),
+       fetch('http://localhost:4000/api/especies'),
+       fetch('http://localhost:4000/api/tipos_publi')
      ]);
 
     colonias.value = await resC.json();
@@ -182,7 +182,7 @@ const handlePublicar = async () => {
   }
 
   try {
-const response = await fetch('https://migobackenddeploy-production.up.railway.app/api/publicaciones', {
+const response = await fetch('http://localhost:4000/api/publicaciones', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -203,7 +203,7 @@ const response = await fetch('https://migobackenddeploy-production.up.railway.ap
       const formData = new FormData();
       formData.append('foto', form.foto);
 
-const fotoResponse = await fetch(`https://migobackenddeploy-production.up.railway.app/api/fotos/${data.id_publi}`, {
+const fotoResponse = await fetch(`http://localhost:4000/api/fotos/${data.id_publi}`, {
         method: 'POST',
         body: formData
       });

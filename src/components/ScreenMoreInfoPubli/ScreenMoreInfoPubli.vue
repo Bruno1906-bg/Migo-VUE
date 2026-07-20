@@ -90,19 +90,19 @@ const avatarColor = ref('#14a098');
 
 const getImageUrl = (ruta) => {
   if (!ruta) return '';
-  return /^https?:\/\//i.test(ruta) ? ruta : `https://migobackenddeploy-production.up.railway.app${ruta}`;
+  return /^https?:\/\//i.test(ruta) ? ruta : `http://localhost:4000${ruta}`;
 };
 
 const cargarDatos = async () => {
   const idBuscado = route.query.id_publi;
   const idLimpio = String(idBuscado).split(':')[0];
   try {
-const res = await fetch('https://migobackenddeploy-production.up.railway.app/api/publicaciones');
+const res = await fetch('http://localhost:4000/api/publicaciones');
     const todasLasPubs = await res.json();
     pub.value = todasLasPubs.find(p => String(p.id_publi) === idLimpio);
 
     if (pub.value) {
-const resUser = await fetch(`https://migobackenddeploy-production.up.railway.app/api/usuarios/${pub.value.id_usuario}`);
+const resUser = await fetch(`http://localhost:4000/api/usuarios/${pub.value.id_usuario}`);
       if (resUser.ok) usuarioPub.value = await resUser.json();
     }
     await cargarComentarios(idLimpio);
@@ -111,7 +111,7 @@ const resUser = await fetch(`https://migobackenddeploy-production.up.railway.app
 
 const cargarComentarios = async (id) => {
   try {
-    const res = await fetch(`https://migobackenddeploy-production.up.railway.app/api/comentarios/${id}`);
+    const res = await fetch(`http://localhost:4000/api/comentarios/${id}`);
     if (res.ok) comentarios.value = await res.json();
   } catch (err) { console.error("Error cargando comentarios:", err); }
 };
@@ -119,7 +119,7 @@ const cargarComentarios = async (id) => {
 const enviarComentario = async () => {
   if (!nuevoComentario.value.trim()) return;
   const id = route.query.id_publi.split(':')[0];
-  await fetch('https://migobackenddeploy-production.up.railway.app/api/comentarios', {
+  await fetch('http://localhost:4000/api/comentarios', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id_publi: id, id_usuario: currentUser.id_usuario, comentario: nuevoComentario.value })
@@ -134,7 +134,7 @@ const iniciarEdicion = (c) => {
 };
 
 const guardarEdicion = async (id) => {
-  await fetch(`https://migobackenddeploy-production.up.railway.app/api/comentarios/${id}`, {
+  await fetch(`http://localhost:4000/api/comentarios/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 
@@ -149,7 +149,7 @@ const guardarEdicion = async (id) => {
 const eliminarComentario = async (idComentario) => {
   if (!confirm('¿Eliminar comentario?')) return;
   const id = route.query.id_publi.split(':')[0];
-  await fetch(`https://migobackenddeploy-production.up.railway.app/api/comentarios/${idComentario}/${currentUser.id_usuario}`, { method: 'DELETE' });
+  await fetch(`http://localhost:4000/api/comentarios/${idComentario}/${currentUser.id_usuario}`, { method: 'DELETE' });
   cargarComentarios(id);
 };
 

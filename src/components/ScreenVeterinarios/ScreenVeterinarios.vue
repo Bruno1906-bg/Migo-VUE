@@ -111,7 +111,7 @@ import { ref, computed, onMounted, onUnmounted, nextTick, onBeforeUnmount, watch
 import { useRouter } from 'vue-router';
 import AppShell from '../AppShell/AppShell.vue';
 
-const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
+const API_BASE_URL = 'http://localhost:4000/api';
 
 const router = useRouter();
 const searchQuery = ref('');

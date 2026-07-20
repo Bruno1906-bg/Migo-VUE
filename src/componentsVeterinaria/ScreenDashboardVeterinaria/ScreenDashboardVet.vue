@@ -18,7 +18,7 @@ import { useRoute } from 'vue-router';
 import AppShell from '../../components/AppShell/AppShell.vue';
 
 const route = useRoute();
-const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
+const API_BASE_URL = 'http://localhost:4000/api';
 const verificationState = ref('sin_solicitud');
 const idVet = sessionStorage.getItem('id_vet');
 

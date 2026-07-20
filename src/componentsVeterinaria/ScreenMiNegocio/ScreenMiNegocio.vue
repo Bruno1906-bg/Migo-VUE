@@ -156,7 +156,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch, nextTick, computed } from 'vue';
 
-const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
+const API_BASE_URL = 'http://localhost:4000/api';
 const API_URL = `${API_BASE_URL}/api`;
 
 const coloniaInput = ref('');

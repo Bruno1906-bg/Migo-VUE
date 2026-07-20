@@ -1,6 +1,6 @@
 export const obtenerPublicaciones = async () => {
     try {
-const response = await fetch('https://migobackenddeploy-production.up.railway.app/api/publicaciones');
+const response = await fetch('http://localhost:4000/api/publicaciones');
         if (!response.ok) throw new Error('Error al obtener datos');
         return await response.json();
     } catch (error) {

@@ -10,6 +10,10 @@
       <div class="card-detalles">
         <img :src="getImageUrl(vet.imagen_logo)" class="logo-grande" alt="Logo">
         <h1>{{ vet.nombre_establecimiento }}</h1>
+        <p v-if="vet.calificacion_promedio" class="calificacion-promedio">
+          ⭐ {{ Number(vet.calificacion_promedio).toFixed(1) }} / 5
+        </p>
+        <p v-else class="calificacion-promedio">Sin calificaciones aún</p>
         <p class="desc">{{ vet.descripcion }}</p>
         
         <div class="info-grid">
@@ -96,21 +100,21 @@ const cargarDatosCompletos = async () => {
   const idVet = route.query.id_vet;
   if (!idVet) return;
   try {
-const resVet = await fetch(`https://migobackenddeploy-production.up.railway.app/api/veterinaria/${idVet}/detallado`);
+const resVet = await fetch(`http://localhost:4000/api/veterinaria/${idVet}/detallado`);
     vet.value = await resVet.json();
-const resResenas = await fetch(`https://migobackenddeploy-production.up.railway.app/api/resenas/${idVet}`);
+const resResenas = await fetch(`http://localhost:4000/api/resenas/${idVet}`);
     resenas.value = await resResenas.json();
   } catch (err) { console.error(err); }
 };
 
 const getImageUrl = (ruta) => {
   if (!ruta) return '';
-  return /^https?:\/\//i.test(ruta) ? ruta : `https://migobackenddeploy-production.up.railway.app${ruta}`;
+  return /^https?:\/\//i.test(ruta) ? ruta : `http://localhost:4000${ruta}`;
 };
 
 const enviarResena = async () => {
   if (!currentUser) return alert("Inicia sesión");
-  await fetch('https://migobackenddeploy-production.up.railway.app/api/resenas', {
+  await fetch('http://localhost:4000/api/resenas', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id_vet: route.query.id_vet, id_usuario: currentUser.id_usuario, comentario: nuevaResena.value, calificacion: nuevaCalificacion.value })
@@ -126,7 +130,7 @@ const iniciarEdicion = (r) => {
 };
 
 const guardarEdicion = async (id) => {
-  await fetch(`https://migobackenddeploy-production.up.railway.app/api/resenas/${id}`, {
+  await fetch(`http://localhost:4000/api/resenas/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ comentario: editTexto.value, calificacion: editCalificacion.value })
@@ -137,7 +141,7 @@ const guardarEdicion = async (id) => {
 
 const eliminarResena = async (id) => {
   if (!confirm('¿Borrar reseña?')) return;
-  await fetch(`https://migobackenddeploy-production.up.railway.app/api/resenas/${id}`, { method: 'DELETE' });
+  await fetch(`http://localhost:4000/api/resenas/${id}`, { method: 'DELETE' });
   cargarDatosCompletos();
 };
 

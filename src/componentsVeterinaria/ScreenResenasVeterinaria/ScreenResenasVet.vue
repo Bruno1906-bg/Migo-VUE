@@ -24,7 +24,7 @@ const resenas = ref([]);
 
 onMounted(async () => {
   try {
-const response = await fetch(`https://migobackenddeploy-production.up.railway.app/api/resenas/${idVet}`);
+const response = await fetch(`http://localhost:4000/api/resenas/${idVet}`);
     if (!response.ok) throw new Error("Error al obtener reseñas");
     resenas.value = await response.json();
   } catch (error) {

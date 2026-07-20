@@ -96,7 +96,7 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'https://migobackenddeploy-production.up.railway.app/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:4000/api';
 const form = reactive({
   nombre: '', apellido: '', correo: '', contrasena: '', 
   telefono: '', direccion: '', id_colonia: '', nombre_establecimiento: ''

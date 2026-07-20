@@ -32,9 +32,12 @@
           </span>
         </div>
 
-        <div class="vet-verification-card__body">
+      <div class="vet-verification-card__body">
           <h3>{{ vet.nombre_establecimiento }}</h3>
           <p>{{ vet.correo_negocio }}</p>
+          <p v-if="vet.dias_pendiente !== null" class="dias-pendiente">
+            ⏳ Pendiente hace {{ vet.dias_pendiente }} {{ vet.dias_pendiente === 1 ? 'día' : 'días' }}
+          </p>
           <div class="vet-verification-card__file">
             <span>📎</span>
             <span>{{ nombreDocumento(vet.documento_verificacion_nombre) }}</span>
@@ -134,7 +137,7 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
-const API_BASE_URL = 'https://migobackenddeploy-production.up.railway.app';
+const API_BASE_URL = 'http://localhost:4000/api';
 const veterinarias = ref([]);
 const cargando = ref(true);
 const modalAbierto = ref(false);
@@ -260,10 +263,11 @@ const actualizarEstado = async (estado, motivoRechazo = '') => {
   if (!veterinariaDetalle.value?.id_vet) return;
   guardandoEstado.value = true;
   try {
+    const sessionUser = JSON.parse(sessionStorage.getItem('migo_user') || 'null');
     const response = await fetch(`${API_BASE_URL}/api/veterinarias/${veterinariaDetalle.value.id_vet}/verificacion`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ estado_verificacion: estado, motivo_rechazo: motivoRechazo })
+      body: JSON.stringify({ estado_verificacion: estado, motivo_rechazo: motivoRechazo, id_admin: sessionUser?.id_usuario })
     });
 
     const data = await response.json().catch(() => ({}));
