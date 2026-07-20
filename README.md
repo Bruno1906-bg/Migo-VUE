@@ -108,6 +108,6 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_m
 
 --DIAGRAMA ENTIDAD RELACION--
 
-<img width="3000" height="1700" alt="migo_db (1) (1)" src="https://github.com/user-attachments/assets/d9daef86-502f-4aa4-8656-41eff2e66d95" />
+<img width="3616" height="2622" alt="migo_db (2)" src="https://github.com/user-attachments/assets/1523af3d-1553-4cd2-94ad-c5c846f03b43" />
 
-[migo_db (2).pdf](https://github.com/user-attachments/files/30050442/migo_db.2.pdf)
+[migo_db (3).pdf](https://github.com/user-attachments/files/30175819/migo_db.3.pdf)
