@@ -81,9 +81,18 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_m
 
 [LINK DE REPORTE DE HARDWARE](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQBYT0PJC4KqQZNcQkY6a7iMAUDRXHYxYcuaVddCKL6c9Zs?e=xbIaz6)
 
+
 --BASE DE DATOS--
 
-Respaldo actual:[respaldo.zip](https://github.com/user-attachments/files/30176436/respaldo.zip)
+Objetos programables: [Documentacion Migo DB_2.0.pdf](https://github.com/user-attachments/files/30213820/Documentacion.Migo.DB_2.0.pdf)
+
+Pasos para crear script de respaldo: [Scripts de Migración.pdf](https://github.com/user-attachments/files/30213802/Scripts.de.Migracion.pdf)
+
+Respaldo anterior: [respaldo.zip](https://github.com/user-attachments/files/30176436/respaldo.zip)
+
+Respaldo actual: [respaldo_final.zip](https://github.com/user-attachments/files/30213777/respaldo_final.zip)
+
+Usuarios y permisos configurados: [Usuarios y Permisos Configurados.pdf](https://github.com/user-attachments/files/30213871/Usuarios.y.Permisos.Configurados.pdf)
 
 
 
