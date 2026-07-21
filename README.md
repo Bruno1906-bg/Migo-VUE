@@ -121,6 +121,8 @@ Usuarios y permisos configurados: [Usuarios y Permisos Configurados.pdf](https:/
 
 --DIAGRAMA ENTIDAD RELACION--
 
-<img width="3616" height="2622" alt="migo_db (2)" src="https://github.com/user-attachments/assets/1523af3d-1553-4cd2-94ad-c5c846f03b43" />
+<img width="3930" height="2756" alt="migo_db (3)" src="https://github.com/user-attachments/assets/dc64cd84-bfd5-4aae-b79a-63501c09d006" />
 
-[migo_db (3).pdf](https://github.com/user-attachments/files/30175819/migo_db.3.pdf)
+
+[migo_db (4).pdf](https://github.com/user-attachments/files/30214267/migo_db.4.pdf)
+
