@@ -30,6 +30,9 @@
             <span class="vet-verification-status__icon">{{ estadoIcon(vet.estado_verificacion) }}</span>
             {{ estadoLabel(vet.estado_verificacion) }}
           </span>
+          <span v-if="normalizarEstado(vet.estado_verificacion) === 'pendiente' && vet.dias_pendiente_verificacion != null" class="dias-pendiente">
+            {{ vet.dias_pendiente_verificacion }} día(s) sin verificar
+          </span>
         </div>
 
         <div class="vet-verification-card__body">

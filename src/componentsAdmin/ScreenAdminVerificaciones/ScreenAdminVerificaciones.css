@@ -108,6 +108,14 @@
   white-space: nowrap;
 }
 
+.dias-pendiente {
+  margin-left: 10px;
+  color: #f59e0b;
+  font-size: 0.88rem;
+  font-weight: 700;
+  align-self: center;
+}
+
 .vet-verification-status__icon {
   font-size: 0.92rem;
   line-height: 1;
