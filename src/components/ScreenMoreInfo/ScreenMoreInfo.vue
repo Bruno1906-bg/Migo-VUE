@@ -10,10 +10,6 @@
       <div class="card-detalles">
         <div class="logo-wrap">
           <img :src="getImageUrl(vet.imagen_logo)" class="logo-grande" alt="Logo">
-          <span v-if="esVeterinariaVerificada(vet)" class="vet-verified-badge vet-verified-badge--detail">
-            <span class="vet-verified-badge__icon">✓</span>
-            Verificado
-          </span>
         </div>
         <div class="card-detalles__title-row">
           <h1>{{ vet.nombre_establecimiento }}</h1>

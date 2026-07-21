@@ -141,11 +141,6 @@
   display: block;
 }
 
-.vet-verified-badge--detail {
-  top: 12px;
-  left: 12px;
-}
-
 .card-detalles__title-row {
   display: flex;
   align-items: center;

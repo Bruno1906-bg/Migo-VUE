@@ -49,10 +49,6 @@
           >
             <div class="vet-image-wrap">
               <img :src="getImageUrl(vet.imagen_logo)" :alt="vet.nombre_establecimiento" class="vet-image">
-              <span v-if="esVeterinariaVerificada(vet)" class="vet-verified-badge">
-                <span class="vet-verified-badge__icon">✓</span>
-                Verificado
-              </span>
             </div>
             <div class="vet-info">
               <div class="vet-info__header">
