@@ -8,8 +8,20 @@
       <button @click="$router.back()" class="btn-volver btn-volver--desktop">← Volver</button>
 
       <div class="card-detalles">
-        <img :src="getImageUrl(vet.imagen_logo)" class="logo-grande" alt="Logo">
-        <h1>{{ vet.nombre_establecimiento }}</h1>
+        <div class="logo-wrap">
+          <img :src="getImageUrl(vet.imagen_logo)" class="logo-grande" alt="Logo">
+          <span v-if="esVeterinariaVerificada(vet)" class="vet-verified-badge vet-verified-badge--detail">
+            <span class="vet-verified-badge__icon">✓</span>
+            Verificado
+          </span>
+        </div>
+        <div class="card-detalles__title-row">
+          <h1>{{ vet.nombre_establecimiento }}</h1>
+          <span v-if="esVeterinariaVerificada(vet)" class="vet-verified-inline vet-verified-inline--detail" aria-label="Veterinaria verificada">
+            <span class="vet-verified-inline__icon">✓</span>
+            Verificado
+          </span>
+        </div>
         <p class="desc">{{ vet.descripcion }}</p>
         
         <div class="info-grid">
@@ -106,6 +118,12 @@ const resResenas = await fetch(`https://migobackenddeploy-production.up.railway.
 const getImageUrl = (ruta) => {
   if (!ruta) return '';
   return /^https?:\/\//i.test(ruta) ? ruta : `https://migobackenddeploy-production.up.railway.app${ruta}`;
+};
+
+const normalizarEstadoVerificacion = estado => String(estado ?? '').trim().toLowerCase();
+
+const esVeterinariaVerificada = vet => {
+  return ['aprobada', 'verificado', 'verificada'].includes(normalizarEstadoVerificacion(vet?.estado_verificacion));
 };
 
 const enviarResena = async () => {

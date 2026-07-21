@@ -125,22 +125,42 @@
   margin-bottom: 30px;
 }
 
-.logo-grande {
+.logo-wrap {
+  position: relative;
   width: 100%;
   max-width: 400px;
+  margin: 0 auto 20px;
+}
+
+.logo-grande {
+  width: 100%;
   height: auto;
   object-fit: contain;
   border-radius: 10px;
   border: 3px solid #14a098;
-  margin-bottom: 20px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+.vet-verified-badge--detail {
+  top: 12px;
+  left: 12px;
+}
+
+.card-detalles__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .card-detalles h1 {
   color: #14a098;
   margin-bottom: 10px;
+}
+
+.vet-verified-inline--detail {
+  padding: 7px 10px;
 }
 
 .card-detalles .desc {
