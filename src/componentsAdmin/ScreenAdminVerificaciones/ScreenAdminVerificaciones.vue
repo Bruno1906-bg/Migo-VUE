@@ -257,15 +257,23 @@ const emitirActualizacion = () => {
 };
 
 const actualizarEstado = async (estado, motivoRechazo = '') => {
-  if (!veterinariaDetalle.value?.id_vet) return;
-  guardandoEstado.value = true;
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/veterinarias/${veterinariaDetalle.value.id_vet}/verificacion`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ estado_verificacion: estado, motivo_rechazo: motivoRechazo })
-    });
+    if (!veterinariaDetalle.value.id_vet) return;
+    guardandoEstado.value = true;
+    try {
+        // 1. Obtener el ID del administrador actual desde el sessionStorage
+        const idAdminActual = parseInt(sessionStorage.getItem('id_admin'), 10) 
+            || JSON.parse(sessionStorage.getItem('migo_user') || 'null')?.id_usuario;
 
+        const response = await fetch(`${API_BASE_URL}/api/veterinarias/${veterinariaDetalle.value.id_vet}/verificacion`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            // 2. Incluir el id_admin en el body que recibe el backend
+            body: JSON.stringify({ 
+                estado_verificacion: estado, 
+                motivo_rechazo: motivoRechazo, 
+                id_admin: idAdminActual 
+            })
+        });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
       throw new Error(data.message || data.error || 'No se pudo actualizar la verificación');
