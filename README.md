@@ -92,8 +92,7 @@ Respaldo anterior: [respaldo.zip](https://github.com/user-attachments/files/3017
 
 Respaldo actual: [respaldo_final.zip](https://github.com/user-attachments/files/30213777/respaldo_final.zip)
 
-Usuarios y permisos configurados: [Usuarios y Permisos Configurados.pdf](https://github.com/user-attachments/files/30213871/Usuarios.y.Permisos.Configurados.pdf)
-
+Usuarios y permisos configurados: [Usuarios y Permisos Configurados.pdf](https://github.com/user-attachments/files/30251382/Usuarios.y.Permisos.Configurados.pdf)
 
 
 --SEGURIDAD--
