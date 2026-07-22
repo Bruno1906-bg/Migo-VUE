@@ -22,7 +22,10 @@
             <td>{{ user.nombre }}</td>
             <td>{{ user.correo }}</td>
             <td>{{ user.telefono }}</td>
-            <td>{{ user.rol }}</td>
+            <td>
+              {{ user.rol }}
+              <span v-if="user.en_riesgo" class="badge-riesgo">△ En riesgo</span>
+            </td>
             <td>
               <button @click="eliminarUsuario(user.id_usuario)" class="btn-eliminar">Eliminar</button>
             </td>
