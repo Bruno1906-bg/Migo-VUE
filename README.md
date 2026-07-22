@@ -86,7 +86,7 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_m
 
 Objetos programables: [Documentacion Migo DB_2.0.pdf](https://github.com/user-attachments/files/30213820/Documentacion.Migo.DB_2.0.pdf)
 
-Pasos para crear script de respaldo: [Scripts de Migración.pdf](https://github.com/user-attachments/files/30213802/Scripts.de.Migracion.pdf)
+Pasos para crear script de respaldo: [Scripts de Migración.pdf](https://github.com/user-attachments/files/30250090/Scripts.de.Migracion.pdf)
 
 Respaldo anterior: [respaldo.zip](https://github.com/user-attachments/files/30176436/respaldo.zip)
 
