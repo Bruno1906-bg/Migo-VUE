@@ -47,9 +47,17 @@
             class="vet-card"
             :class="{ 'vet-card--highlight': vet.dentroRadio, 'vet-card--dimmed': !vet.dentroRadio }"
           >
-            <img :src="getImageUrl(vet.imagen_logo)" :alt="vet.nombre_establecimiento" class="vet-image">
+            <div class="vet-image-wrap">
+              <img :src="getImageUrl(vet.imagen_logo)" :alt="vet.nombre_establecimiento" class="vet-image">
+            </div>
             <div class="vet-info">
-              <h3>{{ vet.nombre_establecimiento }}</h3>
+              <div class="vet-info__header">
+                <h3>{{ vet.nombre_establecimiento }}</h3>
+                <span v-if="esVeterinariaVerificada(vet)" class="vet-verified-inline" aria-label="Veterinaria verificada">
+                  <span class="vet-verified-inline__icon">✓</span>
+                  Verificado
+                </span>
+              </div>
               <p>{{ vet.descripcion }}</p>
               <p><strong>Ubicación:</strong> {{ vet.nombre_colonia }}</p>
               <p v-if="vet.distanciaKm !== null" class="vet-distance">
@@ -285,6 +293,12 @@ const veterinariosFiltrados = computed(() => {
   });
 });
 
+const normalizarEstadoVerificacion = estado => String(estado ?? '').trim().toLowerCase();
+
+const esVeterinariaVerificada = vet => {
+  return ['aprobada', 'verificado', 'verificada'].includes(normalizarEstadoVerificacion(vet?.estado_verificacion));
+};
+
 const ubicacionActualTexto = computed(() => {
   if (ubicacionActual.value.latitud !== null && ubicacionActual.value.longitud !== null) {
     return ubicacionActual.value.etiqueta;
@@ -353,8 +367,10 @@ function obtenerIconoUsuario() {
   };
 }
 
-function obtenerIconoVet(dentroRadio) {
+function obtenerIconoVet(dentroRadio, verificada = false) {
   const fill = dentroRadio ? '#13a57d' : '#d05b5b';
+  const badgeFill = verificada ? '#14a098' : 'transparent';
+  const badgeStroke = verificada ? '#ffffff' : 'transparent';
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42">
       <defs>
@@ -365,6 +381,8 @@ function obtenerIconoVet(dentroRadio) {
       <g filter="url(#v-shadow)">
         <path d="M21 3c7.2 0 13 5.8 13 13 0 8.3-9.7 18.4-12.1 20.8a1.3 1.3 0 0 1-1.8 0C17.7 34.4 8 24.3 8 16 8 8.8 13.8 3 21 3Z" fill="${fill}"/>
         <circle cx="21" cy="15" r="4.5" fill="#ffffff"/>
+        <circle cx="30.5" cy="10.5" r="4.8" fill="${badgeFill}" stroke="${badgeStroke}" stroke-width="1.2" opacity="${verificada ? 1 : 0}"/>
+        <path d="M28.8 10.5l1.2 1.2 2.4-2.5" fill="none" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="${verificada ? 1 : 0}"/>
       </g>
     </svg>
   `;
@@ -455,14 +473,14 @@ function actualizarMarcadoresMapa() {
       marker = new google.maps.Marker({
         position: markerPosition,
         map: googleMapsMap.value,
-        icon: obtenerIconoVet(vet.dentroRadio),
+        icon: obtenerIconoVet(vet.dentroRadio, esVeterinariaVerificada(vet)),
         title: vet.nombre_establecimiento,
         zIndex: vet.dentroRadio ? 900 : 700
       });
       googleMarkers.value.set(vet.id_vet, marker);
     } else {
       marker.setPosition(markerPosition);
-      marker.setIcon(obtenerIconoVet(vet.dentroRadio));
+      marker.setIcon(obtenerIconoVet(vet.dentroRadio, esVeterinariaVerificada(vet)));
       marker.setZIndex(vet.dentroRadio ? 900 : 700);
     }
   });

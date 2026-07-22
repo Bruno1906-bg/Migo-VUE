@@ -81,9 +81,18 @@ https://universi799-my.sharepoint.com/:w:/g/personal/2402015_utrivieramaya_edu_m
 
 [LINK DE REPORTE DE HARDWARE](https://universi799-my.sharepoint.com/:w:/g/personal/2402137_utrivieramaya_edu_mx/IQBYT0PJC4KqQZNcQkY6a7iMAUDRXHYxYcuaVddCKL6c9Zs?e=xbIaz6)
 
+
 --BASE DE DATOS--
 
-Respaldo actual:[respaldo.zip](https://github.com/user-attachments/files/30176436/respaldo.zip)
+Objetos programables: [Documentacion Migo DB_2.0.pdf](https://github.com/user-attachments/files/30213820/Documentacion.Migo.DB_2.0.pdf)
+
+Pasos para crear script de respaldo: [Scripts de Migración.pdf](https://github.com/user-attachments/files/30213802/Scripts.de.Migracion.pdf)
+
+Respaldo anterior: [respaldo.zip](https://github.com/user-attachments/files/30176436/respaldo.zip)
+
+Respaldo actual: [respaldo_final.zip](https://github.com/user-attachments/files/30213777/respaldo_final.zip)
+
+Usuarios y permisos configurados: [Usuarios y Permisos Configurados.pdf](https://github.com/user-attachments/files/30213871/Usuarios.y.Permisos.Configurados.pdf)
 
 
 
@@ -112,6 +121,8 @@ Respaldo actual:[respaldo.zip](https://github.com/user-attachments/files/3017643
 
 --DIAGRAMA ENTIDAD RELACION--
 
-<img width="3616" height="2622" alt="migo_db (2)" src="https://github.com/user-attachments/assets/1523af3d-1553-4cd2-94ad-c5c846f03b43" />
+<img width="3930" height="2756" alt="migo_db (3)" src="https://github.com/user-attachments/assets/dc64cd84-bfd5-4aae-b79a-63501c09d006" />
 
-[migo_db (3).pdf](https://github.com/user-attachments/files/30175819/migo_db.3.pdf)
+
+[migo_db (4).pdf](https://github.com/user-attachments/files/30214267/migo_db.4.pdf)
+
