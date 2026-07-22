@@ -99,11 +99,15 @@
           </div>
 
           <form @submit.prevent="guardarServicios">
-            <div v-for="servicio in servicios" :key="servicio.id_servicio" class="servicio-row">
-              <label>
-                <input type="checkbox" v-model="serviciosSeleccionados" :value="servicio.id_servicio" />
-                {{ servicio.nombre }}
-              </label>
+            <p v-if="!serviciosDelVeterinario.length" class="servicios-empty">
+              Todavía no hay servicios asignados a este veterinario.
+            </p>
+
+            <div v-for="servicio in serviciosDelVeterinario" :key="servicio.id_servicio" class="servicio-row">
+              <span class="servicio-row__nombre">{{ servicio.nombre }}</span>
+              <button type="button" class="btn-secondary btn-secondary--danger" @click="eliminarServicio(servicio.id_servicio)">
+                Eliminar
+              </button>
             </div>
             <button type="submit" class="btn-save">Guardar Servicios</button>
           </form>
@@ -233,6 +237,11 @@ const serviciosSeleccionados = ref([]);
 const nuevoServicio = ref('');
 const idVet = sessionStorage.getItem('id_vet');
 const coordenadasTexto = ref('');
+
+const serviciosDelVeterinario = computed(() => {
+  const idsSeleccionados = new Set(serviciosSeleccionados.value);
+  return servicios.value.filter(servicio => idsSeleccionados.has(servicio.id_servicio));
+});
 
 const tieneUbicacionGuardada = computed(() => negocio.value.latitud !== null && negocio.value.longitud !== null);
 const coordenadasTextoTemporal = computed(() => {
@@ -642,20 +651,53 @@ async function agregarServicio() {
     const data = await res.json();
 
     servicios.value.push({ id_servicio: data.id_servicio, nombre: nuevoServicio.value });
+    if (!serviciosSeleccionados.value.includes(data.id_servicio)) {
+      serviciosSeleccionados.value.push(data.id_servicio);
+    }
     nuevoServicio.value = '';
+
+    const guardado = await guardarServicios(false);
+    if (guardado) {
+      alert('Servicio agregado correctamente');
+    }
   } catch (err) {
   }
 }
 
-async function guardarServicios() {
+async function guardarServicios(mostrarAlerta = true) {
   try {
-    await fetch(`${API_URL}/vet-servicios/${idVet}`, {
+    const res = await fetch(`${API_URL}/vet-servicios/${idVet}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(serviciosSeleccionados.value)
     });
-    alert('Servicios actualizados correctamente');
+
+    if (!res.ok) {
+      return false;
+    }
+
+    if (mostrarAlerta) {
+      alert('Servicios actualizados correctamente');
+    }
+
+    return true;
   } catch (err) {
+    return false;
+  }
+}
+
+async function eliminarServicio(idServicio) {
+  const servicio = servicios.value.find(item => item.id_servicio === idServicio);
+  const nombreServicio = servicio?.nombre ?? 'este servicio';
+
+  if (!confirm(`¿Quieres eliminar ${nombreServicio} de los servicios ofrecidos?`)) {
+    return;
+  }
+
+  serviciosSeleccionados.value = serviciosSeleccionados.value.filter(id => id !== idServicio);
+  const guardado = await guardarServicios(false);
+  if (guardado) {
+    alert('Servicio eliminado correctamente');
   }
 }
 
